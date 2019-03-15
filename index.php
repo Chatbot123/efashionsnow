@@ -324,7 +324,7 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		//echo $jsonoutput;
 		$AuthToken =  $jsonoutput->result;
-		//$speech = "Your Auth number is ".$AuthToken;
+		$speech = "Your Auth number is ".$AuthToken;
 		
 		//Get release key of process
 		$query = "https://platform.uipath.com/odata/Releases";
@@ -342,7 +342,7 @@ if($method == 'POST')
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
 		$ReleaseKey =  $jsonoutput->value[0]->Key;
-		//$speech .= " Your release key is ".$ReleaseKey;
+		$speech .= " Your release key is ".$ReleaseKey;
 		
 		//GET ROBOT ID
 		//https://platform.uipath.com/odata/Robots?$top=1&$filter=Name eq 'guessnum'
@@ -362,7 +362,7 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		$RobotId =  $jsonoutput->value[0]->Id;
 		//echo $RobotId;
-		//$speech .= "  ".$query."  ".$RobotId;
+		$speech .= "  ".$query."  Robotid ".$RobotId;
 		
 		
 		//START A JOB
@@ -404,7 +404,7 @@ if($method == 'POST')
 		curl_close($curl);
 		//$jsonoutput = json_decode($response);
 		//echo $jsonoutput;
-		//$speech = ' Starting the game...';
+		$speech .= ' Starting the game...';
 		
 		
 		
