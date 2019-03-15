@@ -329,8 +329,8 @@ if($method == 'POST')
 		//Get release key of process
 		$query = "https://platform.uipath.com/odata/Releases";
 		$curl = curl_init($query);
-		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-		curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+		//curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		//curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
 		curl_setopt($curl, CURLOPT_VERBOSE, 1);
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
