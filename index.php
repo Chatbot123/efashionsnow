@@ -343,7 +343,7 @@ if($method == 'POST')
 		$response = curl_exec($curl);
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
-		$ReleaseKey =  $jsonoutput->Key;
+		$ReleaseKey =  $jsonoutput->value[0]->Key;
 		$speech = "Your Auth number is ".$ReleaseKey;
 		
 		
