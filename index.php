@@ -360,6 +360,7 @@ if($method == 'POST')
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
 		$RobotId =  $jsonoutput->value[0]->Id;
+		echo $RobotId;
 		$speech .= "  ".$query."  ".$RobotId;
 		//START A JOB
 		$query = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
