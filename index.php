@@ -872,10 +872,10 @@ if($method == 'POST')
 		
 			
 	
-	$response = new \stdClass();
-    	$response->fulfillmentText = $speech;
-    	$response->source = "webhook";
-	echo json_encode($response);
+	$response1 = new \stdClass();
+    	$response1->fulfillmentText = $speech;
+    	$response1->source = "webhook";
+	echo json_encode($response1);
 }
 else
 {
