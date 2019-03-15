@@ -361,17 +361,21 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		$RobotId =  $jsonoutput->value[0]->Id;
 		echo $RobotId;
-		$speech .= "  ".$query."  ".$RobotId;
+		//$speech .= "  ".$query."  ".$RobotId;
+		
+		
 		//START A JOB
 		$query = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
 		$curl = curl_init($query);
-		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		//curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 		//curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
 		curl_setopt($curl, CURLOPT_VERBOSE, 1);
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$authorization = "Authorization: Bearer ".$AuthToken; // Prepare the authorisation token
+      		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization ));
 		$jsonvar = array (
  					 'startInfo' => 
   					array (
@@ -392,7 +396,7 @@ if($method == 'POST')
 		if($jsonobj)
 		{
 			    curl_setopt($curl, CURLOPT_POST, true);
-			    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+			  //  curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
 			    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonvar);
 		}
 		$response=curl_exec($curl);
