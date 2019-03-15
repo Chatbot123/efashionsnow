@@ -347,8 +347,8 @@ if($method == 'POST')
 		//GET ROBOT ID
 		//https://platform.uipath.com/odata/Robots?$top=1&$filter=Name eq 'guessnum'
 		$robotname = "guessnum";
-		$query = "https://platform.uipath.com/odata/Robots?$top=1&$filter=Name eq '".$robotname."'";
-		echo $query;
+		$query = "https://platform.uipath.com/odata/Robots?\$top=1&\$filter=Name eq '".$robotname."'";
+		//echo $query;
 		$curl = curl_init($query);
 		curl_setopt($curl, CURLOPT_VERBOSE, 1);
 		curl_setopt($curl, CURLOPT_HEADER, false);
@@ -361,7 +361,7 @@ if($method == 'POST')
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
 		$RobotId =  $jsonoutput->value[0]->Id;
-		echo $RobotId;
+		//echo $RobotId;
 		//$speech .= "  ".$query."  ".$RobotId;
 		
 		
