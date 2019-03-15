@@ -361,7 +361,7 @@ if($method == 'POST')
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
 		$RobotId =  $jsonoutput->value[0]->Id;
-		//echo $RobotId;
+		echo "robotid".$RobotId;
 		$speech .= "  ".$query."  Robotid ".$RobotId;
 		
 		
