@@ -344,43 +344,12 @@ if($method == 'POST')
 		$ReleaseKey =  $jsonoutput->value[0]->Key;
 		//$speech .= " Your release key is ".$ReleaseKey;
 		
-		//again authtoken
-		//GET Authentication Token
 		
-		
-		$query = "https://platform.uipath.com/api/Account/Authenticate";
-		$curl = curl_init($query);
-		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-		//curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
-		curl_setopt($curl, CURLOPT_VERBOSE, 1);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		$jsonvar = array('tenancyName'=> 'rachna2019',
-				 'usernameOrEmailAddress'=>'rachnarke@gmail.com',
-				 'password'=>'Avik.17.jan',
-				 'url'=>'https://platform.uipath.com/'
-				);
-             	$jsonvar = json_encode($jsonvar);
-		
-		$jsonobj=1;
-		if($jsonobj)
-		{
-			    curl_setopt($curl, CURLOPT_POST, true);
-			    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
-			    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonvar);
-		}
-		$response=curl_exec($curl);
-		curl_close($curl);
-		$jsonoutput = json_decode($response);
-		//echo $jsonoutput;
-		$AuthToken =  $jsonoutput->result;
 		
 		//GET ROBOT ID
 		//https://platform.uipath.com/odata/Robots?$top=1&$filter=Name eq 'guessnum'
 		$robotname = "guessnum";
-		$query = "https://platform.uipath.com/odata/Robots?\$top=1&\$filter=Name eq '".$robotname."'";
+		$query = "https://platform.uipath.com/odata/Robots?\$top=1&\$filter=Name eq \'guessnum\'";;
 		//echo $query;
 		$curl = curl_init($query);
 		curl_setopt($curl, CURLOPT_VERBOSE, 1);
@@ -388,12 +357,13 @@ if($method == 'POST')
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		echo $AuthToken;
 		$authorization = "Authorization: Bearer ".$AuthToken; // Prepare the authorisation token
       		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization )); // Inject the token into the header
 		$response = curl_exec($curl);
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
-		echo 'jsonoutput '.$jsonoutput;
+		//echo 'jsonoutput '.$jsonoutput;
 		$RobotId =  $jsonoutput->value[0]->Id;
 		//echo "robotid".$RobotId;
 		//$speech .= "  ".$query."  Robotid ".$RobotId;
