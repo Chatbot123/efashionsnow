@@ -361,9 +361,10 @@ if($method == 'POST')
 		$authorization = "Authorization: Bearer ".$AuthToken; // Prepare the authorisation token
       		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization )); // Inject the token into the header
 		$response = curl_exec($curl);
+		echo $response;
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
-		echo 'jsonoutput '.$jsonoutput;
+		//echo 'jsonoutput '.$jsonoutput;
 		$RobotId =  $jsonoutput->value[0]->Id;
 		//echo "robotid".$RobotId;
 		//$speech .= "  ".$query."  Robotid ".$RobotId;
