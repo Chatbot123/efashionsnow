@@ -349,63 +349,31 @@ if($method == 'POST')
 		//GET ROBOT ID
 		//https://platform.uipath.com/odata/Robots?$top=1&$filter=Name eq 'guessnum'
 		$robotname = "guessnum";
-		/*$query = "https://platform.uipath.com/odata/Robots?\$top=1&\$filter=Name eq"." '".$robotname."'";
-		echo $query;
-		$curl = curl_init($query);
-		curl_setopt($curl, CURLOPT_VERBOSE, 1);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		//echo $AuthToken;
-		$authorization = "Authorization: Bearer ".$AuthToken; // Prepare the authorisation token
-      		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization )); // Inject the token into the header
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://platform.uipath.com/odata/Robots?$top=1&$filter=Name%20eq%20%27guessnum%27",
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		  CURLOPT_HTTPHEADER => array(
+		    "Authorization: Bearer $AuthToken",
+		    "Content-Type: application/json",
+
+		  ),
+		));
+
 		$response = curl_exec($curl);
-		echo $response;
-		curl_close($curl);
+
 		$jsonoutput = json_decode($response);
-		//echo 'jsonoutput '.$jsonoutput;
-		$RobotId =  $jsonoutput->value[0]->Id;
-		//echo "robotid".$RobotId;
-		//$speech .= "  ".$query."  Robotid ".$RobotId;
-		*/
-		
-		
+				//echo 'jsonoutput '.$jsonoutput;
+				$RobotId =  $jsonoutput->value[0]->Id;
+		curl_close($curl);
 
-$curl = curl_init();
-
-curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://platform.uipath.com/odata/Robots?$top=1&$filter=Name%20eq%20%27guessnum%27",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "GET",
-  CURLOPT_POSTFIELDS => "",
-  CURLOPT_HTTPHEADER => array(
-    "Authorization: Bearer $AuthToken",
-    "Content-Type: application/json",
-    
-  ),
-));
-
-$response = curl_exec($curl);
-		
-$jsonoutput = json_decode($response);
-		//echo 'jsonoutput '.$jsonoutput;
-		$RobotId =  $jsonoutput->value[0]->Id;
-		//echo "robotid".$RobotId;
-		//$speech .= "  ".$query."  Robotid ".$RobotId;
-$err = curl_error($curl);
-
-curl_close($curl);
-
-if ($err) {
-  echo "cURL Error #:" . $err;
-} else {
-  echo $response;
-}
 		
 		
 		//START A JOB
