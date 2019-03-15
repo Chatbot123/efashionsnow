@@ -324,7 +324,7 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		//echo $jsonoutput;
 		$AuthToken =  $jsonoutput->result;
-		$speech = "Your Auth number is ".$AuthToken;
+		//$speech = "Your Auth number is ".$AuthToken;
 		
 		//Get release key of process
 		$query = "https://platform.uipath.com/odata/Releases";
@@ -342,13 +342,13 @@ if($method == 'POST')
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
 		$ReleaseKey =  $jsonoutput->value[0]->Key;
-		$speech .= " Your release key is ".$ReleaseKey;
+		//$speech .= " Your release key is ".$ReleaseKey;
 		
 		//GET ROBOT ID
 		//https://platform.uipath.com/odata/Robots?$top=1&$filter=Name eq 'guessnum'
 		$robotname = "guessnum";
 		$query = "https://platform.uipath.com/odata/Robots?\$top=1&\$filter=Name eq '".$robotname."'";
-		echo $query;
+		//echo $query;
 		$curl = curl_init($query);
 		curl_setopt($curl, CURLOPT_VERBOSE, 1);
 		curl_setopt($curl, CURLOPT_HEADER, false);
@@ -360,9 +360,10 @@ if($method == 'POST')
 		$response = curl_exec($curl);
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
+		echo $jsonoutput;
 		$RobotId =  $jsonoutput->value[0]->Id;
-		echo "robotid".$RobotId;
-		$speech .= "  ".$query."  Robotid ".$RobotId;
+		//echo "robotid".$RobotId;
+		//$speech .= "  ".$query."  Robotid ".$RobotId;
 		
 		
 		//START A JOB
