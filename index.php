@@ -349,7 +349,7 @@ if($method == 'POST')
 		//GET ROBOT ID
 		//https://platform.uipath.com/odata/Robots?$top=1&$filter=Name eq 'guessnum'
 		$robotname = "guessnum";
-		$query = "https://platform.uipath.com/odata/Robots?\$top=1&\$filter=Name eq"." '".$robotname."'";
+		/*$query = "https://platform.uipath.com/odata/Robots?\$top=1&\$filter=Name eq"." '".$robotname."'";
 		echo $query;
 		$curl = curl_init($query);
 		curl_setopt($curl, CURLOPT_VERBOSE, 1);
@@ -368,6 +368,44 @@ if($method == 'POST')
 		$RobotId =  $jsonoutput->value[0]->Id;
 		//echo "robotid".$RobotId;
 		//$speech .= "  ".$query."  Robotid ".$RobotId;
+		*/
+		
+		
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "https://platform.uipath.com/odata/Robots?$top=1&$filter=Name%20eq%20%27guessnum%27",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Bearer $AuthToken",
+    "Content-Type: application/json",
+    
+  ),
+));
+
+$response = curl_exec($curl);
+		
+$jsonoutput = json_decode($response);
+		//echo 'jsonoutput '.$jsonoutput;
+		$RobotId =  $jsonoutput->value[0]->Id;
+		//echo "robotid".$RobotId;
+		//$speech .= "  ".$query."  Robotid ".$RobotId;
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
 		
 		
 		//START A JOB
