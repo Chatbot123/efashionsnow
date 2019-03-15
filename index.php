@@ -290,7 +290,44 @@ if($method == 'POST')
 		$speech = "Your Request number is ".$request_num." Please attach approval of your Line Manager to the ticket, so that the account will be deactivated";
  	}
   ///----SNOW ENDS HERE-----
-	
+///-----RPA-----///
+	if($json->queryResult->intent->displayName=='GuessNumber')
+	{
+		//GET Authentication Token
+		
+		
+		$query = "https://platform.uipath.com/api/Account/Authenticate";
+		$curl = curl_init($query);
+		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		//curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+		curl_setopt($curl, CURLOPT_VERBOSE, 1);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$jsonvar = array('tenancyName'=> 'rachna2019',
+				 'usernameOrEmailAddress'=>'rachnarke@gmail.com',
+				 'password'=>'Avik.17.jan',
+				 'url'=>'https://platform.uipath.com/'
+				);
+             	$jsonvar = json_encode($jsonvar);
+		
+		$jsonobj=1;
+		if($jsonobj)
+		{
+			    curl_setopt($curl, CURLOPT_POST, true);
+			    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+			    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonvar);
+		}
+		$response=curl_exec($curl);
+		curl_close($curl);
+		$jsonoutput = json_decode($response);
+		//echo $jsonoutput;
+		$AuthToken =  $jsonoutput->result;
+		$speech = "Your Auth number is ".$AuthToken;
+ 
+		
+	}
 	
 	
 	//efashion implementation starts here
