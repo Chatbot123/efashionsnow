@@ -539,8 +539,8 @@ if($method == 'POST')
     						       ),
     						'NoOfRobots' => 0,
     						'Source' => 'Manual',
-    						'InputArguments' => array('Country'=>$geo_country)
-  						)
+    						'InputArguments' => array('Country'=>'USA')
+  						),
 				 );
 			
 			
