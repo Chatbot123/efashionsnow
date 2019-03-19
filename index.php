@@ -531,15 +531,16 @@ if($method == 'POST')
 		$jsonvar = array (
 					  'startInfo' => 
 					  array (
-					    'ReleaseKey' => '696c7789-619b-4796-9886-a040ec32bb81',
+					    'ReleaseKey' => $ReleaseKey,
 					    'Strategy' => 'Specific',
 					    'RobotIds' => 
 					    array (
-					      0 => 122563,
+					      0 => $RobotId,
 					    ),
 					    'NoOfRobots' => 0,
 					    'Source' => 'Manual',
-					    'InputArguments' => '{"Country":"$geo_country"}',
+						//  \"InputArguments\":\"{\\\"Country\\\":\\\"china\\\"}\"
+					    'InputArguments' => "\{\"Country\":\"$geo_country\"\}",
 					  ),
 				);
 			
