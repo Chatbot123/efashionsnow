@@ -539,9 +539,12 @@ if($method == 'POST')
     						       ),
     						'NoOfRobots' => 0,
     						'Source' => 'Manual',
-    						'InputArguments' => '{"Country":$geo_country}',
-  						),
-				 )
+    						'InputArguments' => array('Country'=>$geo_country)
+  						)
+				 );
+			
+			
+			
 		$jsonvar = json_encode($jsonvar);
 		
 		$jsonobj=1;
