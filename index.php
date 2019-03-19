@@ -548,7 +548,7 @@ if($method == 'POST')
 			
 			
 		$jsonvar = json_encode($jsonvar);
-		echo $jsonvar;
+		//echo $jsonvar;
 		$jsonobj=1;
 		if($jsonobj)
 		{
@@ -556,10 +556,10 @@ if($method == 'POST')
 			  //  curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
 			    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonvar);
 		}
-	/*	$response=curl_exec($curl);
+	$response=curl_exec($curl);
 		curl_close($curl);
 		//$jsonoutput = json_decode($response);
-		//echo $jsonoutput;*/
+		//echo $jsonoutput
 		$speech .= ' Ok. I am getting';
 		
 		
