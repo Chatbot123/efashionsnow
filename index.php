@@ -426,6 +426,143 @@ if($method == 'POST')
 		
 	}
 	
+	//RPA another usecase Weather info of country
+	if($json->queryResult->intent->displayName=='CountryWeather')
+	{
+		//GET Authentication Token
+		
+		
+		$query = "https://platform.uipath.com/api/Account/Authenticate";
+		$curl = curl_init($query);
+		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		//curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+		curl_setopt($curl, CURLOPT_VERBOSE, 1);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$jsonvar = array('tenancyName'=> 'rachna2019',
+				 'usernameOrEmailAddress'=>'rachnarke@gmail.com',
+				 'password'=>'Avik.17.jan',
+				 'url'=>'https://platform.uipath.com/'
+				);
+             	$jsonvar = json_encode($jsonvar);
+		
+		$jsonobj=1;
+		if($jsonobj)
+		{
+			    curl_setopt($curl, CURLOPT_POST, true);
+			    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+			    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonvar);
+		}
+		$response=curl_exec($curl);
+		curl_close($curl);
+		$jsonoutput = json_decode($response);
+		//echo $jsonoutput;
+		$AuthToken =  $jsonoutput->result;
+		//$speech = "Your Auth number is ".$AuthToken;
+		
+		//Get release key of process
+		$query = "https://platform.uipath.com/odata/Releases";
+		$curl = curl_init($query);
+		//curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		//curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+		curl_setopt($curl, CURLOPT_VERBOSE, 1);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$authorization = "Authorization: Bearer ".$AuthToken; // Prepare the authorisation token
+      		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization )); // Inject the token into the header
+		$response = curl_exec($curl);
+		curl_close($curl);
+		$jsonoutput = json_decode($response);
+		$ReleaseKey =  $jsonoutput->value[0]->Key;
+		//$speech .= " Your release key is ".$ReleaseKey;
+		
+		
+		
+		//GET ROBOT ID
+		//https://platform.uipath.com/odata/Robots?$top=1&$filter=Name eq 'guessnum'
+		$robotname = "CTLI_Robot";
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://platform.uipath.com/odata/Robots?$top=1&$filter=Name%20eq%20%27CTLI_Robot%27",
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		  CURLOPT_HTTPHEADER => array(
+		    "Authorization: Bearer $AuthToken",
+		    "Content-Type: application/json",
+
+		  ),
+		));
+
+		$response = curl_exec($curl);
+
+		$jsonoutput = json_decode($response);
+				//echo 'jsonoutput '.$jsonoutput;
+				$RobotId =  $jsonoutput->value[0]->Id;
+		curl_close($curl);
+
+		
+		
+		//START A JOB
+		$geo_country=$json->queryResult->parameters->geo-country;
+		$query = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
+		$curl = curl_init($query);
+		//curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		//curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+		curl_setopt($curl, CURLOPT_VERBOSE, 1);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$authorization = "Authorization: Bearer ".$AuthToken; // Prepare the authorisation token
+      		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization ));
+		$jsonvar = array (
+ 					 'startInfo' => 
+  					array (
+    						'ReleaseKey' => $ReleaseKey,
+    						'Strategy' => 'Specific',
+    						'RobotIds' => 
+    						array (
+      							0 => $RobotId,
+    						       ),
+    						'NoOfRobots' => 0,
+    						'Source' => 'Manual',
+    						'InputArguments' => '{"Country":$geo_country}',
+  						),
+				 )
+		$jsonvar = json_encode($jsonvar);
+		
+		$jsonobj=1;
+		if($jsonobj)
+		{
+			    curl_setopt($curl, CURLOPT_POST, true);
+			  //  curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+			    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonvar);
+		}
+		$response=curl_exec($curl);
+		curl_close($curl);
+		//$jsonoutput = json_decode($response);
+		//echo $jsonoutput;
+		$speech .= ' Getting the weather info';
+		
+		
+		
+		
+		
+		
+ 
+		
+	}
+	
 	
 	//efashion implementation starts here
 	// Fetching values from dialogflow
