@@ -539,7 +539,7 @@ if($method == 'POST')
     						       ),
     						'NoOfRobots' => 0,
     						'Source' => 'Manual',
-    						'InputArguments' => '{"Country":\"$geo_country\"}',
+    						'InputArguments' => '{"Country":$geo_country}',
   						),
 				 )
 		$jsonvar = json_encode($jsonvar);
@@ -555,7 +555,7 @@ if($method == 'POST')
 		curl_close($curl);
 		//$jsonoutput = json_decode($response);
 		//echo $jsonoutput;
-		$speech .= ' Getting the weather info';*/
+		$speech .= ' Ok. I am getting';*/
 		
 		
 		
