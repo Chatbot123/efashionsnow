@@ -460,8 +460,8 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		//echo $jsonoutput;
 		$AuthToken =  $jsonoutput->result;
-		//$speech = "Your Auth number is ".$AuthToken;
-		
+		$speech = "Your Auth number is ".$AuthToken;
+	/*	
 		//Get release key of process
 		$query = "https://platform.uipath.com/odata/Releases";
 		$curl = curl_init($query);
@@ -553,7 +553,7 @@ if($method == 'POST')
 		curl_close($curl);
 		//$jsonoutput = json_decode($response);
 		//echo $jsonoutput;
-		$speech .= ' Getting the weather info';
+		$speech .= ' Getting the weather info';*/
 		
 		
 		
