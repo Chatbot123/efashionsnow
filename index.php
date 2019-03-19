@@ -540,7 +540,7 @@ if($method == 'POST')
 					    'NoOfRobots' => 0,
 					    'Source' => 'Manual',
 						//  \"InputArguments\":\"{\\\"Country\\\":\\\"china\\\"}\"
-					    'InputArguments' => "\{\"Country\":\"$geo_country\"\}",
+					    'InputArguments' => "{\"Country\":\"$geo_country\"}",
 					  ),
 				);
 			
