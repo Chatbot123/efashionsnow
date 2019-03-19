@@ -508,14 +508,14 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 				//echo 'jsonoutput '.$jsonoutput;
 				$RobotId =  $jsonoutput->value[0]->Id;
-		$speech = 'Robot id $RobotId';
+		$speech = "Robot id ".$RobotId;
 		curl_close($curl);
 
+	/*	
 		
-		
-	/*	//START A JOB
+	//START A JOB
 		$geo_country=$json->queryResult->parameters->country;
-		echo $geo_country;
+		//echo $geo_country;
 		$query = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
 		$curl = curl_init($query);
 		//curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
