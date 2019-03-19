@@ -514,6 +514,7 @@ if($method == 'POST')
 		
 		//START A JOB
 		$geo_country=$json->queryResult->parameters->geo-country;
+		echo $geo_country;
 		$query = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
 		$curl = curl_init($query);
 		//curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
@@ -536,7 +537,7 @@ if($method == 'POST')
     						       ),
     						'NoOfRobots' => 0,
     						'Source' => 'Manual',
-    						'InputArguments' => '{"Country":$geo_country}',
+    						'InputArguments' => '{"Country":\"$geo_country\"}',
   						),
 				 )
 		$jsonvar = json_encode($jsonvar);
