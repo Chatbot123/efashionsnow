@@ -529,19 +529,19 @@ if($method == 'POST')
 		$authorization = "Authorization: Bearer ".$AuthToken; // Prepare the authorisation token
       		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization ));
 		$jsonvar = array (
- 					 'startInfo' => 
-  					array (
-    						'ReleaseKey' => $ReleaseKey,
-    						'Strategy' => 'Specific',
-    						'RobotIds' => 
-    						array (
-      							0 => $RobotId,
-    						       ),
-    						'NoOfRobots' => 0,
-    						'Source' => 'Manual',
-    						'InputArguments' => array('Country'=>'USA')
-  						),
-				 );
+					  'startInfo' => 
+					  array (
+					    'ReleaseKey' => '696c7789-619b-4796-9886-a040ec32bb81',
+					    'Strategy' => 'Specific',
+					    'RobotIds' => 
+					    array (
+					      0 => 122563,
+					    ),
+					    'NoOfRobots' => 0,
+					    'Source' => 'Manual',
+					    'InputArguments' => '{"Country":"USA"}',
+					  ),
+				);
 			
 			
 			
