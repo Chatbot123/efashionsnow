@@ -516,8 +516,8 @@ if($method == 'POST')
 		
 	//START A JOB
 		//$geo_country=$json->queryResult->parameters->country;
-		echo $geo_country;
-		/*$query = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
+		//echo $geo_country;
+		$query = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
 		$curl = curl_init($query);
 		//curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 		//curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
