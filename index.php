@@ -431,6 +431,8 @@ if($method == 'POST')
 	{
 		//GET Authentication Token
 		
+		if(isset($json->queryResult->parameters->country))
+		{	$geo_country= $json->queryResult->parameters->country; } 
 		
 		$query = "https://platform.uipath.com/api/Account/Authenticate";
 		$curl = curl_init($query);
@@ -513,7 +515,7 @@ if($method == 'POST')
 	
 		
 	//START A JOB
-		$geo_country=$json->queryResult->parameters->country;
+		//$geo_country=$json->queryResult->parameters->country;
 		echo $geo_country;
 		/*$query = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
 		$curl = curl_init($query);
