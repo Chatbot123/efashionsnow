@@ -558,7 +558,7 @@ if($method == 'POST')
 		curl_close($curl);
 		//$jsonoutput = json_decode($response);
 		//echo $jsonoutput;
-		$speech .= ' Ok. I am getting';*/
+		$speech .= ' Ok. I am getting';
 		
 		
 		
