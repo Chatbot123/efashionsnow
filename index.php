@@ -478,10 +478,10 @@ if($method == 'POST')
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
 		$ReleaseKey =  $jsonoutput->value[0]->Key;
-		$speech .= " Your release key is ".$ReleaseKey;
+		//$speech .= " Your release key is ".$ReleaseKey;
 		
 		
-		/*
+		
 		//GET ROBOT ID
 		//https://platform.uipath.com/odata/Robots?$top=1&$filter=Name eq 'guessnum'
 		$robotname = "CTLI_Robot";
@@ -508,6 +508,7 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 				//echo 'jsonoutput '.$jsonoutput;
 				$RobotId =  $jsonoutput->value[0]->Id;
+		$speech = 'Robot id $RobotId';
 		curl_close($curl);
 
 		
