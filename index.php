@@ -111,7 +111,7 @@ curl_close($curl);
 	$LocalLock=	$jsonoutput->d->LocalLock;
 	
 	$speech = "Username = ".$username."\n"."Company = ".$Company."\n"."Personal num = ".$PersNo."\n"."Fullname = ".$Fullname."\n"."Lock Status = ".$LocalLock;*/
-	$speech = 'test';
+	$speech = $jsonoutput;
 }
 
 
