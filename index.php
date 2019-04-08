@@ -5,6 +5,47 @@ if($method == 'POST')
 {
 	$requestBody = file_get_contents('php://input');
 	$json = json_decode($requestBody);
+	
+	//--sap integration
+	
+	if($json->queryResult->intent->displayName=='SAPUserList')
+	{
+		
+		
+		
+		
+			
+		
+		$username = "arunn";
+		$password = "ctl@1976";
+		
+		
+		$query = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UsersListSet/?$format=json";
+		$curl = curl_init($query);
+		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+		curl_setopt($curl, CURLOPT_VERBOSE, 1);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+
+		$response = curl_exec($curl);
+		curl_close($curl);
+		$jsonoutput = json_decode($response);
+		echo $jsonoutput;
+		
+		
+		
+		   
+		}
+
+			
+
+	
+	//--end sap
+	
 		//----SNOW IMPLEMENTATION----
   	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue')
 	{
