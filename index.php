@@ -94,7 +94,7 @@ $response = curl_exec($curl);
 $err = curl_error($curl);
 curl_close($curl);
 	$jsonoutput = json_decode($response,true);
-	$username = 	$jsonoutput->d->Username;
+	/*$username = 	$jsonoutput->d->Username;
 	$Company = 	$jsonoutput->d->Company;
 	$PersNo=	$jsonoutput->d->PersNo;
 	$Firstname = 	$jsonoutput->d->Firstname;
@@ -110,7 +110,8 @@ curl_close($curl);
 	$Tel1Numbr=	$jsonoutput->d->Tel1Numbr;
 	$LocalLock=	$jsonoutput->d->LocalLock;
 	
-	$speech = "Username = ".$username."\n"."Company = ".$Company."\n"."Personal num = ".$PersNo."\n"."Fullname = ".$Fullname."\n"."Lock Status = ".$LocalLock;
+	$speech = "Username = ".$username."\n"."Company = ".$Company."\n"."Personal num = ".$PersNo."\n"."Fullname = ".$Fullname."\n"."Lock Status = ".$LocalLock;*/
+	$speech = 'test';
 }
 
 
