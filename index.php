@@ -45,15 +45,13 @@ $jsonoutput = json_decode($response,true);
 $gg_res = sizeof($jsonoutput['d']['results']);
 //echo $gg;
 //echo $gg_d;
-echo $gg_res;
+//echo $gg_res;
 		//$gg = sizeof($jsonoutput['d']['results']);
-/*for($x=0;$x<$gg;$x++) {
-   $images = data['books'][$x]['images'];
-   $sizeOfImages = sizeof($images);
-   for($j = 0; $j < $sizeOfImages; $j++) {
-      // access $images[$j]['320x180']
-   }
-}*/		
+for($x=0;$x<$gg_res;$x++) {
+   $username = $jsonoutput['d']['results'][$x]['Username'];
+echo $username;	
+  
+}	
 		
 /*foreach ($jsonoutput["results"] as $value) 
 			{
