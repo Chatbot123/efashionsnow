@@ -40,12 +40,27 @@ $err = curl_error($curl);
 
 curl_close($curl);
 $jsonoutput = json_decode($response);
-foreach ($jsonoutput[d]["results"] as $value) 
+$gg = sizeof($jsonoutput);
+$gg_d = sizeof($jsonoutput['d']);
+$gg_res = sizeof($jsonoutput['d']['results']);
+echo $gg;
+echo $gg_d;
+echo $gg_res;
+		//$gg = sizeof($jsonoutput['d']['results']);
+/*for($x=0;$x<$gg;$x++) {
+   $images = data['books'][$x]['images'];
+   $sizeOfImages = sizeof($images);
+   for($j = 0; $j < $sizeOfImages; $j++) {
+      // access $images[$j]['320x180']
+   }
+}*/		
+		
+/*foreach ($jsonoutput["results"] as $value) 
 			{
 				$speech .=  $value["Username"]." ".$value["Firstname"]." ".$value["Lastname"];
 				$speech .= "\r\n";
 				//$speech .= "Do you want this info on mail\n";
-			 }
+			 }*/
 //$username =  $jsonoutput->d->results[0]->Username;
 	//$speech = $username;	
 
