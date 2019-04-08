@@ -64,8 +64,9 @@ if($json->queryResult->intent->displayName=='SAPGivenUser')
 			$username= strtoupper($username);
 		}
 		
-$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserDetailsSet('".$username."')/?\$format=json";	
-	echo $url;
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserDetailsSet%28%27".$username."%27%29/?$format=json";
+//	"http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserDetailsSet('".$username."')/?\$format=json";	
+	
 $curl = curl_init();
 	
  // Prepare the authorisation token
@@ -91,8 +92,7 @@ curl_setopt_array($curl, array(
 
 $response = curl_exec($curl);
 $err = curl_error($curl);
-
-	curl_close($curl);
+curl_close($curl);
 	$jsonoutput = json_decode($response,true);
 	$username = 	$jsonoutput->d->Username;
 	$Company = 	$jsonoutput->d->Company;
