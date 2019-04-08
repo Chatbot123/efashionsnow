@@ -14,7 +14,7 @@ if($method == 'POST')
 		
 
 $curl = curl_init();
-
+$authorization =  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="; // Prepare the authorisation token
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UsersListSet/?$format=json",
@@ -26,14 +26,11 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => "GET",
   CURLOPT_POSTFIELDS => "",
  //CURLOPT_USERPWD=> "$username:$password",
- CURLOPT_HTTPHEADER=> array("Content-Type: application/json"),
+ 
 
-		
-  CURLOPT_HTTPHEADER => array(
-    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
-   
-  
-  ),
+	
+  CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization ), // Inject the token into the header	
+ 
 ));
 
 $response = curl_exec($curl);
