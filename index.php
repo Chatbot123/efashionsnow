@@ -39,10 +39,11 @@ curl_setopt_array($curl, array(
 $response = curl_exec($curl);
 $err = curl_error($curl);
 
-
+curl_close($curl);
 $jsonoutput = json_decode($response);
-		echo $jsonoutput;
-curl_close($curl);	
+$username =  $jsonoutput->d->results[0]->Username;
+		
+
 		
 			
 		
@@ -66,7 +67,7 @@ curl_close($curl);
 		$jsonoutput = json_decode($response);
 		echo $jsonoutput;*/
 		
-		$speech = 'test';
+		$speech = $username;
 		
 		   
 		}
