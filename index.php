@@ -43,7 +43,7 @@ $jsonoutput = json_decode($response,true);
 $numofusers = sizeof($jsonoutput['d']['results']);
 $speech = "Total number of Users ".$numofusers;
 $speech .= "\r\n";
-$speech .= "UserName\tFirstName\tLastName";
+$speech .= "UserName\tFirstName\tLastName\n";
 		//$gg = sizeof($jsonoutput['d']['results']);
 for($x=0;$x<$numofusers;$x++) {
    $username = $jsonoutput['d']['results'][$x]['Username'];
@@ -52,46 +52,9 @@ for($x=0;$x<$numofusers;$x++) {
 	
 	$speech .=  $username."\t".$firstname ."\t".$lastname;
 				$speech .= "\r\n";	
-	
-  
-}	
-		
-/*foreach ($jsonoutput["results"] as $value) 
-			{
-				$speech .=  $value["Username"]." ".$value["Firstname"]." ".$value["Lastname"];
-				$speech .= "\r\n";
-				//$speech .= "Do you want this info on mail\n";
-			 }*/
-//$username =  $jsonoutput->d->results[0]->Username;
-	//$speech = $username;	
-
-		
-			
-		
-		/*$username = "arunn";
-		$password = "ctl@1976";
-		
-		
-		$query = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UsersListSet";
-		$curl = curl_init($query);
-		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-		curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
-		curl_setopt($curl, CURLOPT_VERBOSE, 1);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
-
-		$response = curl_exec($curl);
-		curl_close($curl);
-		$jsonoutput = json_decode($response);
-		echo $jsonoutput;*/
-		
-		//$speech = $username;
-		
+	}
 		   
-		}
+}
 
 			
 
