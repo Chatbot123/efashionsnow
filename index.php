@@ -40,8 +40,14 @@ $err = curl_error($curl);
 
 curl_close($curl);
 $jsonoutput = json_decode($response);
-$username =  $jsonoutput->d->results[0]->Username;
-	$speech = $username;	
+foreach ($jsonoutput[d]["results"] as $value) 
+			{
+				$speech .=  $value["Username"]." ".$value["Firstname"]." ".$value["Lastname"];
+				$speech .= "\r\n";
+				//$speech .= "Do you want this info on mail\n";
+			 }
+//$username =  $jsonoutput->d->results[0]->Username;
+	//$speech = $username;	
 
 		
 			
