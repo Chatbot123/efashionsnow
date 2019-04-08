@@ -25,12 +25,12 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "GET",
   CURLOPT_POSTFIELDS => "",
- CURLOPT_USERPWD=> "$username:$password",
+ //CURLOPT_USERPWD=> "$username:$password",
  CURLOPT_HTTPHEADER=> array("Content-Type: application/json"),
 
 		
   CURLOPT_HTTPHEADER => array(
-    "Authorization: Basic",
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
    
   
   ),
