@@ -41,7 +41,7 @@ $err = curl_error($curl);
 curl_close($curl);
 $jsonoutput = json_decode($response);
 $username =  $jsonoutput->d->results[0]->Username;
-	$speech = $response;	
+	$speech = $username;	
 
 		
 			
