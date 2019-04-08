@@ -117,6 +117,61 @@ curl_close($curl);
 
 	
 	//--end sap
+
+if($json->queryResult->intent->displayName=='unlockSAPuser')
+{
+	if(isset($json->queryResult->parameters->username))
+		{ $username = $json->queryResult->parameters->username; 
+			$username= strtoupper($username);
+		}
+		
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserDetailsSet%28%27".$username."%27%29/?\$format=json";
+//	"http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserDetailsSet('".$username."')/?\$format=json";	
+	
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => ,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+    "Postman-Token: e68e68d1-acbc-4ed2-bfb4-c9d624cb25e0",
+    "cache-control: no-cache",
+    "x-CSRF-Token: Fetch"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+	$jsonoutput = json_decode($response);
+	$username = 	$jsonoutput->d->Username;
+	$Company = 	$jsonoutput->d->Company;
+	$PersNo=	$jsonoutput->d->PersNo;
+	$Firstname = 	$jsonoutput->d->Firstname;
+	$Lastname = 	$jsonoutput->d->Lastname;
+	$Fullname=	$jsonoutput->d->Fullname;
+	$City = 	$jsonoutput->d->City;
+	$District = 	$jsonoutput->d->District;
+	$PoBox=		$jsonoutput->d->PoBox;
+	$Street = 	$jsonoutput->d->Street;
+	$Location = 	$jsonoutput->d->Location;
+	$Langu=		$jsonoutput->d->Langu;
+	$Region=	$jsonoutput->d->Region;
+	$Tel1Numbr=	$jsonoutput->d->Tel1Numbr;
+	$LocalLock=	$jsonoutput->d->LocalLock;
+	
+	$speech = "Username = ".$username."\n"."Company = ".$Company."\n"."Personal num = ".$PersNo."\n"."Fullname = ".$Fullname."\n"."Lock Status = ".$LocalLock;
+	//$speech = $username;
+}
 	
 		//----SNOW IMPLEMENTATION----
   	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue')
