@@ -42,7 +42,7 @@ curl_close($curl);
 $jsonoutput = json_decode($response);
 //$gg = sizeof($jsonoutput);
 $gg_d = sizeof($jsonoutput['d']);
-$gg_res = sizeof($jsonoutput['d']['results']);
+//$gg_res = sizeof($jsonoutput['d']['results']);
 echo $gg;
 echo $gg_d;
 echo $gg_res;
