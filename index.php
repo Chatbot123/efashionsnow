@@ -56,7 +56,61 @@ for($x=0;$x<$numofusers;$x++) {
 		   
 }
 
-			
+//get detial of sap user
+if($json->queryResult->intent->displayName=='SAPGivenUser')
+{
+	if(isset($json->queryResult->parameters->username))
+		{ $username = $json->queryResult->parameters->username; 
+			$username= strtoupper($username);
+		}
+		
+	
+$curl = curl_init();
+ // Prepare the authorisation token
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserDetailsSet('".$username."')/?\$format=json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+ //CURLOPT_USERPWD=> "$username:$password",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+    "Content-Type: application/json"
+   
+  ),
+	
+ 
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+	curl_close($curl);
+	$jsonoutput = json_decode($response,true);
+	$username = 	$jsonoutput->d->Username;
+	$Company = 	$jsonoutput->d->Company;
+	$PersNo=	$jsonoutput->d->PersNo;
+	$Firstname = 	$jsonoutput->d->Firstname;
+	$Lastname = 	$jsonoutput->d->Lastname;
+	$Fullname=	$jsonoutput->d->Fullname;
+	$City = 	$jsonoutput->d->City;
+	$District = 	$jsonoutput->d->District;
+	$PoBox=		$jsonoutput->d->PoBox;
+	$Street = 	$jsonoutput->d->Street;
+	$Location = 	$jsonoutput->d->Location;
+	$Langu=		$jsonoutput->d->Langu;
+	$Region=	$jsonoutput->d->Region;
+	$Tel1Numbr=	$jsonoutput->d->Tel1Numbr;
+	$LocalLock=	$jsonoutput->d->LocalLock;
+	
+	$speech = "Username = ".$username."\n"."Company = ".$Company."\n"."Personal num = ".$PersNo."\n"."Fullname = ".$Fullname."\n"."Lock Status = ".$LocalLock;
+}
+
 
 	
 	//--end sap
