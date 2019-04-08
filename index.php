@@ -41,11 +41,11 @@ $err = curl_error($curl);
 curl_close($curl);
 $jsonoutput = json_decode($response,true);
 //$gg = sizeof($jsonoutput);
-$gg_d = sizeof($jsonoutput['d']);
-//$gg_res = sizeof($jsonoutput['d']['results']);
+//$gg_d = sizeof($jsonoutput['d']);
+$gg_res = sizeof($jsonoutput['d']['results']);
 //echo $gg;
-echo $gg_d;
-//echo $gg_res;
+//echo $gg_d;
+echo $gg_res;
 		//$gg = sizeof($jsonoutput['d']['results']);
 /*for($x=0;$x<$gg;$x++) {
    $images = data['books'][$x]['images'];
