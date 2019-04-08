@@ -36,7 +36,7 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		echo $jsonoutput;
 		
-		
+		$speech = 'test';
 		
 		   
 		}
