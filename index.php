@@ -40,16 +40,19 @@ $err = curl_error($curl);
 
 curl_close($curl);
 $jsonoutput = json_decode($response,true);
-//$gg = sizeof($jsonoutput);
-//$gg_d = sizeof($jsonoutput['d']);
-$gg_res = sizeof($jsonoutput['d']['results']);
-//echo $gg;
-//echo $gg_d;
-//echo $gg_res;
+$numofusers = sizeof($jsonoutput['d']['results']);
+$speech = "Total number of Users ".$numofusers;
+$speech .= "\r\n";
+$speech .= "UserName\tFirstName\tLastName";
 		//$gg = sizeof($jsonoutput['d']['results']);
-for($x=0;$x<$gg_res;$x++) {
+for($x=0;$x<$numofusers;$x++) {
    $username = $jsonoutput['d']['results'][$x]['Username'];
-echo $username;	
+	$firstname = $jsonoutput['d']['results'][$x]['Firstname'];
+	$lastname = $jsonoutput['d']['results'][$x]['Lastname'];
+	
+	$speech .=  $username."\t".$firstname ."\t".$lastname;
+				$speech .= "\r\n";	
+	
   
 }	
 		
