@@ -39,8 +39,8 @@ $response = curl_exec($curl);
 $err = curl_error($curl);
 
 curl_close($curl);
-//$jsonoutput = json_decode($response);
-//$username =  $jsonoutput->d->results[0]->Username;
+$jsonoutput = json_decode($response);
+$username =  $jsonoutput->d->results[0]->Username;
 	$speech = $response;	
 
 		
