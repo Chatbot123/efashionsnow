@@ -139,9 +139,10 @@ curl_setopt_array($curl, array(
 $headers = [];
 // Get the response body as string
 $response = curl_exec($curl);
-echo $response;
+//echo $response;
 // Get the response headers as string
 $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+	echo $headerSize;
 // Get the substring of the headers and explode as an array by \r\n
 // Each element of the array will be a string `Header-Key: Header-Value`
 // Retrieve this two parts with a simple regex `/(.*?): (.*)/`
