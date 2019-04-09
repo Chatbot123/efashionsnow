@@ -141,6 +141,9 @@ $response = curl_exec($curl);
 $headers= get_headers($url, 1);
 	$sizearray = sizeof($headers);
 	echo $sizearray;
+	foreach($headers as $value){
+    echo $value . "<br>";
+}
 	
 
 	$speech = 'test';
