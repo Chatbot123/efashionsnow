@@ -125,14 +125,11 @@ if($json->queryResult->intent->displayName=='unlockSAPuser')
 			$username= strtoupper($username);
 		}
 		
-$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserDetailsSet%28%27".$username."%27%29/?\$format=json";
-//	"http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserDetailsSet('".$username."')/?\$format=json";	
-	
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet/";
 $curl = curl_init();
-
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
-  CURLOPT_URL => ,
+  CURLOPT_URL => $url,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -149,10 +146,12 @@ curl_setopt_array($curl, array(
 ));
 
 $response = curl_exec($curl);
+echo get_headers($url, 1)
 $err = curl_error($curl);
 
 curl_close($curl);
-	$jsonoutput = json_decode($response);
+	$speech = get_headers($url,1);
+	/*$jsonoutput = json_decode($response);
 	$username = 	$jsonoutput->d->Username;
 	$Company = 	$jsonoutput->d->Company;
 	$PersNo=	$jsonoutput->d->PersNo;
@@ -167,9 +166,9 @@ curl_close($curl);
 	$Langu=		$jsonoutput->d->Langu;
 	$Region=	$jsonoutput->d->Region;
 	$Tel1Numbr=	$jsonoutput->d->Tel1Numbr;
-	$LocalLock=	$jsonoutput->d->LocalLock;
+	$LocalLock=	$jsonoutput->d->LocalLock;*/
 	
-	$speech = "Username = ".$username."\n"."Company = ".$Company."\n"."Personal num = ".$PersNo."\n"."Fullname = ".$Fullname."\n"."Lock Status = ".$LocalLock;
+	//$speech = "Username = ".$username."\n"."Company = ".$Company."\n"."Personal num = ".$PersNo."\n"."Fullname = ".$Fullname."\n"."Lock Status = ".$LocalLock;
 	//$speech = $username;
 }
 	
