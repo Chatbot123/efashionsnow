@@ -137,19 +137,18 @@ curl_setopt_array($curl, array(
 // Get the response body as string
 $response = curl_exec($curl);
 
- $headers = array();
-$headers= apache_response_headers();
-	$sizearray = sizeof($headers);
-	echo $sizearray;
-	foreach($headers as $value){
+ // Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+curl_close($curl);
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+
+$headers = array_filter($headers);
+foreach($headers as $value){
     echo $value . "<br>";
 }
-	
-
-	$speech = 'test';
-$err = curl_error($curl);
-
-curl_close($curl);
+$speech = 'test';
 	//$speech = get_headers($url,1);
 	/*$jsonoutput = json_decode($response);
 	$username = 	$jsonoutput->d->Username;
