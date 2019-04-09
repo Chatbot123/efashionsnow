@@ -138,7 +138,7 @@ curl_setopt_array($curl, array(
 $response = curl_exec($curl);
 
  $headers = array();
-$headers= get_headers($url, 1);
+$headers= apache_response_headers();
 	$sizearray = sizeof($headers);
 	echo $sizearray;
 	foreach($headers as $value){
