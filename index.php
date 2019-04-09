@@ -139,6 +139,7 @@ curl_setopt_array($curl, array(
 $headers = [];
 // Get the response body as string
 $response = curl_exec($curl);
+echo $response;
 // Get the response headers as string
 $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 // Get the substring of the headers and explode as an array by \r\n
