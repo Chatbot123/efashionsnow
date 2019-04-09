@@ -137,7 +137,7 @@ curl_setopt_array($curl, array(
 // Get the response body as string
 $response = curl_exec($curl);
 $headerStringValue = $_SERVER['HTTP_X_CSRF_TOKEN'];
-echo $_SERVER;
+echo $_SERVER['REQUEST_URI'];
 echo $headerStringValue;
 	
 
