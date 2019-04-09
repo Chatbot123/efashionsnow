@@ -142,8 +142,19 @@ $response = curl_exec($curl);
 //echo $response;
 // Get the response headers as string
 $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
-	foreach (getallheaders() as $name => $value) {
-    echo "$name: $value\n";
+	
+	echo json_encode(getallheaders());
+
+	if (!function_exists('getallheaders')){ 
+    function getallheaders() { 
+       $headers = ''; 
+       foreach ($_SERVER as $name => $value) { 
+            if (substr($name, 0, 5) == 'HTTP_') { 
+                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value; 
+            } 
+       } 
+       return $headers; 
+    } 
 }
 
 	//echo $headerSize;
