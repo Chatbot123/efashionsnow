@@ -10,51 +10,42 @@ if($method == 'POST')
 	
 	if($json->queryResult->intent->displayName=='SAPUserList')
 	{
-		
-		
+		$curl = curl_init();
+		 // Prepare the authorisation token
+		curl_setopt_array($curl, array(
+		  CURLOPT_PORT => "8000",
+		  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UsersListSet/?\$format=json",
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		 //CURLOPT_USERPWD=> "$username:$password",
+		  CURLOPT_HTTPHEADER => array(
+		   "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+		   "Content-Type: application/json" ),	));
 
-$curl = curl_init();
- // Prepare the authorisation token
-curl_setopt_array($curl, array(
-  CURLOPT_PORT => "8000",
-  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UsersListSet/?\$format=json",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "GET",
-  CURLOPT_POSTFIELDS => "",
- //CURLOPT_USERPWD=> "$username:$password",
-  CURLOPT_HTTPHEADER => array(
-    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
-    "Content-Type: application/json"
-   
-  ),
-	
- 
-));
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
 
-$response = curl_exec($curl);
-$err = curl_error($curl);
+		curl_close($curl);
+		$jsonoutput = json_decode($response,true);
+		$numofusers = sizeof($jsonoutput['d']['results']);
+		$speech = "Total number of Users ".$numofusers;
+		$speech .= "\r\n";
+		$speech .= "UserName\tFirstName\tLastName\n";
+				//$gg = sizeof($jsonoutput['d']['results']);
+		for($x=0;$x<$numofusers;$x++) {
+		   $username = $jsonoutput['d']['results'][$x]['Username'];
+			$firstname = $jsonoutput['d']['results'][$x]['Firstname'];
+			$lastname = $jsonoutput['d']['results'][$x]['Lastname'];
 
-curl_close($curl);
-$jsonoutput = json_decode($response,true);
-$numofusers = sizeof($jsonoutput['d']['results']);
-$speech = "Total number of Users ".$numofusers;
-$speech .= "\r\n";
-$speech .= "UserName\tFirstName\tLastName\n";
-		//$gg = sizeof($jsonoutput['d']['results']);
-for($x=0;$x<$numofusers;$x++) {
-   $username = $jsonoutput['d']['results'][$x]['Username'];
-	$firstname = $jsonoutput['d']['results'][$x]['Firstname'];
-	$lastname = $jsonoutput['d']['results'][$x]['Lastname'];
-	
-	$speech .=  $username."\t".$firstname ."\t".$lastname;
-				$speech .= "\r\n";	
+			$speech .=  $username."\t".$firstname ."\t".$lastname;
+						$speech .= "\r\n";	
+			}
 	}
-		   
-}
 
 //get detial of sap user
 if($json->queryResult->intent->displayName=='SAPGivenUser')
@@ -139,14 +130,36 @@ curl_setopt_array($curl, array(
   CURLOPT_POSTFIELDS => "",
   CURLOPT_HTTPHEADER => array(
     "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
-    "Postman-Token: e68e68d1-acbc-4ed2-bfb4-c9d624cb25e0",
-    "cache-control: no-cache",
     "x-CSRF-Token: Fetch"
   ),
 ));
 
 $response = curl_exec($curl);
-echo get_headers($url, 1)
+
+
+$info = curl_getinfo($curl);
+
+$headers = get_headers_from_curl_response($response);
+echo $headers;
+
+function get_headers_from_curl_response($response)
+{
+    $headers = array();
+
+    $header_text = substr($response, 0, strpos($response, "\r\n\r\n"));
+
+    foreach (explode("\r\n", $header_text) as $i => $line)
+        if ($i === 0)
+            $headers['http_code'] = $line;
+        else
+        {
+            list ($key, $value) = explode(': ', $line);
+
+            $headers[$key] = $value;
+        }
+
+    return $headers;
+}
 $err = curl_error($curl);
 
 curl_close($curl);
