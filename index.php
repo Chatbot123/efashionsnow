@@ -136,27 +136,33 @@ curl_setopt_array($curl, array(
 
 $response = curl_exec($curl);
 
-
-$info = curl_getinfo($curl);
-
-$headers = get_headers_from_curl_response($response);
+$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+$header = substr($a, 0, $header_size);
+$headers = get_headers_from_curl_response($header);
 echo $headers;
-
-function get_headers_from_curl_response($response)
+static function get_headers_from_curl_response($headerContent)
 {
+
     $headers = array();
 
-    $header_text = substr($response, 0, strpos($response, "\r\n\r\n"));
+    // Split the string on every "double" new line.
+    $arrRequests = explode("\r\n\r\n", $headerContent);
 
-    foreach (explode("\r\n", $header_text) as $i => $line)
-        if ($i === 0)
-            $headers['http_code'] = $line;
-        else
+    // Loop of response headers. The "count() -1" is to 
+    //avoid an empty row for the extra line break before the body of the response.
+    for ($index = 0; $index < count($arrRequests) -1; $index++) {
+
+        foreach (explode("\r\n", $arrRequests[$index]) as $i => $line)
         {
-            list ($key, $value) = explode(': ', $line);
-
-            $headers[$key] = $value;
+            if ($i === 0)
+                $headers[$index]['http_code'] = $line;
+            else
+            {
+                list ($key, $value) = explode(': ', $line);
+                $headers[$index][$key] = $value;
+            }
         }
+    }
 
     return $headers;
 }
