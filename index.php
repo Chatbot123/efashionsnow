@@ -150,7 +150,7 @@ echo get_headers($url, 1)
 $err = curl_error($curl);
 
 curl_close($curl);
-	$speech = get_headers($url,1);
+	//$speech = get_headers($url,1);
 	/*$jsonoutput = json_decode($response);
 	$username = 	$jsonoutput->d->Username;
 	$Company = 	$jsonoutput->d->Company;
