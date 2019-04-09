@@ -138,6 +138,9 @@ curl_setopt_array($curl, array(
 $response = curl_exec($curl);
 $headerStringValue = $_SERVER['X-CSRF-TOKEN'];
 echo $headerStringValue;
+ $headers = array();
+$headers= get_headers($url, 1);
+	echo $headers;
 	
 
 	$speech = 'test';
