@@ -134,40 +134,13 @@ curl_setopt_array($curl, array(
   ),
 ));
 
-//$response = curl_exec($curl);
-
-$headers = [];
 // Get the response body as string
 $response = curl_exec($curl);
-//echo $response;
-// Get the response headers as string
-$headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
-	
-	echo json_encode(getallheaders());
+$headerStringValue = $_SERVER['HTTP_X_CSRF_TOKEN'];
 
-	if (!function_exists('getallheaders')){ 
-    function getallheaders() { 
-       $headers = ''; 
-       foreach ($_SERVER as $name => $value) { 
-            if (substr($name, 0, 5) == 'HTTP_') { 
-                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value; 
-            } 
-       } 
-       return $headers; 
-    } 
-}
-
-	//echo $headerSize;
-// Get the substring of the headers and explode as an array by \r\n
-// Each element of the array will be a string `Header-Key: Header-Value`
-// Retrieve this two parts with a simple regex `/(.*?): (.*)/`
-/*foreach(explode("\r\n", trim(substr($response, 0, $headerSize))) as $row) {
-    if(preg_match('/(.*?): (.*)/', $row, $matches)) {
-        $headers[$matches[1]] = $matches[2];
-    }*/
-}
+echo $headerStringValue;
 	
-echo sizeof($headers);
+
 	$speech = 'test';
 $err = curl_error($curl);
 
