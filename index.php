@@ -72,7 +72,7 @@ $err = curl_error($curl);
 curl_close($curl);
 		$jsonoutput = json_decode($response,true);
 		$numofusers = sizeof($jsonoutput['d']['results']);
-		$speech = "Total number of Compnies ".$numofusers;
+		$speech = "Total number of Companies ".$numofusers;
 		$speech .= "\r\n";
 		$speech .= "Company Code(BUKRS)\tCompany Name(BUTXT)\tLocation(ORT01)\tWAERS\n";
 				
@@ -110,14 +110,13 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 		$v_AcctType = $json->queryResult->parameters->AcctType; 
 	  	$v_AcctType= strtoupper($v_AcctType);
 	}
-	//http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar='1710',AcctType='A',ToAcct='ZZZZZZZZZZ',FiscalYearVar='K4')/?$format=json
-	//"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet%28PostgPerdVar=%27\$v_PostgPerdVar%27,AcctType=%27\$v_AcctType%27,ToAcct=%27\$v_ToAcct%27,FiscalYearVar=%27\$v_FiscalYearVar%27%29/?$format=json"
+	
 	$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar='".$v_PostgPerdVar."',AcctType='".$v_AcctType."',ToAcct='".$v_ToAcct."',FiscalYearVar='".$v_FiscalYearVar."')/?"."\$format"."=json";
 	echo $url;
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
 	  CURLOPT_PORT => "8000",
-	  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet%28PostgPerdVar=%27\$v_PostgPerdVar%27,AcctType=%27\$v_AcctType%27,ToAcct=%27\$v_ToAcct%27,FiscalYearVar=%27\$v_FiscalYearVar%27%29/?$format=json",
+	  CURLOPT_URL => $url,
 	  CURLOPT_RETURNTRANSFER => true,
 	  CURLOPT_ENCODING => "",
 	  CURLOPT_MAXREDIRS => 10,
@@ -135,18 +134,42 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 	curl_close($curl);
 	$jsonoutput = json_decode($response,true);
 	$numofusers = sizeof($jsonoutput['d']['results']);
-	$speech = "Total number of Compnies ".$numofusers;
-	$speech .= "\r\n";
-	$speech .= "Company Code(BUKRS)\tCompany Name(BUTXT)\tLocation(ORT01)\tWAERS\n";
+	//$speech = "Total number of Compnies ".$numofusers;
+	//$speech .= "\r\n";
+	$speech = "Details are\n";
 
 	for($x=0;$x<$numofusers;$x++) 
 	{
-		$comp_code = $jsonoutput['d']['results'][$x]['BUKRS'];
-		$comp_name = $jsonoutput['d']['results'][$x]['BUTXT'];
-		$comp_loc = $jsonoutput['d']['results'][$x]['ORT01'];
-		$comp_cur = $jsonoutput['d']['results'][$x]['WAERS'];
-
-		$speech .=  $comp_code."\t".$comp_name."\t".$comp_loc."\t".$comp_cur;
+		$v_PostgPerdVar = $jsonoutput['d']['results'][$x]['PostgPerdVar'];
+		$v_AcctType = $jsonoutput['d']['results'][$x]['AcctType'];
+		$v_ToAcct = $jsonoutput['d']['results'][$x]['ToAcct'];
+		$v_FiscalYearVar = $jsonoutput['d']['results'][$x]['FiscalYearVar'];
+		$v_FromAcct = $jsonoutput['d']['results'][$x]['FromAcct'];
+		$v_PostgPerdVarDesc = $jsonoutput['d']['results'][$x]['PostgPerdVarDesc'];
+		$v_FiscalYearVarDesc = $jsonoutput['d']['results'][$x]['FiscalYearVarDesc'];
+		$v_AcctTypeDesc = $jsonoutput['d']['results'][$x]['AcctTypeDesc'];
+		$v_NumPostingPer = $jsonoutput['d']['results'][$x]['NumPostingPer'];
+		$v_NumSpePeriod = $jsonoutput['d']['results'][$x]['NumSpePeriod'];
+		$v_OpvPerdActionType = $jsonoutput['d']['results'][$x]['OpvPerdActionType'];
+		$v_OpvPerdYrStrt = $jsonoutput['d']['results'][$x]['OpvPerdYrStrt'];
+		$v_OpvPerdMnthStrt = $jsonoutput['d']['results'][$x]['OpvPerdMnthStrt'];
+		$v_OpvPerdYrEnd = $jsonoutput['d']['results'][$x]['OpvPerdYrEnd'];
+		$v_OpvPerdMnthEnd = $jsonoutput['d']['results'][$x]['OpvPerdMnthEnd'];
+		$v_AdjtPerdYrStrt = $jsonoutput['d']['results'][$x]['AdjtPerdYrStrt'];
+		$v_AdjtPerdMnthStrt = $jsonoutput['d']['results'][$x]['AdjtPerdMnthStrt'];
+		$v_AdjtPerdYrEnd = $jsonoutput['d']['results'][$x]['AdjtPerdYrEnd'];
+		$v_AdjtPerdMnthEnd = $jsonoutput['d']['results'][$x]['AdjtPerdMnthEnd'];
+		
+		$speech .=  "PostgPerdVar"."\t".$v_PostgPerdVar."\n"."AcctType"."\t".$v_AcctType."\n";
+		$speech .=  "ToAcct"."\t".$v_ToAcct."\n"."FiscalYearVar"."\t".$v_FiscalYearVar."\n";
+		$speech .=  "FromAcct"."\t".$v_FromAcct."\n"."PostgPerdVarDesc"."\t".$v_PostgPerdVarDesc."\n";
+		$speech .=  "FiscalYearVarDesc"."\t".$v_FiscalYearVarDesc."\n"."AcctTypeDesc"."\t".$v_AcctTypeDesc."\n";
+		$speech .=  "NumPostingPer"."\t".$v_NumPostingPer."\n"."NumSpePeriod"."\t".$v_NumSpePeriod."\n";
+		$speech .=  "OpvPerdActionType"."\t".$v_OpvPerdActionType."\n"."OpvPerdYrStrt"."\t".$v_OpvPerdYrStrt."\n";
+		$speech .=  "OpvPerdMnthStrt"."\t".$v_OpvPerdMnthStrt."\n"."OpvPerdYrEnd"."\t".$v_OpvPerdYrEnd."\n";
+		$speech .=  "OpvPerdMnthEnd"."\t".$v_OpvPerdMnthEnd."\n"."AdjtPerdYrStrt"."\t".$v_AdjtPerdYrStrt."\n";
+		$speech .=  "AdjtPerdMnthStrt"."\t".$v_AdjtPerdMnthStrt."\n"."AdjtPerdYrEnd"."\t".$v_AdjtPerdYrEnd."\n";
+		$speech .=  "AdjtPerdMnthEnd"."\t".$v_AdjtPerdMnthEnd."\n";
 		$speech .= "\r\n";	
 	}
 }
