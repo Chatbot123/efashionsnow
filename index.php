@@ -22,8 +22,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => "GET",
   CURLOPT_POSTFIELDS => "",
   CURLOPT_HTTPHEADER => array(
-    "Postman-Token: 13a38d08-3ea1-4087-965f-f1cb0aa7689b",
-    "cache-control: no-cache"
+        "cache-control: no-cache"
   ),
 ));
 
