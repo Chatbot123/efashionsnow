@@ -112,7 +112,7 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 	}
 	
 	$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar='".$v_PostgPerdVar."',AcctType='".$v_AcctType."',ToAcct='".$v_ToAcct."',FiscalYearVar='".$v_FiscalYearVar."')/?"."\$format"."=json";
-	echo $url;
+	//echo $url;
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
 	  CURLOPT_PORT => "8000",
