@@ -6,6 +6,44 @@ if($method == 'POST')
 	$requestBody = file_get_contents('php://input');
 	$json = json_decode($requestBody);
 	
+	//sap integration -- open posting period
+	if($json->queryResult->intent->displayName=='OPPacctype')
+	{
+		$curl = curl_init();
+		 // Prepare the authorisation token
+		curl_setopt_array($curl, array(
+		  CURLOPT_PORT => "8000",
+		  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/VL_FV_FAC_OPP_ACCOUNT_TYPE/?\$format=json",
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		 //CURLOPT_USERPWD=> "$username:$password",
+		  CURLOPT_HTTPHEADER => array(
+		   "Content-Type: application/json" ),	));
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		curl_close($curl);
+		$jsonoutput = json_decode($response,true);
+		$numofusers = sizeof($jsonoutput['d']['results']);
+		$speech = "Total number of Users ".$numofusers;
+		$speech .= "\r\n";
+		$speech .= "Account Code\tAccount Type\n";
+				
+		for($x=0;$x<$numofusers;$x++) {
+		   $acc_code = $jsonoutput['d']['results'][$x]['Code'];
+			$acc_type = $jsonoutput['d']['results'][$x]['Text'];
+			
+			$speech .=  $acc_code."\t".$acc_type;
+			$speech .= "\r\n";	
+			}
+	}
+
+	//sap integration -- open posting period ends here
+	
 	//--sap integration
 	
 	if($json->queryResult->intent->displayName=='SAPUserList')
