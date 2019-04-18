@@ -23,7 +23,8 @@ curl_setopt_array($curl, array(
   CURLOPT_POSTFIELDS => "",
   CURLOPT_HTTPHEADER => array(
         "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
-"Accept-Language:en-US,en;q=0.5"
+"Accept-Language:en-US,en;q=0.5",
+	  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
   ),
 ));
 
