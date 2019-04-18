@@ -13,7 +13,7 @@ if($method == 'POST')
 
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
-  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/VL_FV_FAC_OPP_ACCOUNT_TYPE/?\$format=json",
+  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/VL_FV_FAC_OPP_ACCOUNT_TYPE",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
