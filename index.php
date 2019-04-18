@@ -138,10 +138,8 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 	//$speech .= "\r\n";
 	$speech = "Details are\n";
 
-	for($x=0;$x<$numofusers;$x++) 
-	{
-		$v_PostgPerdVar = $jsonoutput['d'][$x]['PostgPerdVar'];
-		$v_AcctType = $jsonoutput['d'][$x]['AcctType'];
+		$v_PostgPerdVar = $jsonoutput->d->PostgPerdVar;
+		/*$v_AcctType = $jsonoutput['d'][$x]['AcctType'];
 		$v_ToAcct = $jsonoutput['d'][$x]['ToAcct'];
 		$v_FiscalYearVar = $jsonoutput['d'][$x]['FiscalYearVar'];
 		$v_FromAcct = $jsonoutput['d'][$x]['FromAcct'];
@@ -158,9 +156,10 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 		$v_AdjtPerdYrStrt = $jsonoutput['d'][$x]['AdjtPerdYrStrt'];
 		$v_AdjtPerdMnthStrt = $jsonoutput['d'][$x]['AdjtPerdMnthStrt'];
 		$v_AdjtPerdYrEnd = $jsonoutput['d'][$x]['AdjtPerdYrEnd'];
-		$v_AdjtPerdMnthEnd = $jsonoutput['d'][$x]['AdjtPerdMnthEnd'];
+		$v_AdjtPerdMnthEnd = $jsonoutput['d'][$x]['AdjtPerdMnthEnd'];*/
 		
-		$speech .=  "PostgPerdVar"."\t".$v_PostgPerdVar."\n"."AcctType"."\t".$v_AcctType."\n";
+		$speech .=  "PostgPerdVar"."\t".$v_PostgPerdVar."\n";
+	/*."AcctType"."\t".$v_AcctType."\n";
 		$speech .=  "ToAcct"."\t".$v_ToAcct."\n"."FiscalYearVar"."\t".$v_FiscalYearVar."\n";
 		$speech .=  "FromAcct"."\t".$v_FromAcct."\n"."PostgPerdVarDesc"."\t".$v_PostgPerdVarDesc."\n";
 		$speech .=  "FiscalYearVarDesc"."\t".$v_FiscalYearVarDesc."\n"."AcctTypeDesc"."\t".$v_AcctTypeDesc."\n";
@@ -170,8 +169,8 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 		$speech .=  "OpvPerdMnthEnd"."\t".$v_OpvPerdMnthEnd."\n"."AdjtPerdYrStrt"."\t".$v_AdjtPerdYrStrt."\n";
 		$speech .=  "AdjtPerdMnthStrt"."\t".$v_AdjtPerdMnthStrt."\n"."AdjtPerdYrEnd"."\t".$v_AdjtPerdYrEnd."\n";
 		$speech .=  "AdjtPerdMnthEnd"."\t".$v_AdjtPerdMnthEnd."\n";
-		$speech .= "\r\n";	
-	}
+		$speech .= "\r\n";	*/
+	
 }
 
 	//sap integration -- open posting period ends here
