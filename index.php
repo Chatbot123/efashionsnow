@@ -25,6 +25,7 @@ if($method == 'POST')
 		  CURLOPT_HTTPHEADER => array(
 		   "Content-Type: application/json" ),	));
 		$response = curl_exec($curl);
+		echo $response
 		$err = curl_error($curl);
 		curl_close($curl);
 		$jsonoutput = json_decode($response,true);
