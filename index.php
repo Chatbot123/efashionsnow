@@ -45,6 +45,47 @@ curl_close($curl);
 			$speech .= "\r\n";	
 			}
 	}
+	//display company code
+if($json->queryResult->intent->displayName=='OPPacctype')
+{
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_DOCUMENT_POST_SRV/VL_SH_H_T001/?\$format=json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
+  ),
+));
+
+$response = curl_exec($curl);
+		//echo $response;
+$err = curl_error($curl);
+
+curl_close($curl);
+		$jsonoutput = json_decode($response,true);
+		$numofusers = sizeof($jsonoutput['d']['results']);
+		$speech = "Total number of Users ".$numofusers;
+		$speech .= "\r\n";
+		$speech .= "Company Code(BUKRS)\tCompany Name(BUTXT)\tLocation(ORT01)\tWAERS\n";
+				
+		for($x=0;$x<$numofusers;$x++) {
+		   $comp_code = $jsonoutput['d']['results'][$x]['BUKRS'];
+			$comp_name = $jsonoutput['d']['results'][$x]['BUTXT'];
+			$comp_loc = $jsonoutput['d']['results'][$x]['ORT01'];
+			$comp_cur = $jsonoutput['d']['results'][$x]['WAERS'];
+			
+			$speech .=  $comp_code."\t".$comp_name."\t".$comp_loc."\t".$comp_cur;
+			$speech .= "\r\n";	
+			}
+	}
 
 	//sap integration -- open posting period ends here
 	
