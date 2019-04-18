@@ -13,7 +13,7 @@ if($method == 'POST')
 
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
-  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/VL_FV_FAC_OPP_ACCOUNT_TYPE",
+  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/VL_FV_FAC_OPP_ACCOUNT_TYPE/?\$format=json",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -22,9 +22,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => "GET",
   CURLOPT_POSTFIELDS => "",
   CURLOPT_HTTPHEADER => array(
-        "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
-"Accept-Language:en-US,en;q=0.5",
-	  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
   ),
 ));
 
