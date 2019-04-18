@@ -33,7 +33,7 @@ $err = curl_error($curl);
 curl_close($curl);
 		$jsonoutput = json_decode($response,true);
 		$numofusers = sizeof($jsonoutput['d']['results']);
-		$speech = "Total number of Users ".$numofusers;
+		$speech = "Total number of Accounts ".$numofusers;
 		$speech .= "\r\n";
 		$speech .= "Account Code\tAccount Type\n";
 				
@@ -72,7 +72,7 @@ $err = curl_error($curl);
 curl_close($curl);
 		$jsonoutput = json_decode($response,true);
 		$numofusers = sizeof($jsonoutput['d']['results']);
-		$speech = "Total number of Users ".$numofusers;
+		$speech = "Total number of Compnies ".$numofusers;
 		$speech .= "\r\n";
 		$speech .= "Company Code(BUKRS)\tCompany Name(BUTXT)\tLocation(ORT01)\tWAERS\n";
 				
