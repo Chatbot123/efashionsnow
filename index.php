@@ -46,7 +46,7 @@ curl_close($curl);
 			}
 	}
 	//display company code
-if($json->queryResult->intent->displayName=='OPPacctype')
+if($json->queryResult->intent->displayName=='OPPCompanyCode')
 {
 $curl = curl_init();
 
