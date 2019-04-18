@@ -10,24 +10,28 @@ if($method == 'POST')
 	if($json->queryResult->intent->displayName=='OPPacctype')
 	{
 		$curl = curl_init();
-		 // Prepare the authorisation token
-		curl_setopt_array($curl, array(
-		  CURLOPT_PORT => "8000",
-		  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/VL_FV_FAC_OPP_ACCOUNT_TYPE/?\$format=json",
-		  CURLOPT_RETURNTRANSFER => true,
-		  CURLOPT_ENCODING => "",
-		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 30,
-		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		  CURLOPT_CUSTOMREQUEST => "GET",
-		  CURLOPT_POSTFIELDS => "",
-		 //CURLOPT_USERPWD=> "$username:$password",
-		  CURLOPT_HTTPHEADER => array(
-		   "Content-Type: application/json" ),	));
-		$response = curl_exec($curl);
+
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/VL_FV_FAC_OPP_ACCOUNT_TYPE/?\$format=json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Postman-Token: 13a38d08-3ea1-4087-965f-f1cb0aa7689b",
+    "cache-control: no-cache"
+  ),
+));
+
+$response = curl_exec($curl);
 		echo $response;
-		$err = curl_error($curl);
-		curl_close($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
 		$jsonoutput = json_decode($response,true);
 		$numofusers = sizeof($jsonoutput['d']['results']);
 		$speech = "Total number of Users ".$numofusers;
