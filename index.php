@@ -128,7 +128,7 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 	));
 
 	$response = curl_exec($curl);
-			//echo $response;
+			echo $response;
 	$err = curl_error($curl);
 
 	curl_close($curl);
