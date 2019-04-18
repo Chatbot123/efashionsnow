@@ -112,7 +112,7 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 	}
 	//http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar='1710',AcctType='A',ToAcct='ZZZZZZZZZZ',FiscalYearVar='K4')/?$format=json
 	//"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet%28PostgPerdVar=%27\$v_PostgPerdVar%27,AcctType=%27\$v_AcctType%27,ToAcct=%27\$v_ToAcct%27,FiscalYearVar=%27\$v_FiscalYearVar%27%29/?$format=json"
-	$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet%28PostgPerdVar=%27\$v_PostgPerdVar%27,AcctType=%27\$v_AcctType%27,ToAcct=%27\$v_ToAcct%27,FiscalYearVar=%27\$v_FiscalYearVar%27%29/?$format=json";
+	$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar=".$v_PostgPerdVar.",AcctType=".$v_AcctType.",ToAcct=".$v_ToAcct.",FiscalYearVar=".$v_FiscalYearVar.")/\?$format=json";
 	echo $url;
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
