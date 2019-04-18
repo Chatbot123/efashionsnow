@@ -133,33 +133,32 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 
 	curl_close($curl);
 	$jsonoutput = json_decode($response);
-	$numofusers = sizeof($jsonoutput['d']);
+	//$numofusers = sizeof($jsonoutput['d']);
 	//$speech = "Total number of Compnies ".$numofusers;
 	//$speech .= "\r\n";
 	$speech = "Details are\n";
 
 		$v_PostgPerdVar = $jsonoutput->d->PostgPerdVar;
-		/*$v_AcctType = $jsonoutput['d'][$x]['AcctType'];
-		$v_ToAcct = $jsonoutput['d'][$x]['ToAcct'];
-		$v_FiscalYearVar = $jsonoutput['d'][$x]['FiscalYearVar'];
-		$v_FromAcct = $jsonoutput['d'][$x]['FromAcct'];
-		$v_PostgPerdVarDesc = $jsonoutput['d'][$x]['PostgPerdVarDesc'];
-		$v_FiscalYearVarDesc = $jsonoutput['d'][$x]['FiscalYearVarDesc'];
-		$v_AcctTypeDesc = $jsonoutput['d'][$x]['AcctTypeDesc'];
-		$v_NumPostingPer = $jsonoutput['d'][$x]['NumPostingPer'];
-		$v_NumSpePeriod = $jsonoutput['d'][$x]['NumSpePeriod'];
-		$v_OpvPerdActionType = $jsonoutput['d'][$x]['OpvPerdActionType'];
-		$v_OpvPerdYrStrt = $jsonoutput['d'][$x]['OpvPerdYrStrt'];
-		$v_OpvPerdMnthStrt = $jsonoutput['d'][$x]['OpvPerdMnthStrt'];
-		$v_OpvPerdYrEnd = $jsonoutput['d'][$x]['OpvPerdYrEnd'];
-		$v_OpvPerdMnthEnd = $jsonoutput['d'][$x]['OpvPerdMnthEnd'];
-		$v_AdjtPerdYrStrt = $jsonoutput['d'][$x]['AdjtPerdYrStrt'];
-		$v_AdjtPerdMnthStrt = $jsonoutput['d'][$x]['AdjtPerdMnthStrt'];
-		$v_AdjtPerdYrEnd = $jsonoutput['d'][$x]['AdjtPerdYrEnd'];
-		$v_AdjtPerdMnthEnd = $jsonoutput['d'][$x]['AdjtPerdMnthEnd'];*/
+		$v_AcctType = $jsonoutput->d->AcctType;
+		$v_ToAcct = $jsonoutput->d->ToAcct;
+		$v_FiscalYearVar = $jsonoutput->d->FiscalYearVar;
+		$v_FromAcct = $jsonoutput->d->FromAcct;
+		$v_PostgPerdVarDesc = $jsonoutput->d->PostgPerdVarDesc;
+		$v_FiscalYearVarDesc = $jsonoutput->d->FiscalYearVarDesc;
+		$v_AcctTypeDesc = $jsonoutput->d->AcctTypeDesc;
+		$v_NumPostingPer = $jsonoutput->d->NumPostingPer;
+		$v_NumSpePeriod = $jsonoutput->d->NumSpePeriod;
+		$v_OpvPerdActionType = $jsonoutput->d->OpvPerdActionType;
+		$v_OpvPerdYrStrt = $jsonoutput->d->OpvPerdYrStrt;
+		$v_OpvPerdMnthStrt = $jsonoutput->d->OpvPerdMnthStrt;
+		$v_OpvPerdYrEnd = $jsonoutput->d->OpvPerdYrEnd;
+		$v_OpvPerdMnthEnd = $jsonoutput->d->OpvPerdMnthEnd;
+		$v_AdjtPerdYrStrt = $jsonoutput->d->AdjtPerdYrStrt;
+		$v_AdjtPerdMnthStrt = $jsonoutput->d->AdjtPerdMnthStrt;
+		$v_AdjtPerdYrEnd = $jsonoutput->d->AdjtPerdYrEnd;
+		$v_AdjtPerdMnthEnd = $jsonoutput->d->AdjtPerdMnthEnd;
 		
-		$speech .=  "PostgPerdVar"."\t".$v_PostgPerdVar."\n";
-	/*."AcctType"."\t".$v_AcctType."\n";
+		$speech .=  "PostgPerdVar"."\t".$v_PostgPerdVar."\n"."AcctType"."\t".$v_AcctType."\n";
 		$speech .=  "ToAcct"."\t".$v_ToAcct."\n"."FiscalYearVar"."\t".$v_FiscalYearVar."\n";
 		$speech .=  "FromAcct"."\t".$v_FromAcct."\n"."PostgPerdVarDesc"."\t".$v_PostgPerdVarDesc."\n";
 		$speech .=  "FiscalYearVarDesc"."\t".$v_FiscalYearVarDesc."\n"."AcctTypeDesc"."\t".$v_AcctTypeDesc."\n";
@@ -169,7 +168,7 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 		$speech .=  "OpvPerdMnthEnd"."\t".$v_OpvPerdMnthEnd."\n"."AdjtPerdYrStrt"."\t".$v_AdjtPerdYrStrt."\n";
 		$speech .=  "AdjtPerdMnthStrt"."\t".$v_AdjtPerdMnthStrt."\n"."AdjtPerdYrEnd"."\t".$v_AdjtPerdYrEnd."\n";
 		$speech .=  "AdjtPerdMnthEnd"."\t".$v_AdjtPerdMnthEnd."\n";
-		$speech .= "\r\n";	*/
+		$speech .= "\r\n";	
 	
 }
 
