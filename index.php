@@ -86,6 +86,70 @@ curl_close($curl);
 			$speech .= "\r\n";	
 			}
 	}
+	
+	//display single account for posting period data 
+if($json->queryResult->intent->displayName=='OPPdataSingle')
+{
+	if(isset($json->queryResult->parameters->PostgPerdVar))
+	{ 
+		$v_PostgPerdVar = $json->queryResult->parameters->PostgPerdVar; 
+	  	$v_PostgPerdVar= strtoupper($v_PostgPerdVar);
+	}
+	if(isset($json->queryResult->parameters->FiscalYearVar))
+	{ 
+		$v_FiscalYearVar = $json->queryResult->parameters->FiscalYearVar; 
+	  	$v_FiscalYearVar= strtoupper($v_FiscalYearVar);
+	}
+	if(isset($json->queryResult->parameters->ToAcct))
+	{ 
+		$v_ToAcct = $json->queryResult->parameters->ToAcct; 
+	  	$v_ToAcct= strtoupper($v_ToAcct);
+	}
+	if(isset($json->queryResult->parameters->AcctType))
+	{ 
+		$v_AcctType = $json->queryResult->parameters->AcctType; 
+	  	$v_AcctType= strtoupper($v_AcctType);
+	}
+	//http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar='1710',AcctType='A',ToAcct='ZZZZZZZZZZ',FiscalYearVar='K4')/?$format=json
+	//"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet%28PostgPerdVar=%27\$v_PostgPerdVar%27,AcctType=%27\$v_AcctType%27,ToAcct=%27\$v_ToAcct%27,FiscalYearVar=%27\$v_FiscalYearVar%27%29/?$format=json"
+	$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet%28PostgPerdVar=%27\$v_PostgPerdVar%27,AcctType=%27\$v_AcctType%27,ToAcct=%27\$v_ToAcct%27,FiscalYearVar=%27\$v_FiscalYearVar%27%29/?$format=json";
+	echo $url;
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+	  CURLOPT_PORT => "8000",
+	  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet%28PostgPerdVar=%27\$v_PostgPerdVar%27,AcctType=%27\$v_AcctType%27,ToAcct=%27\$v_ToAcct%27,FiscalYearVar=%27\$v_FiscalYearVar%27%29/?$format=json",
+	  CURLOPT_RETURNTRANSFER => true,
+	  CURLOPT_ENCODING => "",
+	  CURLOPT_MAXREDIRS => 10,
+	  CURLOPT_TIMEOUT => 30,
+	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	  CURLOPT_CUSTOMREQUEST => "GET",
+	  CURLOPT_POSTFIELDS => "",
+	  CURLOPT_HTTPHEADER => array("Authorization: Basic YXJ1bm46Y3RsQDE5NzY="),
+	));
+
+	$response = curl_exec($curl);
+			//echo $response;
+	$err = curl_error($curl);
+
+	curl_close($curl);
+	$jsonoutput = json_decode($response,true);
+	$numofusers = sizeof($jsonoutput['d']['results']);
+	$speech = "Total number of Compnies ".$numofusers;
+	$speech .= "\r\n";
+	$speech .= "Company Code(BUKRS)\tCompany Name(BUTXT)\tLocation(ORT01)\tWAERS\n";
+
+	for($x=0;$x<$numofusers;$x++) 
+	{
+		$comp_code = $jsonoutput['d']['results'][$x]['BUKRS'];
+		$comp_name = $jsonoutput['d']['results'][$x]['BUTXT'];
+		$comp_loc = $jsonoutput['d']['results'][$x]['ORT01'];
+		$comp_cur = $jsonoutput['d']['results'][$x]['WAERS'];
+
+		$speech .=  $comp_code."\t".$comp_name."\t".$comp_loc."\t".$comp_cur;
+		$speech .= "\r\n";	
+	}
+}
 
 	//sap integration -- open posting period ends here
 	
