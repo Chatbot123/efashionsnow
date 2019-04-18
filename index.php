@@ -133,32 +133,32 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 
 	curl_close($curl);
 	$jsonoutput = json_decode($response,true);
-	$numofusers = sizeof($jsonoutput['d']['results']);
+	$numofusers = sizeof($jsonoutput['d']);
 	//$speech = "Total number of Compnies ".$numofusers;
 	//$speech .= "\r\n";
 	$speech = "Details are\n";
 
 	for($x=0;$x<$numofusers;$x++) 
 	{
-		$v_PostgPerdVar = $jsonoutput['d']['results'][$x]['PostgPerdVar'];
-		$v_AcctType = $jsonoutput['d']['results'][$x]['AcctType'];
-		$v_ToAcct = $jsonoutput['d']['results'][$x]['ToAcct'];
-		$v_FiscalYearVar = $jsonoutput['d']['results'][$x]['FiscalYearVar'];
-		$v_FromAcct = $jsonoutput['d']['results'][$x]['FromAcct'];
-		$v_PostgPerdVarDesc = $jsonoutput['d']['results'][$x]['PostgPerdVarDesc'];
-		$v_FiscalYearVarDesc = $jsonoutput['d']['results'][$x]['FiscalYearVarDesc'];
-		$v_AcctTypeDesc = $jsonoutput['d']['results'][$x]['AcctTypeDesc'];
-		$v_NumPostingPer = $jsonoutput['d']['results'][$x]['NumPostingPer'];
-		$v_NumSpePeriod = $jsonoutput['d']['results'][$x]['NumSpePeriod'];
-		$v_OpvPerdActionType = $jsonoutput['d']['results'][$x]['OpvPerdActionType'];
-		$v_OpvPerdYrStrt = $jsonoutput['d']['results'][$x]['OpvPerdYrStrt'];
-		$v_OpvPerdMnthStrt = $jsonoutput['d']['results'][$x]['OpvPerdMnthStrt'];
-		$v_OpvPerdYrEnd = $jsonoutput['d']['results'][$x]['OpvPerdYrEnd'];
-		$v_OpvPerdMnthEnd = $jsonoutput['d']['results'][$x]['OpvPerdMnthEnd'];
-		$v_AdjtPerdYrStrt = $jsonoutput['d']['results'][$x]['AdjtPerdYrStrt'];
-		$v_AdjtPerdMnthStrt = $jsonoutput['d']['results'][$x]['AdjtPerdMnthStrt'];
-		$v_AdjtPerdYrEnd = $jsonoutput['d']['results'][$x]['AdjtPerdYrEnd'];
-		$v_AdjtPerdMnthEnd = $jsonoutput['d']['results'][$x]['AdjtPerdMnthEnd'];
+		$v_PostgPerdVar = $jsonoutput['d'][$x]['PostgPerdVar'];
+		$v_AcctType = $jsonoutput['d'][$x]['AcctType'];
+		$v_ToAcct = $jsonoutput['d'][$x]['ToAcct'];
+		$v_FiscalYearVar = $jsonoutput['d'][$x]['FiscalYearVar'];
+		$v_FromAcct = $jsonoutput['d'][$x]['FromAcct'];
+		$v_PostgPerdVarDesc = $jsonoutput['d'][$x]['PostgPerdVarDesc'];
+		$v_FiscalYearVarDesc = $jsonoutput['d'][$x]['FiscalYearVarDesc'];
+		$v_AcctTypeDesc = $jsonoutput['d'][$x]['AcctTypeDesc'];
+		$v_NumPostingPer = $jsonoutput['d'][$x]['NumPostingPer'];
+		$v_NumSpePeriod = $jsonoutput['d'][$x]['NumSpePeriod'];
+		$v_OpvPerdActionType = $jsonoutput['d'][$x]['OpvPerdActionType'];
+		$v_OpvPerdYrStrt = $jsonoutput['d'][$x]['OpvPerdYrStrt'];
+		$v_OpvPerdMnthStrt = $jsonoutput['d'][$x]['OpvPerdMnthStrt'];
+		$v_OpvPerdYrEnd = $jsonoutput['d'][$x]['OpvPerdYrEnd'];
+		$v_OpvPerdMnthEnd = $jsonoutput['d'][$x]['OpvPerdMnthEnd'];
+		$v_AdjtPerdYrStrt = $jsonoutput['d'][$x]['AdjtPerdYrStrt'];
+		$v_AdjtPerdMnthStrt = $jsonoutput['d'][$x]['AdjtPerdMnthStrt'];
+		$v_AdjtPerdYrEnd = $jsonoutput['d'][$x]['AdjtPerdYrEnd'];
+		$v_AdjtPerdMnthEnd = $jsonoutput['d'][$x]['AdjtPerdMnthEnd'];
 		
 		$speech .=  "PostgPerdVar"."\t".$v_PostgPerdVar."\n"."AcctType"."\t".$v_AcctType."\n";
 		$speech .=  "ToAcct"."\t".$v_ToAcct."\n"."FiscalYearVar"."\t".$v_FiscalYearVar."\n";
