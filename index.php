@@ -132,7 +132,7 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 	$err = curl_error($curl);
 
 	curl_close($curl);
-	$jsonoutput = json_decode($response,true);
+	$jsonoutput = json_decode($response);
 	$numofusers = sizeof($jsonoutput['d']);
 	//$speech = "Total number of Compnies ".$numofusers;
 	//$speech .= "\r\n";
