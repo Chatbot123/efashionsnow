@@ -27,7 +27,7 @@ curl_setopt_array($curl, array(
 ));
 
 $response = curl_exec($curl);
-		echo $response;
+		//echo $response;
 $err = curl_error($curl);
 
 curl_close($curl);
