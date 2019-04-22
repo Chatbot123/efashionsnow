@@ -310,7 +310,7 @@ $response = curl_exec($curl);
   $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
-  
+  echo $headers;
 curl_close($ch);
 
 header("Content-Type:application/json");
