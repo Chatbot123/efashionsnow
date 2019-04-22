@@ -395,11 +395,12 @@ header("Content-Type:application/json");
 
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
+	$headers =  json_encode($headers);
 echo $headers;
 $token = $headers[5];
 $token = substr($token,14);
 $speech = "Token fetched ".$token;
-
+/*
 //put
 $jsonvar = array(
 					'Username'=> $username,
@@ -434,7 +435,7 @@ $err = curl_error($curl);
 curl_close($curl);
 	$speech .= " Success".$response;
 	
-	
+*/	
 
 }
 
