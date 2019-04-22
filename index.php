@@ -376,10 +376,7 @@ curl_setopt_array($curl, array(
     "x-CSRF-Token: Fetch"
   ),
 ));
-// additional for storing cookie 
-        $tmpfname = dirname(__FILE__).'/cookie.txt';
-        curl_setopt($curl, CURLOPT_COOKIEJAR, $tmpfname);
-        curl_setopt($curl, CURLOPT_COOKIEFILE, $tmpfname);
+
 // Get the response body as string
 $response = curl_exec($curl);
 //echo $response;
@@ -389,11 +386,7 @@ $response = curl_exec($curl);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
 header("Content-Type:application/json");
- // let's extract cookie from raw content for the viewing purpose         
-        $cookiepattern = "#Set-Cookie:\\s+(?<cookie>[^=]+=[^;]+)#m"; 
-        preg_match_all($cookiepattern, $headers, $matches); 
- 	$cookiesOut = implode("; ", $matches['cookie']);
-	echo $cookiesOut;
+ echo $headers;
 curl_close($curl);
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
