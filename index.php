@@ -307,8 +307,8 @@ curl_setopt_array($curl, array(
 $response = curl_exec($curl);
 	//echo $response;
 //---------
-	// Retudn headers seperatly from the Response Body
-  $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
   
@@ -316,6 +316,18 @@ curl_close($ch);
 
 header("Content-Type:text/plain; charset=UTF-8");
 echo $headers;
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+
+foreach ($headers as $value) {
+    echo $value;
+
+}
+
+
+
+
 //echo $body;
 
 $speech = 'test';
