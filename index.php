@@ -375,7 +375,9 @@ $headers = explode("\r\n", $headers); // The seperator used in the Response Head
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
 $xcsrftoken = $headers[5];
-//$speech = "Token fetched ".$token;
+$speech = "Token fetched ".$xcsrftoken;
+	$xcsrftoken = """.$xcsrftoken.""";
+	
 	
 //logic to change password put request
 //json body
@@ -396,11 +398,11 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "PUT",
   CURLOPT_POSTFIELDS => $jsonvar,
-  CURLOPT_HTTPHEADER => array(  "x-csrf-token: M6CeRAEJCeDmEnupNLl9GQ=="  ),
+  CURLOPT_HTTPHEADER => array(  $xcsrftoken  ),
 ));
 
 $response = curl_exec($curl);
-echo $response;
+//echo $response;
 $err = curl_error($curl);
 
 curl_close($curl);
