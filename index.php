@@ -321,6 +321,7 @@ $headers = explode("\r\n", $headers); // The seperator used in the Response Head
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
 $token = $headers[5];
+	$token = substr($token,14);
 $speech = "Token fetched ".$token;
 	//-------------------
  
