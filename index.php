@@ -408,7 +408,7 @@ $jsonvar = array(
              	$jsonvar = json_encode($jsonvar);
 	//echo $jsonvar;
 $curl = curl_init();
-$authorization = "x-CSRF-Token:".$token; // Prepare the authorisation token
+$csrftoken = "x-CSRF-Token:".$token; // Prepare the authorisation token
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserPwdChangeSet('".$username."')/";
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
@@ -420,7 +420,9 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "PUT",
   CURLOPT_POSTFIELDS => $jsonvar,
-  CURLOPT_HTTPHEADER => array($authorization),
+  CURLOPT_HTTPHEADER => array(
+	  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+	  $csrftoken),
 ));
 
 $response = curl_exec($curl);
