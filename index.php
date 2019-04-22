@@ -385,35 +385,33 @@ $response = curl_exec($curl);
   $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
-header("Content-Type:application/json");
+  header("Content-Type:application/json");
  //echo $headers;
-curl_close($curl);
+  curl_close($curl);
 
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
 //echo $headers;
+//extracting status, csrftoken and cookie (session id) from header
+$httpstatus = $header[0];
 $token = $headers[5];
 $sapcookie = $headers[2];
-	preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
-	//echo "[0]".$matches[0];
-	//echo "[1]".$matches[1];
+preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
 $token = substr($token,14);
-$speech = "Token fetched ".$token;
+//$speech = "Token fetched ".$token;
 
 //put
 $jsonvar = array(
-					'Username'=> $username,
-					'Bapipwdx'=> 'X',
-					'Bapipwd'=> $newpswd
-				);
-             	$jsonvar = json_encode($jsonvar);
+			'Username'=> $username,
+			'Bapipwdx'=> 'X',
+			'Bapipwd'=> $newpswd
+		);
+$jsonvar = json_encode($jsonvar);
 	//echo $jsonvar;
 $curl = curl_init();
-$csrftoken = "x-CSRF-Token:".$token; // Prepare the authorisation token
-$v_cookie =  "SAP_SESSIONID_SMF_100".$matches[1];
-	//echo $v_cookie;
-	//echo $csrftoken;
+$csrftoken = "x-CSRF-Token:".$token; // Prepare the csrf token
+$v_cookie =  "SAP_SESSIONID_SMF_100".$matches[1]; //Prepare cookie value sap session id
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserPwdChangeSet('".$username."')/";
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
@@ -439,10 +437,8 @@ $err = curl_error($curl);
 
 	
 curl_close($curl);
-	$speech .= " Success".$response;
-	
-	
-
+	$speech .= "Password Successfully changed.";
+	$speech .= "\r\n".$httpstatus;
 }
 
 
