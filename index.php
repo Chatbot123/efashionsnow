@@ -305,7 +305,7 @@ curl_setopt_array($curl, array(
 
 // Get the response body as string
 $response = curl_exec($curl);
-	echo $response;
+	//echo $response;
 //---------
 	// Retudn headers seperatly from the Response Body
   $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
@@ -315,7 +315,7 @@ $response = curl_exec($curl);
 curl_close($ch);
 
 header("Content-Type:text/plain; charset=UTF-8");
-//echo $headers;
+echo $headers;
 //echo $body;
 
 $speech = 'test';
