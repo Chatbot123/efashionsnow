@@ -395,6 +395,7 @@ $headers = array_filter($headers);
 //echo $headers;
 //extracting status, csrftoken and cookie (session id) from header
 $httpstatus = $header[0];
+	echo $httpstatus;
 $token = $headers[5];
 $sapcookie = $headers[2];
 preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
