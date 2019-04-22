@@ -387,19 +387,27 @@ $response = curl_exec($curl);
   $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
-  
-curl_close($ch);
-
 header("Content-Type:application/json");
-
 
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
-	$headers =  json_encode($headers);
-echo $headers;
+//$headers =  json_encode($headers);
+//echo $headers;
 $token = $headers[5];
 $token = substr($token,14);
 $speech = "Token fetched ".$token;
+	
+// additional for storing cookie 
+        $tmpfname = dirname(__FILE__).'/cookie.txt';
+        curl_setopt($curl, CURLOPT_COOKIEJAR, $tmpfname);
+        curl_setopt($curl, CURLOPT_COOKIEFILE, $tmpfname);
+ // let's extract cookie from raw content for the viewing purpose         
+        $cookiepattern = "#Set-Cookie:\\s+(?<cookie>[^=]+=[^;]+)#m"; 
+        preg_match_all($cookiepattern, $headers, $matches); 
+ 	$cookiesOut = implode("; ", $matches['cookie']);
+	echo $cookiesOut;
+
+	curl_close($curl);
 /*
 //put
 $jsonvar = array(
