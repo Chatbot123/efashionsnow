@@ -320,43 +320,10 @@ header("Content-Type:application/json");
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
-$matches = preg_grep("/x-csrf-token/", $headers);
-echo $headers[5];
-echo " at position ";
-	echo $matches;
-/*
-foreach ($headers as $value) {
-    echo $value;
-	echo "\r\n";
-
-}*/
-
-
-
-
-//echo $body;
-
-$speech = 'test';
-	//$speech = get_headers($url,1);
-	/*$jsonoutput = json_decode($response);
-	$username = 	$jsonoutput->d->Username;
-	$Company = 	$jsonoutput->d->Company;
-	$PersNo=	$jsonoutput->d->PersNo;
-	$Firstname = 	$jsonoutput->d->Firstname;
-	$Lastname = 	$jsonoutput->d->Lastname;
-	$Fullname=	$jsonoutput->d->Fullname;
-	$City = 	$jsonoutput->d->City;
-	$District = 	$jsonoutput->d->District;
-	$PoBox=		$jsonoutput->d->PoBox;
-	$Street = 	$jsonoutput->d->Street;
-	$Location = 	$jsonoutput->d->Location;
-	$Langu=		$jsonoutput->d->Langu;
-	$Region=	$jsonoutput->d->Region;
-	$Tel1Numbr=	$jsonoutput->d->Tel1Numbr;
-	$LocalLock=	$jsonoutput->d->LocalLock;*/
+$token = $headers[5];
+$speech = "Token fetched ".$token;
 	
-	//$speech = "Username = ".$username."\n"."Company = ".$Company."\n"."Personal num = ".$PersNo."\n"."Fullname = ".$Fullname."\n"."Lock Status = ".$LocalLock;
-	//$speech = $username;
+
 }
 	
 	
