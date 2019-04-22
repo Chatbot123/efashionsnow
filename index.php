@@ -314,17 +314,18 @@ $response = curl_exec($curl);
   
 curl_close($ch);
 
-header("Content-Type:application/json; charset=UTF-8");
-echo json_encode($headers);
+//header("Content-Type:application/json; charset=UTF-8");
+$headers =  json_encode($headers);
+echo $headers;
 
-$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+/*$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 
 foreach ($headers as $value) {
     echo $value;
 	echo "\r\n";
 
-}
+}*/
 
 
 
