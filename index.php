@@ -275,7 +275,7 @@ curl_close($curl);
 
 
 	
-	//--end sap
+	
 
 if($json->queryResult->intent->displayName=='unlockSAPuser')
 {
@@ -290,6 +290,7 @@ curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
   CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
@@ -304,8 +305,20 @@ curl_setopt_array($curl, array(
 
 // Get the response body as string
 $response = curl_exec($curl);
+	echo $response;
+//---------
+	// Retudn headers seperatly from the Response Body
+  $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  
+curl_close($ch);
 
- // Return headers seperatly from the Response Body
+header("Content-Type:text/plain; charset=UTF-8");
+echo $headers;
+echo $body;
+//----------
+ /*// Return headers seperatly from the Response Body
   $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
@@ -315,7 +328,7 @@ $headers = explode("\r\n", $headers); // The seperator used in the Response Head
 $headers = array_filter($headers);
 foreach($headers as $value){
     echo $value . "<br>";
-}
+}*/
 $speech = 'test';
 	//$speech = get_headers($url,1);
 	/*$jsonoutput = json_decode($response);
@@ -339,6 +352,9 @@ $speech = 'test';
 	//$speech = $username;
 }
 	
+	
+	
+	//--end sap
 		//----SNOW IMPLEMENTATION----
   	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue')
 	{
