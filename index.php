@@ -388,16 +388,14 @@ $response = curl_exec($curl);
 header("Content-Type:application/json");
  //echo $headers;
 curl_close($curl);
-// let's extract cookie from raw content for the viewing purpose         
-        $cookiepattern = "#set-cookie:\\s+(?<cookie>[^=]+=[^;]+)#m"; 
-        preg_match_all($cookiepattern, $header_content, $matches); 
-        $cookiesOut = implode("; ", $matches['cookie']);
-echo $cookiesOut;
+
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
 //echo $headers;
 $token = $headers[5];
+$sapcookie = $headers[2];
+	echo $sapcookie;
 $token = substr($token,14);
 $speech = "Token fetched ".$token;
 /*
