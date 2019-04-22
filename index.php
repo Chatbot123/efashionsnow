@@ -376,7 +376,7 @@ $headers = array_filter($headers);
 //$headers =  json_encode($headers);
 $xcsrftoken = $headers[5];
 $speech = "password changed successfully;
-	$xcsrftoken = "\"".$xcsrftoken."\"";
+	$xcsrftoken = '\"'.$xcsrftoken.'\"';
 	echo $xcsrftoken;
 	
 /*	
