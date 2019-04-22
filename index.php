@@ -386,8 +386,13 @@ $response = curl_exec($curl);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
 header("Content-Type:application/json");
- echo $headers;
+ //echo $headers;
 curl_close($curl);
+// let's extract cookie from raw content for the viewing purpose         
+        $cookiepattern = "#set-cookie:\\s+(?<cookie>[^=]+=[^;]+)#m"; 
+        preg_match_all($cookiepattern, $header_content, $matches); 
+        $cookiesOut = implode("; ", $matches['cookie']);
+echo $cookiesOut;
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
