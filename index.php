@@ -314,9 +314,9 @@ $response = curl_exec($curl);
   
 curl_close($ch);
 
-//header("Content-Type:application/json; charset=UTF-8");
+header("Content-Type:application/json");
 $headers =  json_encode($headers);
-echo $headers;
+echo $headers->x-csrf-token;
 
 /*$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
