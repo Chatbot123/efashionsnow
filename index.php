@@ -405,7 +405,8 @@ $jsonvar = array('Username'=> $username,
  		'Bapipwd': $newpswd
 		);
              	$jsonvar = json_encode($jsonvar);
-$curl = curl_init();
+	echo $jsonvar;
+/*$curl = curl_init();
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserPwdChangeSet('".$username."')/";
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
@@ -427,7 +428,7 @@ $err = curl_error($curl);
 	
 curl_close($curl);
 	$speech .= " Success";
-
+*/
 }
 
 
