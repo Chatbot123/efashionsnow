@@ -323,7 +323,7 @@ $token = $headers[5];
 $speech = "Token fetched ".$token;
 	//-------------------
  
-$speech = 'test';
+//$speech = 'test';
 	//$speech = get_headers($url,1);
 	/*$jsonoutput = json_decode($response);
 	$username = 	$jsonoutput->d->Username;
