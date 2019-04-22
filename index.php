@@ -315,7 +315,7 @@ $response = curl_exec($curl);
 curl_close($ch);
 
 header("Content-Type:application/json; charset=UTF-8");
-echo $headers;
+echo json_encode($headers);
 
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
