@@ -396,11 +396,11 @@ $headers = array_filter($headers);
 $token = $headers[5];
 $sapcookie = $headers[2];
 	preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
-	echo "[0]".$matches[0];
-	echo "[1]".$matches[1];
+	//echo "[0]".$matches[0];
+	//echo "[1]".$matches[1];
 $token = substr($token,14);
 $speech = "Token fetched ".$token;
-/*
+
 //put
 $jsonvar = array(
 					'Username'=> $username,
@@ -421,6 +421,7 @@ curl_setopt_array($curl, array(
   CURLOPT_TIMEOUT => 30,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "PUT",
+  CURLOPT_COOKIE => $matches[1],
   CURLOPT_POSTFIELDS => $jsonvar,
   CURLOPT_HTTPHEADER => array(
 	  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
@@ -435,7 +436,7 @@ $err = curl_error($curl);
 curl_close($curl);
 	$speech .= " Success".$response;
 	
-*/	
+	
 
 }
 
