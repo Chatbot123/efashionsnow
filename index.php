@@ -425,8 +425,10 @@ curl_setopt_array($curl, array(
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "PUT",
   CURLOPT_COOKIE => $v_cookie,
+  CURLOPT_POST => true,
   CURLOPT_POSTFIELDS => $jsonvar,
   CURLOPT_HTTPHEADER => array(
+	  "Content-Type: application/json",
 	  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
 	  $csrftoken),
 ));
