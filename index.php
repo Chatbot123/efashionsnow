@@ -433,7 +433,8 @@ curl_setopt_array($curl, array(
 ));
 
 $response = curl_exec($curl);
-echo $response;
+$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//echo $response;
 $err = curl_error($curl);
 
 	
@@ -442,6 +443,7 @@ curl_close($curl);
 	{
 		$speech .= "Password Successfully changed.";
 		$speech .= "\r\n";
+		$speech .= $statusCode;
 	}
 	else 
 	{
