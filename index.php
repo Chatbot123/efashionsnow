@@ -377,8 +377,9 @@ $headers = array_filter($headers);
 $xcsrftoken = $headers[5];
 $speech = "Token fetched ".$xcsrftoken;
 	$xcsrftoken = """.$xcsrftoken.""";
+	echo $xcsrftoken;
 	
-	
+/*	
 //logic to change password put request
 //json body
 $jsonvar = array('Username'=> $username,
@@ -407,7 +408,7 @@ $err = curl_error($curl);
 
 curl_close($curl);
 	
-
+*/
 }
 	
 	//--end sap
