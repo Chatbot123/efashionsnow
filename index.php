@@ -274,8 +274,8 @@ curl_close($curl);
 }
 
 
-	//unlock sap user account
 	
+	//--end sap
 
 if($json->queryResult->intent->displayName=='unlockSAPuser')
 {
@@ -284,13 +284,12 @@ if($json->queryResult->intent->displayName=='unlockSAPuser')
 			$username= strtoupper($username);
 		}
 		
-$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet/?"."\$format"."=json";
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet/";
 $curl = curl_init();
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
   CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_HEADER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
@@ -305,88 +304,41 @@ curl_setopt_array($curl, array(
 
 // Get the response body as string
 $response = curl_exec($curl);
-	//echo $response;
-//---------
-// Return headers seperatly from the Response Body
-  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+
+ // Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
-  
-curl_close($ch);
-
-header("Content-Type:application/json");
-
-
+curl_close($curl);
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
-$headers = array_filter($headers);
-//$headers =  json_encode($headers);
-$token = $headers[5];
-$speech = "Token fetched ".$token;
-	
 
+$headers = array_filter($headers);
+foreach($headers as $value){
+    echo $value . "<br>";
+}
+$speech = 'test';
+	//$speech = get_headers($url,1);
+	/*$jsonoutput = json_decode($response);
+	$username = 	$jsonoutput->d->Username;
+	$Company = 	$jsonoutput->d->Company;
+	$PersNo=	$jsonoutput->d->PersNo;
+	$Firstname = 	$jsonoutput->d->Firstname;
+	$Lastname = 	$jsonoutput->d->Lastname;
+	$Fullname=	$jsonoutput->d->Fullname;
+	$City = 	$jsonoutput->d->City;
+	$District = 	$jsonoutput->d->District;
+	$PoBox=		$jsonoutput->d->PoBox;
+	$Street = 	$jsonoutput->d->Street;
+	$Location = 	$jsonoutput->d->Location;
+	$Langu=		$jsonoutput->d->Langu;
+	$Region=	$jsonoutput->d->Region;
+	$Tel1Numbr=	$jsonoutput->d->Tel1Numbr;
+	$LocalLock=	$jsonoutput->d->LocalLock;*/
+	
+	//$speech = "Username = ".$username."\n"."Company = ".$Company."\n"."Personal num = ".$PersNo."\n"."Fullname = ".$Fullname."\n"."Lock Status = ".$LocalLock;
+	//$speech = $username;
 }
 	
-//CHANGE PASSWORD OF SAP USER
-if($json->queryResult->intent->displayName=='SAPchangePswd')
-{
-	if(isset($json->queryResult->parameters->sapusername))
-		{	$username = $json->queryResult->parameters->sapusername; 
-			$username= strtoupper($username);
-		}
-	if(isset($json->queryResult->parameters->newpswd))
-		{ 	$newpswd = $json->queryResult->parameters->newpswd; 
-			//$username= strtoupper($username);
-		}
-		
-$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserPwdChangeSet('".$username."')/?"."\$format"."=json";
-$curl = curl_init();
-curl_setopt_array($curl, array(
-  CURLOPT_PORT => "8000",
-  CURLOPT_URL => $url,
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_HEADER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "GET",
-  CURLOPT_POSTFIELDS => "",
-  CURLOPT_HTTPHEADER => array(
-    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
-    "x-CSRF-Token: Fetch"
-  ),
-));
-
-// Get the response body as string
-$response = curl_exec($curl);
-	//echo $response;
-//---------
-// Return headers seperatly from the Response Body
-  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
-  $headers = substr($response, 0, $header_size);
-  $body = substr($response, $header_size);
-  
-curl_close($ch);
-
-header("Content-Type:application/json");
-
-
-$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
-$headers = array_filter($headers);
-echo $headers;
-//$headers =  json_encode($headers);
-//$xcsrftoken = $headers[5];
-//echo $xcsrftoken;
-$speech = "password changed successfully;
-
-
-	
-
-
-
-}
-	
-	//--end sap
 		//----SNOW IMPLEMENTATION----
   	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue')
 	{
