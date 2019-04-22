@@ -290,6 +290,7 @@ curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
   CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
@@ -310,7 +311,7 @@ $response = curl_exec($curl);
   $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
-  echo $headers;
+  
 curl_close($ch);
 
 header("Content-Type:application/json");
