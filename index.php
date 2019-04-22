@@ -315,12 +315,13 @@ $response = curl_exec($curl);
 curl_close($ch);
 
 header("Content-Type:application/json");
-$headers =  json_encode($headers);
-echo $headers->x-csrf-token;
 
-/*$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
-
+$headers =  json_encode($headers,JSON_FORCE_OBJECT);
+echo $headers;
+/*
 foreach ($headers as $value) {
     echo $value;
 	echo "\r\n";
