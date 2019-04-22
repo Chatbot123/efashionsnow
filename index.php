@@ -429,7 +429,7 @@ $err = curl_error($curl);
 
 	
 curl_close($curl);
-	$speech .= " Success";
+	$speech .= " Success".$response;
 	
 	
 
