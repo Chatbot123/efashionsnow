@@ -306,18 +306,35 @@ curl_setopt_array($curl, array(
 // Get the response body as string
 $response = curl_exec($curl);
 	//echo $response;
-$dom = new DomDocument();
-$dom->loadHTML($response);
-$tokens = $dom->getElementsByTagName("meta");
-for ($i = 0; $i < $tokens->length; $i++)
-{
-    $meta = $tokens->item($i);
-    if($meta->getAttribute('name') == 'x-csrf-token')
-    $token = $meta->getAttribute('content');
-}
-//$postinfo = "email=".$username."&password=".$password."&_csrf=".$token;
-echo $token; 
+//---------
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  
+curl_close($ch);
 
+header("Content-Type:application/json");
+
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+//$headers =  json_encode($headers);
+$k = array_search('x-csrf-token', $headers); //$k = 1;
+echo $headers[5];
+echo " at position ";
+	echo $k;
+/*
+foreach ($headers as $value) {
+    echo $value;
+	echo "\r\n";
+
+}*/
+
+
+
+
+//echo $body;
 
 $speech = 'test';
 	//$speech = get_headers($url,1);
