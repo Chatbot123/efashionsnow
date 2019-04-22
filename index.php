@@ -381,7 +381,7 @@ curl_setopt_array($curl, array(
 
 // Get the response body as string
 $response = curl_exec($curl);
-	//echo $response;
+//echo $response;
 //---------
 // Return headers seperatly from the Response Body
   $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
@@ -398,6 +398,38 @@ $headers = array_filter($headers);
 $token = $headers[5];
 $token = substr($token,14);
 $speech = "Token fetched ".$token;
+
+//put
+$jsonvar = array(
+					'Username'=> $username,
+					'Bapipwdx': 'X',
+					'Bapipwd': $newpswd
+				);
+             	$jsonvar = json_encode($jsonvar);
+	//echo $jsonvar;
+$curl = curl_init();
+$authorization = "x-CSRF-Token:".$token; // Prepare the authorisation token
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserPwdChangeSet('".$username."')/";
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "PUT",
+  CURLOPT_POSTFIELDS => $jsonvar,
+  CURLOPT_HTTPHEADER => array($authorization),
+));
+
+$response = curl_exec($curl);
+//echo $response;
+$err = curl_error($curl);
+
+	
+curl_close($curl);
+	$speech .= " Success";
 	
 	
 
