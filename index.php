@@ -375,8 +375,8 @@ $headers = explode("\r\n", $headers); // The seperator used in the Response Head
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
 $xcsrftoken = $headers[5];
-$speech = "Token fetched ".$xcsrftoken;
-	//$xcsrftoken = """.$xcsrftoken.""";
+$speech = "password changed successfully;
+	$xcsrftoken = "\"".$xcsrftoken."\"";
 	echo $xcsrftoken;
 	
 /*	
