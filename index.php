@@ -326,7 +326,59 @@ $speech = "Token fetched ".$token;
 
 }
 	
+//CHANGE PASSWORD OF SAP USER
+if($json->queryResult->intent->displayName=='SAPchangePswd')
+{
+	if(isset($json->queryResult->parameters->sapusername))
+		{	$username = $json->queryResult->parameters->sapusername; 
+			$username= strtoupper($username);
+		}
+	if(isset($json->queryResult->parameters->newpswd))
+		{ 	$newpswd = $json->queryResult->parameters->newpswd; 
+			//$username= strtoupper($username);
+		}
+		
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserPwdChangeSet('".$username."')/?"."\$format"."=json";
+$curl = curl_init();
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+    "x-CSRF-Token: Fetch"
+  ),
+));
+
+// Get the response body as string
+$response = curl_exec($curl);
+	//echo $response;
+//---------
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  
+curl_close($ch);
+
+header("Content-Type:application/json");
+
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+//$headers =  json_encode($headers);
+$token = $headers[5];
+$speech = "Token fetched ".$token;
 	
+
+}
 	
 	//--end sap
 		//----SNOW IMPLEMENTATION----
