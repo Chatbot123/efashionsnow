@@ -389,7 +389,12 @@ $response = curl_exec($curl);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
 header("Content-Type:application/json");
-
+ // let's extract cookie from raw content for the viewing purpose         
+        $cookiepattern = "#Set-Cookie:\\s+(?<cookie>[^=]+=[^;]+)#m"; 
+        preg_match_all($cookiepattern, $headers, $matches); 
+ 	$cookiesOut = implode("; ", $matches['cookie']);
+	echo $cookiesOut;
+curl_close($curl);
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
@@ -397,15 +402,6 @@ $headers = array_filter($headers);
 $token = $headers[5];
 $token = substr($token,14);
 $speech = "Token fetched ".$token;
-	
-
- // let's extract cookie from raw content for the viewing purpose         
-        $cookiepattern = "#Set-Cookie:\\s+(?<cookie>[^=]+=[^;]+)#m"; 
-        preg_match_all($cookiepattern, $headers, $matches); 
- 	$cookiesOut = implode("; ", $matches['cookie']);
-	echo $cookiesOut;
-
-	curl_close($curl);
 /*
 //put
 $jsonvar = array(
