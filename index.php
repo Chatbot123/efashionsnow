@@ -305,17 +305,24 @@ curl_setopt_array($curl, array(
 // Get the response body as string
 $response = curl_exec($curl);
 
- // Return headers seperatly from the Response Body
-  $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+	//---------
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
-curl_close($curl);
-$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+  
+curl_close($ch);
 
+header("Content-Type:application/json");
+
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
-foreach($headers as $value){
-    echo $value . "<br>";
-}
+//$headers =  json_encode($headers);
+$token = $headers[5];
+$speech = "Token fetched ".$token;
+	//-------------------
+ 
 $speech = 'test';
 	//$speech = get_headers($url,1);
 	/*$jsonoutput = json_decode($response);
