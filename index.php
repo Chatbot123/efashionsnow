@@ -374,8 +374,8 @@ header("Content-Type:application/json");
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
-$xcsrftoken = json_encode($headers[5],JSON_FORCE_OBJECT);
-	echo $xcsrftoken;
+$xcsrftoken = $headers[5];
+echo $xcsrftoken;
 $speech = "password changed successfully;
 
 
