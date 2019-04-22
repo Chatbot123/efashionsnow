@@ -411,7 +411,7 @@ $jsonvar = array(
 	//echo $jsonvar;
 $curl = curl_init();
 $csrftoken = "x-CSRF-Token:".$token; // Prepare the authorisation token
-$v_cookie =  $matches[1];
+$v_cookie =  "SAP_SESSIONID_SMF_100=".$matches[1];
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserPwdChangeSet('".$username."')/";
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
