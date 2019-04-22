@@ -320,10 +320,10 @@ header("Content-Type:application/json");
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
-$k = array_search('x-csrf-token', $headers); //$k = 1;
+$matches = preg_grep("/x-csrf-token/", $headers);
 echo $headers[5];
 echo " at position ";
-	echo $k;
+	echo $matches;
 /*
 foreach ($headers as $value) {
     echo $value;
