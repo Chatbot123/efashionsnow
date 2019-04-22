@@ -373,6 +373,7 @@ header("Content-Type:application/json");
 
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
+echo $headers;
 //$headers =  json_encode($headers);
 $xcsrftoken = $headers[5];
 echo $xcsrftoken;
