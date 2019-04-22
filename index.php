@@ -395,8 +395,9 @@ $headers = array_filter($headers);
 //echo $headers;
 $token = $headers[5];
 $sapcookie = $headers[2];
-	preg_match("/=(\d+)\;/", $sapcookie, $matches);
-	echo $matches[1];
+	preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
+	echo "[0]".$matches[0];
+	echo "[1]".$matches[1];
 $token = substr($token,14);
 $speech = "Token fetched ".$token;
 /*
