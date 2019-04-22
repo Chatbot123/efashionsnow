@@ -395,7 +395,8 @@ $headers = array_filter($headers);
 //echo $headers;
 $token = $headers[5];
 $sapcookie = $headers[2];
-	echo $sapcookie;
+	preg_match("/=(\d+)\;/", $sapcookie, $matches);
+	echo $matches;
 $token = substr($token,14);
 $speech = "Token fetched ".$token;
 /*
