@@ -374,8 +374,36 @@ header("Content-Type:application/json");
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 //$headers =  json_encode($headers);
-$token = $headers[5];
-$speech = "Token fetched ".$token;
+$xcsrftoken = $headers[5];
+//$speech = "Token fetched ".$token;
+	
+//logic to change password put request
+//json body
+$jsonvar = array('Username'=> $username,
+		 'Bapipwdx': 'X',
+ 		'Bapipwd': $newpswd
+		);
+             	$jsonvar = json_encode($jsonvar);
+$curl = curl_init();
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserPwdChangeSet('".$username."')/";
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "PUT",
+  CURLOPT_POSTFIELDS => $jsonvar,
+  CURLOPT_HTTPHEADER => array(  $xcsrftoken  ),
+));
+
+$response = curl_exec($curl);
+echo $response;
+$err = curl_error($curl);
+
+curl_close($curl);
 	
 
 }
