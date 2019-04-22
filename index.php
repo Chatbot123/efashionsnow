@@ -320,7 +320,7 @@ header("Content-Type:application/json");
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 $headers =  json_encode($headers,JSON_FORCE_OBJECT);
-echo $headers;
+echo $headers->5;
 /*
 foreach ($headers as $value) {
     echo $value;
