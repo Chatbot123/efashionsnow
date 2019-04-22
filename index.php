@@ -394,7 +394,7 @@ $headers = array_filter($headers);
 //$headers =  json_encode($headers);
 //echo $headers;
 //extracting status, csrftoken and cookie (session id) from header
-$httpstatus = $headers[0];
+//$httpstatus = $headers[0];
 	//echo $httpstatus;
 $token = $headers[5];
 $sapcookie = $headers[2];
@@ -433,13 +433,24 @@ curl_setopt_array($curl, array(
 ));
 
 $response = curl_exec($curl);
-//echo $response;
+echo $response;
 $err = curl_error($curl);
 
 	
 curl_close($curl);
-	$speech .= "Password Successfully changed.";
-	$speech .= "\r\n".$httpstatus;
+	if($response=" ")
+	{
+		$speech .= "Password Successfully changed.";
+		$speech .= "\r\n";
+	}
+	else 
+	{
+		$speech = $err;
+	}
+	
+	
+	
+		
 }
 
 
