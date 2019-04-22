@@ -274,7 +274,7 @@ curl_close($curl);
 }
 
 
-	
+	//unlock sap user account
 	
 
 if($json->queryResult->intent->displayName=='unlockSAPuser')
@@ -284,7 +284,7 @@ if($json->queryResult->intent->displayName=='unlockSAPuser')
 			$username= strtoupper($username);
 		}
 		
-$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet/";
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet/?"."\$format"."=json";
 $curl = curl_init();
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
@@ -315,20 +315,9 @@ $response = curl_exec($curl);
 curl_close($ch);
 
 header("Content-Type:text/plain; charset=UTF-8");
-echo $headers;
-echo $body;
-//----------
- /*// Return headers seperatly from the Response Body
-  $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-  $headers = substr($response, 0, $header_size);
-  $body = substr($response, $header_size);
-curl_close($curl);
-$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+//echo $headers;
+//echo $body;
 
-$headers = array_filter($headers);
-foreach($headers as $value){
-    echo $value . "<br>";
-}*/
 $speech = 'test';
 	//$speech = get_headers($url,1);
 	/*$jsonoutput = json_decode($response);
