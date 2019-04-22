@@ -395,6 +395,7 @@ header("Content-Type:application/json");
 
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
+echo $headers;
 $token = $headers[5];
 $token = substr($token,14);
 $speech = "Token fetched ".$token;
