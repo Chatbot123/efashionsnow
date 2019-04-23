@@ -446,7 +446,7 @@ $err = curl_error($curl);
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
 $headers =  json_encode($headers);
-//echo $headers;
+echo $headers;
 //extracting status from header
 $httpstatus = $headers[0];
 //echo $httpstatus;
