@@ -418,6 +418,7 @@ curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
   CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
@@ -433,17 +434,28 @@ curl_setopt_array($curl, array(
 ));
 
 $response = curl_exec($curl);
-//$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-//echo $response;
 $err = curl_error($curl);
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+ //echo $headers;
+  curl_close($curl);
 
-	
-curl_close($curl);
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+$headers =  json_encode($headers);
+//echo $headers;
+//extracting status from header
+$httpstatus = $headers[0];
+//echo $httpstatus;
+
 	if($response=" ")
 	{
 		$speech .= "Password Successfully changed.";
 		$speech .= "\r\n";
-		//$speech .= $statusCode;
+		$speech .= $httpstatus;
 	}
 	else 
 	{
