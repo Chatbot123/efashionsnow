@@ -440,15 +440,12 @@ $err = curl_error($curl);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
   header("Content-Type:application/json");
- //echo $headers;
   curl_close($curl);
 
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
-$headers =  json_encode($headers);
-//echo $headers;
 //extracting status from header
-$httpstatus = $headers[1];
+$httpstatus = $headers[0];
 //echo $httpstatus;
 
 	if($response=" ")
