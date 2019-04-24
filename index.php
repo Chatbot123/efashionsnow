@@ -443,14 +443,11 @@ $headers = array_filter($headers);
 $httpstatus = $headers[0];
 	
 preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
-echo $res[0];
-	echo $res[1];
 
-	if($response=" ")
+	if($res=" 204 No Content")
 	{
 		$speech .= "Password Successfully changed.";
 		$speech .= "\r\n";
-		$speech .= $httpstatus;
 	}
 	else 
 	{
