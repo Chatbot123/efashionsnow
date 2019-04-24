@@ -274,17 +274,17 @@ curl_close($curl);
 }
 
 
-	
-
-
+//-----------------------------
+//SAP ACCOUNT UNLOCK BEGINS HERE
+//------------------------------
 if($json->queryResult->intent->displayName=='SAPUnlockaccount')
 {
 	if(isset($json->queryResult->parameters->username))
-		{ $username = $json->queryResult->parameters->username; 
+		{	$username = $json->queryResult->parameters->username; 
 			$username= strtoupper($username);
 		}
-		
-$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet/";
+//http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserUnLockSet('CHATBOT1')/?$format=json
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserUnLockSet('".$username."')/?"."\$format"."=json";
 $curl = curl_init();
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
@@ -305,48 +305,127 @@ curl_setopt_array($curl, array(
 
 // Get the response body as string
 $response = curl_exec($curl);
+//echo $response;
 
-	//---------
+
+//---------
 // Return headers seperatly from the Response Body
   $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
   $headers = substr($response, 0, $header_size);
   $body = substr($response, $header_size);
-  
-curl_close($ch);
+  header("Content-Type:application/json");
+ //echo $headers;
+  curl_close($curl);
+$jsonoutput = json_decode($body);
 
-header("Content-Type:application/json");
+//echo $body;	
+$lockstatus = $jsonoutput->d->IsLockedFlag;
+if ($lockstatus == "U")
+{
+		$speech .= "This account is UNLOCKED already.";
+		$speech .= "\r\n";
+}	
+else
+{
+
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
-//$headers =  json_encode($headers);
 $token = $headers[5];
-	$token = substr($token,14);
-$speech = "Token fetched ".$token;
-	//-------------------
- 
-//$speech = 'test';
-	//$speech = get_headers($url,1);
-	/*$jsonoutput = json_decode($response);
-	$username = 	$jsonoutput->d->Username;
-	$Company = 	$jsonoutput->d->Company;
-	$PersNo=	$jsonoutput->d->PersNo;
-	$Firstname = 	$jsonoutput->d->Firstname;
-	$Lastname = 	$jsonoutput->d->Lastname;
-	$Fullname=	$jsonoutput->d->Fullname;
-	$City = 	$jsonoutput->d->City;
-	$District = 	$jsonoutput->d->District;
-	$PoBox=		$jsonoutput->d->PoBox;
-	$Street = 	$jsonoutput->d->Street;
-	$Location = 	$jsonoutput->d->Location;
-	$Langu=		$jsonoutput->d->Langu;
-	$Region=	$jsonoutput->d->Region;
-	$Tel1Numbr=	$jsonoutput->d->Tel1Numbr;
-	$LocalLock=	$jsonoutput->d->LocalLock;*/
+$sapcookie = $headers[2];
+preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
+$token = substr($token,14);
+//$speech = "Token fetched ".$token;
+
+//put request
+$jsonvar = array(
+			'Username'=> $username,
+			
+		);
+$jsonvar = json_encode($jsonvar);
+	//echo $jsonvar;
+$curl = curl_init();
+$csrftoken = "x-CSRF-Token:".$token; // Prepare the csrf token
+$v_cookie =  "SAP_SESSIONID_SMF_100".$matches[1]; //Prepare cookie value sap session id
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserUnLockSet('".$username."')/";
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "PUT",
+  CURLOPT_COOKIE => $v_cookie,
+  CURLOPT_POST => true,
+  CURLOPT_POSTFIELDS => $jsonvar,
+  CURLOPT_HTTPHEADER => array(
+	  "Content-Type: application/json",
+	  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+	  $csrftoken),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+  curl_close($curl);
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+//extracting status from header
+$httpstatus = $headers[0];
 	
-	//$speech = "Username = ".$username."\n"."Company = ".$Company."\n"."Personal num = ".$PersNo."\n"."Fullname = ".$Fullname."\n"."Lock Status = ".$LocalLock;
-	//$speech = $username;
+//GET REQUEST EXECUTING AGAIN TO CHECK FLAG STATUS
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet('".$username."')/?"."\$format"."=json";
+$curl = curl_init();
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  //CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+    "x-CSRF-Token: Fetch"
+  ),
+));
+
+// Get the response body as string
+$response = curl_exec($curl);
+$jsonoutput = json_decode($response);
+
+//echo $response;	
+$lockstatus = $jsonoutput->d->IsLockedFlag;
+if ($lockstatus == "U")
+{
+		$speech .= "Account UNLOCKED Successfully.";
+		$speech .= "\r\n";
 }
+//-----GET REQUEST AGAIN ENDS
 	
-//CHANGE PASSWORD OF SAP USER
+
+}	
+	
+		
+}
+
+//-----------------------------
+//SAP ACCOUNT UNLOCK ENDS HERE
+//------------------------------	
+	
+//---------------------------------------
+//CHANGE PASSWORD OF SAP USER BEGINS HERE
+//----------------------------------------
 if($json->queryResult->intent->displayName=='SAPchangePswd')
 {
 	if(isset($json->queryResult->parameters->sapusername))
