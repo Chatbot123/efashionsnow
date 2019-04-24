@@ -442,8 +442,9 @@ $headers = array_filter($headers);
 //extracting status from header
 $httpstatus = $headers[0];
 	
-preg_match("/HTTP/1.1 (.*?)/", $httpstatus, $matches);
-echo $matches[1];
+preg_match("/HTTP/1.1 (.*?)/", $httpstatus, $res);
+echo $res[0];
+	echo $res[1];
 
 	if($response=" ")
 	{
