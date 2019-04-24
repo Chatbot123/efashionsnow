@@ -522,7 +522,7 @@ $headers = array_filter($headers);
 $httpstatus = $headers[0];
 	
 preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
-echo $res;
+echo $res[1];
 	if($res==" 204 No Content")
 	{
 		$speech .= "Password Successfully changed.";
