@@ -391,18 +391,13 @@ $response = curl_exec($curl);
 
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
-//$headers =  json_encode($headers);
-//echo $headers;
-//extracting status, csrftoken and cookie (session id) from header
-//$httpstatus = $headers[0];
-	//echo $httpstatus;
 $token = $headers[5];
 $sapcookie = $headers[2];
 preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
 $token = substr($token,14);
 //$speech = "Token fetched ".$token;
 
-//put
+//put request
 $jsonvar = array(
 			'Username'=> $username,
 			'Bapipwdx'=> 'X',
@@ -446,7 +441,9 @@ $headers = explode("\r\n", $headers); // The seperator used in the Response Head
 $headers = array_filter($headers);
 //extracting status from header
 $httpstatus = $headers[0];
-//echo $httpstatus;
+	
+preg_match("/HTTP/1.1 (.*?)/", $httpstatus, $matches);
+echo $matches[1];
 
 	if($response=" ")
 	{
