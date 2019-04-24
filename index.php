@@ -575,7 +575,7 @@ curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
   CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_HEADER => true,
+  //CURLOPT_HEADER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
@@ -601,18 +601,7 @@ if ($lockstatus == "L")
 }
 //-----GET REQUEST AGAIN ENDS
 	
-/*preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 
-	if($res==" 204 No Content")
-	{
-		$speech .= "Account Locked Successfully.";
-		$speech .= "\r\n";
-	}
-	else 
-	{
-		$speech = $err;
-	}
-	*/
 }	
 	
 		
