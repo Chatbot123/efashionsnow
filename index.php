@@ -522,7 +522,7 @@ $headers = array_filter($headers);
 $httpstatus = $headers[0];
 	
 preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
-echo $res[1];
+//echo $res[1];
 	$v_res = str_replace(' ', '', $res[1]);
 	if($v_res=="204NoContent")
 	{
