@@ -444,7 +444,7 @@ $httpstatus = $headers[0];
 	
 preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 
-	if($res=" 204 No Content")
+	if($res==" 204 No Content")
 	{
 		$speech .= "Password Successfully changed.";
 		$speech .= "\r\n";
@@ -494,6 +494,18 @@ curl_setopt_array($curl, array(
 // Get the response body as string
 $response = curl_exec($curl);
 //echo $response;
+
+$jsonoutput = json_decode($response);
+
+//echo $response;	
+$lockstatus = $jsonoutput->d->IsLockedFlag;
+if ($lockstatus == "L")
+{
+		$speech .= "This account is locked already.";
+		$speech .= "\r\n";
+}	
+else
+{
 //---------
 // Return headers seperatly from the Response Body
   $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
@@ -512,7 +524,12 @@ $token = substr($token,14);
 //$speech = "Token fetched ".$token;
 
 //put request
-
+$jsonvar = array(
+			'Username'=> $username,
+			
+		);
+$jsonvar = json_encode($jsonvar);
+	//echo $jsonvar;
 $curl = curl_init();
 $csrftoken = "x-CSRF-Token:".$token; // Prepare the csrf token
 $v_cookie =  "SAP_SESSIONID_SMF_100".$matches[1]; //Prepare cookie value sap session id
@@ -550,9 +567,42 @@ $headers = array_filter($headers);
 //extracting status from header
 $httpstatus = $headers[0];
 	
-preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+//GET REQUEST EXECUTING AGAIN TO CHECK FLAG STATUS
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet('".$username."')/?"."\$format"."=json";
+$curl = curl_init();
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+    "x-CSRF-Token: Fetch"
+  ),
+));
 
-	if($res=" 204 No Content")
+// Get the response body as string
+$response = curl_exec($curl);
+$jsonoutput = json_decode($response);
+
+//echo $response;	
+$lockstatus = $jsonoutput->d->IsLockedFlag;
+if ($lockstatus == "L")
+{
+		$speech .= "Account Locked Successfully.";
+		$speech .= "\r\n";
+}
+//-----GET REQUEST AGAIN ENDS
+	
+/*preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+
+	if($res==" 204 No Content")
 	{
 		$speech .= "Account Locked Successfully.";
 		$speech .= "\r\n";
@@ -561,8 +611,8 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	{
 		$speech = $err;
 	}
-	
-	
+	*/
+}	
 	
 		
 }
