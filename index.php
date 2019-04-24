@@ -493,7 +493,7 @@ curl_setopt_array($curl, array(
 
 // Get the response body as string
 $response = curl_exec($curl);
-//echo $response;
+echo $response;
 
 $jsonoutput = json_decode($response);
 
