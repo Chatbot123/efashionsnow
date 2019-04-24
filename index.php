@@ -275,9 +275,9 @@ curl_close($curl);
 
 
 	
-	//--end sap
 
-if($json->queryResult->intent->displayName=='unlockSAPuser')
+
+if($json->queryResult->intent->displayName=='SAPUnlockaccount')
 {
 	if(isset($json->queryResult->parameters->username))
 		{ $username = $json->queryResult->parameters->username; 
@@ -458,6 +458,118 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	
 		
 }
+//Change password sap user account ends here
+	
+//----------------------------------
+//Lock sap user account begin
+//---------------------------
+
+if($json->queryResult->intent->displayName=='SAPLockaccount')
+{
+	if(isset($json->queryResult->parameters->username))
+		{	$username = $json->queryResult->parameters->username; 
+			$username= strtoupper($username);
+		}
+	//http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet('CHATBOT1')/?$format=json
+		
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet('".$username."')/?"."\$format"."=json";
+$curl = curl_init();
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+    "x-CSRF-Token: Fetch"
+  ),
+));
+
+// Get the response body as string
+$response = curl_exec($curl);
+//echo $response;
+//---------
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+ //echo $headers;
+  curl_close($curl);
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+$token = $headers[5];
+$sapcookie = $headers[2];
+preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
+$token = substr($token,14);
+//$speech = "Token fetched ".$token;
+
+//put request
+
+$curl = curl_init();
+$csrftoken = "x-CSRF-Token:".$token; // Prepare the csrf token
+$v_cookie =  "SAP_SESSIONID_SMF_100".$matches[1]; //Prepare cookie value sap session id
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/SAP/ZUSER_MAINT_OPRS_DEMO_SRV/UserLockSet('".$username."')/";
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "PUT",
+  CURLOPT_COOKIE => $v_cookie,
+  CURLOPT_POST => true,
+  CURLOPT_POSTFIELDS => $jsonvar,
+  CURLOPT_HTTPHEADER => array(
+	  "Content-Type: application/json",
+	  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+	  $csrftoken),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+  curl_close($curl);
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+//extracting status from header
+$httpstatus = $headers[0];
+	
+preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+
+	if($res=" 204 No Content")
+	{
+		$speech .= "Account Locked Successfully.";
+		$speech .= "\r\n";
+	}
+	else 
+	{
+		$speech = $err;
+	}
+	
+	
+	
+		
+}
+//------------------------------	
+//Lock sap user account ends here
+//-------------------------------
+	//SAP ends here
 
 
 		//----SNOW IMPLEMENTATION----
