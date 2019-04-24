@@ -493,19 +493,9 @@ curl_setopt_array($curl, array(
 
 // Get the response body as string
 $response = curl_exec($curl);
-echo $response;
+//echo $response;
 
-$jsonoutput = json_decode($response);
 
-//echo $response;	
-$lockstatus = $jsonoutput->d->IsLockedFlag;
-if ($lockstatus == "L")
-{
-		$speech .= "This account is locked already.";
-		$speech .= "\r\n";
-}	
-else
-{
 //---------
 // Return headers seperatly from the Response Body
   $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
@@ -514,6 +504,17 @@ else
   header("Content-Type:application/json");
  //echo $headers;
   curl_close($curl);
+$jsonoutput = json_decode($body);
+
+//echo $body;	
+$lockstatus = $jsonoutput->d->IsLockedFlag;
+if ($lockstatus == "L")
+{
+		$speech .= "This account is locked already.";
+		$speech .= "\r\n";
+}	
+else
+{
 
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
