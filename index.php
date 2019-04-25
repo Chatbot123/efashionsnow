@@ -756,6 +756,7 @@ curl_setopt_array($curl, array(
 ));
 
 $response = curl_exec($curl);
+echo $response;
 $err = curl_error($curl);
 curl_close($curl);
 // Return headers seperatly from the Response Body
@@ -775,7 +776,7 @@ preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
 $token = substr($token,14);
 
 preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
-echo $res[1];
+//echo $res[1];
 	$v_res = str_replace(' ', '', $res[1]);
 	if($v_res=="404NotFound")
 	{
