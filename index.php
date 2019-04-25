@@ -756,7 +756,7 @@ curl_setopt_array($curl, array(
 ));
 
 $response = curl_exec($curl);
-echo $response;
+//echo $response;
 $err = curl_error($curl);
 curl_close($curl);
 // Return headers seperatly from the Response Body
@@ -768,6 +768,7 @@ $headers = explode("\r\n", $headers); // The seperator used in the Response Head
 $headers = array_filter($headers);
 //extracting status from header
 $httpstatus = $headers[0];
+echo $httpstatus;
 //extracting TOKEN from header
 $token = $headers[5];
 ////extracting SAP SESSION ID from header
