@@ -248,7 +248,7 @@ if($json->queryResult->intent->displayName=='OPPCustomDisSpecific')
 $curl = curl_init();
 //"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar='".$v_PostgPerdVar."',AcctType='".$v_AcctType."',ToAcct='".$v_ToAcct."',FiscalYearVar='".$v_FiscalYearVar."')/?"."\$format"."=json";	
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json";
-
+//echo $url;
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
@@ -269,7 +269,7 @@ curl_setopt_array($curl, array(
 		$err = curl_error($curl);
 
 		curl_close($curl);
-		$jsonoutput = json_decode($response,true);
+		$jsonoutput = json_decode($response);
 		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer2\n";
 				
 		
