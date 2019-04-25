@@ -342,7 +342,7 @@ curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
   CURLOPT_RETURNTRANSFER => true,
- // CURLOPT_HEADER => true,
+ CURLOPT_HEADER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
@@ -357,7 +357,31 @@ curl_setopt_array($curl, array(
 
 // Get the response body as string
 $response = curl_exec($curl);
-$jsonoutput = json_decode($response);
+//-------------------------------------------------------------------
+
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+ //echo $headers;
+  curl_close($curl);
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+$httpstatus = $headers[0];
+preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+//echo $res[1];
+	$v_res = str_replace(' ', '', $res[1]);
+	if($v_res=="404NotFound")
+	{
+		$speech .= "Record Doesn't exist in system";
+		$speech .= "\r\n";
+	}
+//------------------------------------------------------------------	
+else
+{
+			$jsonoutput = json_decode($body);
 			$v_BUKRS = $jsonoutput->d->Bukrs;
 			$v_Mandt = $jsonoutput->d->Mandt;
 			$v_Mkoar = $jsonoutput->d->Mkoar;
@@ -368,6 +392,7 @@ $jsonoutput = json_decode($response);
 	$speech .= "CompanyCode\tClientCode\tAccountType\tTo Period\n";
 	$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Tope1;
 	$speech .= "\r\nDo you want to update To Period value (Yes/No) \n";
+}
 }
 
 //--------YES UPDATE STATRS HERE-------------------
