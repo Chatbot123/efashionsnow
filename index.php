@@ -390,7 +390,7 @@ $response = curl_exec($curl);
  //echo $headers;
   curl_close($curl);
 $jsonoutput = json_decode($body);
-echo $body;	
+//echo $body;	
 	
 			//Fetching all values to create payload to update request
 			$v_BUKRS = $jsonoutput->d->Bukrs;
@@ -493,7 +493,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	$v_res = str_replace(' ', '', $res[1]);
 	if($v_res=="204NoContent")
 	{
-		$speech .= "Record Updated Successfully
+		$speech .= "Record Updated Successfully";
 		$speech .= "\r\n";
 	}
 	else 
@@ -533,7 +533,7 @@ $jsonoutput = json_decode($response);
 			$v_Mkoar = $jsonoutput->d->Mkoar;
 			$v_Tope1 = $jsonoutput->d->Tope1;
 	
-	$speech = "Updated values are\r\n";
+	$speech .= "Updated values are\r\n";
 	
 	$speech .= "CompanyCode\tClientCode\tAccountType\tTo Period\n";
 	$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Tope1;
