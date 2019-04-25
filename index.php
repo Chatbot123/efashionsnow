@@ -172,6 +172,69 @@ if($json->queryResult->intent->displayName=='OPPdataSingle')
 	
 }
 
+//---------------------------------------------------
+//----CUSTOM ODATA SERVICES STARTS HERE-------------
+//---------------------------------------------------
+
+//---------------------------------------------------
+//--OPP DISPLAY ALL RECORDS STARTS HERE
+//---------------------------------------------------
+if($json->queryResult->intent->displayName=='OPPCustomDisAll')
+{
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet/?$format=json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
+  ),
+));
+
+		$response = curl_exec($curl);
+		//echo $response;
+		$err = curl_error($curl);
+
+		curl_close($curl);
+		$jsonoutput = json_decode($response,true);
+		$numofusers = sizeof($jsonoutput['d']['results']);
+		$speech = "Total number of records ".$numofusers;
+		$speech .= "\r\n";
+		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer2\n";
+				
+		for($x=0;$x<$numofusers;$x++) 
+		{
+		   	$v_BUKRS = $jsonoutput['d']['results'][$x]['Bukrs'];
+			$v_Mandt = $jsonoutput['d']['results'][$x]['Mandt'];
+			$v_Mkoar = $jsonoutput['d']['results'][$x]['Mkoar'];
+			$v_Bkont = $jsonoutput['d']['results'][$x]['Bkont'];
+			$v_Frye1 = $jsonoutput['d']['results'][$x]['Frye1'];
+			$v_Frpe1 = $jsonoutput['d']['results'][$x]['Frpe1'];
+			$v_Toye1 = $jsonoutput['d']['results'][$x]['Toye1'];
+			$v_Tope1 = $jsonoutput['d']['results'][$x]['Tope1'];
+			
+			
+			$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t".$v_Bkont."\t".$v_Frye1."\t".$v_Frpe1."\t".$v_Toye1."\t".$v_Tope1;
+			$speech .= "\r\n";	
+		}
+	}
+//---------------------------------------------------
+//--OPP DISPLAY ALL RECORDS ENDS HERE
+//---------------------------------------------------
+
+//---------------------------------------------------
+//----CUSTOM ODATA SERVICES ENDS HERE-------------
+//---------------------------------------------------
+
+
+	
 	//sap integration -- open posting period ends here
 	
 	//--sap integration
