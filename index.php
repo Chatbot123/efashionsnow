@@ -207,7 +207,7 @@ curl_setopt_array($curl, array(
 		$numofusers = sizeof($jsonoutput['d']['results']);
 		$speech = "Total number of records ".$numofusers;
 		$speech .= "\r\n";
-		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer2\n";
+		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
 				
 		for($x=0;$x<$numofusers;$x++) 
 		{
@@ -270,7 +270,7 @@ curl_setopt_array($curl, array(
 
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
-		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer2\n";
+		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
 				
 		
 		   	$v_BUKRS = $jsonoutput->d->Bukrs;
@@ -291,7 +291,61 @@ curl_setopt_array($curl, array(
 
 //---------------------------------------------------
 //--OPP DISPLAY SPECIFIC RECORD ENDS HERE
-//---------------------------------------------------	
+//---------------------------------------------------
+	
+//---------------------------------------------------
+//--OPP UPDATE SPECIFIC RECORD STARTS HERE
+//---------------------------------------------------
+if($json->queryResult->intent->displayName=='OPPCustomUpdateSpecific')
+{
+	if(isset($json->queryResult->parameters->CompanyCode))
+		{	$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
+			$v_CompanyCode= strtoupper($v_CompanyCode);
+		}
+	if(isset($json->queryResult->parameters->AcctType))
+		{	$v_AcctType = $json->queryResult->parameters->AcctType; 
+			$v_AcctType= strtoupper($v_AcctType);
+		}
+
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json";
+
+$curl = curl_init();
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+ // CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+   // "x-CSRF-Token: Fetch"
+  ),
+));
+
+// Get the response body as string
+$response = curl_exec($curl);
+$jsonoutput = json_decode($response);
+			$v_BUKRS = $jsonoutput->d->Bukrs;
+			$v_Mandt = $jsonoutput->d->Mandt;
+			$v_Mkoar = $jsonoutput->d->Mkoar;
+			$v_Tope1 = $jsonoutput->d->Tope1;
+	
+	$speech = "Current values for this record are\r\n";
+	
+	$speech .= "CompanyCode\tClientCode\tAccountType\tTo Period\n";
+	$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Tope1;
+	$speech .= "\r\nDo you want to update To Period value\n";
+}
+
+	
+//---------------------------------------------------
+//--OPP UPDATE SPECIFIC RECORD ENDS HERE
+//---------------------------------------------------
 	
 //---------------------------------------------------
 //----CUSTOM ODATA SERVICES ENDS HERE-------------
