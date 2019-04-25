@@ -799,7 +799,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 		  CURLOPT_CUSTOMREQUEST => "DELETE",
 		  CURLOPT_COOKIE => $v_cookie,
-		  CURLOPT_POST => true,
+		  //CURLOPT_POST => true,
 		  //CURLOPT_POSTFIELDS => $jsonvar,
 		  CURLOPT_HTTPHEADER => array(
 			  "Content-Type: application/json",
