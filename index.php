@@ -718,6 +718,131 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 //--OPP CREATE NEW RECORD ENDS HERE
 //---------------------------------------------------
 
+//---------------------------------------------------
+//--OPP DELETE RECORD STARTS HERE OPPCustomDelSpecific
+//---------------------------------------------------
+if($json->queryResult->intent->displayName=='OPPCustomDelSpecific')
+{
+	
+	if(isset($json->queryResult->parameters->CompanyCode))
+	{ 
+		$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
+	  	$v_CompanyCode= strtoupper($v_CompanyCode);
+	}
+	if(isset($json->queryResult->parameters->AcctType))
+	{ 
+		$v_AcctType = $json->queryResult->parameters->AcctType; 
+	  	$v_AcctType= strtoupper($v_AcctType);
+	}
+$curl = curl_init();
+//"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar='".$v_PostgPerdVar."',AcctType='".$v_AcctType."',ToAcct='".$v_ToAcct."',FiscalYearVar='".$v_FiscalYearVar."')/?"."\$format"."=json";	
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json";
+//echo $url;
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_HEADER => true,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+// Return headers seperatly from the Response Body
+$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+$headers = substr($response, 0, $header_size);
+$body = substr($response, $header_size);
+header("Content-Type:application/json");
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+//extracting status from header
+$httpstatus = $headers[0];
+//extracting TOKEN from header
+$token = $headers[5];
+////extracting SAP SESSION ID from header
+$sapcookie = $headers[2];
+preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
+$token = substr($token,14);
+
+preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+//echo $res[1];
+	$v_res = str_replace(' ', '', $res[1]);
+	if($v_res=="404NotFound")
+	{
+		$speech .= "Record Doesn't exist in system";
+		$speech .= "\r\n";
+	}
+	else 
+	{
+		$curl = curl_init();
+		$csrftoken = "x-CSRF-Token:".$token; // Prepare the csrf token
+		$v_cookie =  "SAP_SESSIONID_SMF_100".$matches[1]; //Prepare cookie value sap session id
+		$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json";
+		curl_setopt_array($curl, array(
+		  CURLOPT_PORT => "8000",
+		  CURLOPT_URL => $url,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_HEADER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "DELETE",
+		  CURLOPT_COOKIE => $v_cookie,
+		  CURLOPT_POST => true,
+		  //CURLOPT_POSTFIELDS => $jsonvar,
+		  CURLOPT_HTTPHEADER => array(
+			  "Content-Type: application/json",
+			  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+			  $csrftoken),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		// Return headers seperatly from the Response Body
+		  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+		  $headers = substr($response, 0, $header_size);
+		  $body = substr($response, $header_size);
+		  header("Content-Type:application/json");
+		  curl_close($curl);
+
+		$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+		$headers = array_filter($headers);
+		//extracting status from header
+		$httpstatus = $headers[0];
+
+		//---
+
+		preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+		//echo $res[1];
+			$v_res = str_replace(' ', '', $res[1]);
+			if($v_res=="204NoContent")
+			{
+				$speech .= "Record deleted Successfully";
+				$speech .= "\r\n";
+			}
+			else 
+			{
+				$speech = $err;
+			}	
+		
+		
+	}
+}
+
+	
+//---------------------------------------------------
+//--OPP DELETE RECORD ENDS HERE OPPCustomDelSpecific
+//---------------------------------------------------
 	
 //---------------------------------------------------
 //----CUSTOM ODATA SERVICES ENDS HERE-------------
