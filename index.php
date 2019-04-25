@@ -812,7 +812,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 		// Return headers seperatly from the Response Body
 		  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 		  $headers = substr($response, 0, $header_size);
-		echo $headers;
+		//echo $headers;
 		  $body = substr($response, $header_size);
 		  header("Content-Type:application/json");
 		  curl_close($curl);
