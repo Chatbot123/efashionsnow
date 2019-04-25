@@ -230,6 +230,68 @@ curl_setopt_array($curl, array(
 //---------------------------------------------------
 
 //---------------------------------------------------
+//--OPP DISPLAY SPECIFIC RECORD STARTS HERE
+//---------------------------------------------------
+if($json->queryResult->intent->displayName=='OPPCustomDisSpecific')
+{
+	
+	if(isset($json->queryResult->parameters->CompanyCode))
+	{ 
+		$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
+	  	$v_CompanyCode= strtoupper($v_CompanyCode);
+	}
+	if(isset($json->queryResult->parameters->AcctType))
+	{ 
+		$v_AcctType = $json->queryResult->parameters->AcctType; 
+	  	$v_AcctType= strtoupper($v_AcctType);
+	}
+$curl = curl_init();
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json"
+
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
+  ),
+));
+
+		$response = curl_exec($curl);
+		//echo $response;
+		$err = curl_error($curl);
+
+		curl_close($curl);
+		$jsonoutput = json_decode($response,true);
+		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer2\n";
+				
+		
+		   	$v_BUKRS = $jsonoutput->results->Bukrs;
+			$v_Mandt = $jsonoutput->results->Mandt;
+			$v_Mkoar = $jsonoutput->results->Mkoar;
+			$v_Bkont = $jsonoutput->results->Bkont;
+			$v_Frye1 = $jsonoutput->results->Frye1;
+			$v_Frpe1 = $jsonoutput->results->Frpe1;
+			$v_Toye1 = $jsonoutput->results->Toye1;
+			$v_Tope1 = $jsonoutput->results->Tope1;
+			
+			
+			$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Bkont."\t\t".$v_Frye1."\t\t".$v_Frpe1."\t\t".$v_Toye1."\t\t".$v_Tope1;
+			$speech .= "\r\n";	
+		
+	}
+
+//---------------------------------------------------
+//--OPP DISPLAY SPECIFIC RECORD ENDS HERE
+//---------------------------------------------------	
+	
+//---------------------------------------------------
 //----CUSTOM ODATA SERVICES ENDS HERE-------------
 //---------------------------------------------------
 
