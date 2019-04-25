@@ -339,7 +339,7 @@ $jsonoutput = json_decode($response);
 	
 	$speech .= "CompanyCode\tClientCode\tAccountType\tTo Period\n";
 	$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Tope1;
-	$speech .= "\r\nDo you want to update To Period value\n";
+	$speech .= "\r\nDo you want to update To Period value (Yes/No) \n";
 }
 
 	
