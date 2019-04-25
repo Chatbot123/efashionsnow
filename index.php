@@ -390,7 +390,7 @@ $response = curl_exec($curl);
  //echo $headers;
   curl_close($curl);
 $jsonoutput = json_decode($body);
-//echo $body;	
+echo $body;	
 	
 			//Fetching all values to create payload to update request
 			$v_BUKRS = $jsonoutput->d->Bukrs;
