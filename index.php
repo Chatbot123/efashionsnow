@@ -755,28 +755,25 @@ curl_setopt_array($curl, array(
   ),
 ));
 
+// Get the response body as string
 $response = curl_exec($curl);
-//echo $response;
-$err = curl_error($curl);
-curl_close($curl);
+
+//---------
 // Return headers seperatly from the Response Body
-$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
-$headers = substr($response, 0, $header_size);
-$body = substr($response, $header_size);
-header("Content-Type:application/json");
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+ //echo $headers;
+  curl_close($curl);
+
 $headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
 $headers = array_filter($headers);
-echo $headers[0];
-//extracting status from header
-$httpstatus = $headers[0];
-//echo $httpstatus;
-//extracting TOKEN from header
 $token = $headers[5];
-////extracting SAP SESSION ID from header
 $sapcookie = $headers[2];
 preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
 $token = substr($token,14);
-
+$httpstatus = $headers[0];
 preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 //echo $res[1];
 	$v_res = str_replace(' ', '', $res[1]);
