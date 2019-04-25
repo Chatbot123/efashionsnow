@@ -787,7 +787,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 		$curl = curl_init();
 		$csrftoken = "x-CSRF-Token:".$token; // Prepare the csrf token
 		$v_cookie =  "SAP_SESSIONID_SMF_100".$matches[1]; //Prepare cookie value sap session id
-		$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json";
+		$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')";
 		curl_setopt_array($curl, array(
 		  CURLOPT_PORT => "8000",
 		  CURLOPT_URL => $url,
