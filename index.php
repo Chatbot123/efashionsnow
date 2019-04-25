@@ -221,7 +221,7 @@ curl_setopt_array($curl, array(
 			$v_Tope1 = $jsonoutput['d']['results'][$x]['Tope1'];
 			
 			
-			$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t".$v_Bkont."\t".$v_Frye1."\t".$v_Frpe1."\t".$v_Toye1."\t".$v_Tope1;
+			$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Bkont."\t\t".$v_Frye1."\t\t".$v_Frpe1."\t\t".$v_Toye1."\t\t".$v_Tope1;
 			$speech .= "\r\n";	
 		}
 	}
