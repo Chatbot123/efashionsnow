@@ -342,6 +342,210 @@ $jsonoutput = json_decode($response);
 	$speech .= "\r\nDo you want to update To Period value (Yes/No) \n";
 }
 
+//--------YES UPDATE STATRS HERE-------------------
+if($json->queryResult->intent->displayName=='OPPCustomUpdateSpecific-yes')
+{
+	if(isset($json->queryResult->parameters->CompanyCode))
+		{	$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
+			$v_CompanyCode= strtoupper($v_CompanyCode);
+		}
+	if(isset($json->queryResult->parameters->AcctType))
+		{	$v_AcctType = $json->queryResult->parameters->AcctType; 
+			$v_AcctType= strtoupper($v_AcctType);
+		}
+	if(isset($json->queryResult->parameters->ToPer))
+		{	$v_ToPer = $json->queryResult->parameters->ToPer; 
+			$v_ToPer= strtoupper($v_ToPer);
+		}
+	
+
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json";
+$curl = curl_init();
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+    "x-CSRF-Token: Fetch"
+  ),
+));
+
+// Get the response body as string
+$response = curl_exec($curl);
+
+//---------
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+ //echo $headers;
+  curl_close($curl);
+$jsonoutput = json_decode($body);
+//echo $body;	
+	
+			//Fetching all values to create payload to update request
+			$v_BUKRS = $jsonoutput->d->Bukrs;
+			$v_Mandt = $jsonoutput->d->Mandt;
+			$v_Mkoar = $jsonoutput->d->Mkoar;
+			$v_Rrcty = $jsonoutput->d->Rrcty;
+			$v_Bkont = $jsonoutput->d->Bkont;
+			$v_Frye2 = $jsonoutput->d->Frye2;
+			$v_Vkont = $jsonoutput->d->Vkont;
+			$v_Frpe2 = $jsonoutput->d->Frpe2;
+			$v_Frye1 = $jsonoutput->d->Frye1;
+			$v_Toye2 = $jsonoutput->d->Toye2;
+			$v_Frpe1 = $jsonoutput->d->Frpe1;
+			$v_Tope2 = $jsonoutput->d->Tope2;
+			$v_Toye1 = $jsonoutput->d->Toye1;
+			$v_Brgru = $jsonoutput->d->Brgru;
+			$v_Tope1 = $jsonoutput->d->Tope1;
+			$v_Frye3 = $jsonoutput->d->Frye3;
+			$v_Frpe3 = $jsonoutput->d->Frpe3;
+			$v_Toye3 = $jsonoutput->d->Toye3;
+			$v_Tope3 = $jsonoutput->d->Tope3;
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+$token = $headers[5];
+$sapcookie = $headers[2];
+preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
+$token = substr($token,14);
+//$speech = "Token fetched ".$token;
+
+
+
+//put request
+$jsonvar = array(
+				'Bukrs'=> $v_BUKRS,
+				'Mandt'=> $v_Mandt,
+				'Mkoar'=> $v_Mkoar,
+				'Rrcty'=> $v_Rrcty,
+				'Bkont'=> $v_Bkont,
+				'Frye2'=> $v_Frye2,
+				'Vkont'=> $v_Vkont,
+				'Frpe2'=> $v_Frpe2,
+				'Frye1'=> $v_Frye1,
+				'Toye2'=> $v_Toye2,
+				'Frpe1'=> $v_Frpe1,
+				'Tope2'=> $v_Tope2,
+				'Toye1'=> $v_Toye1,
+				'Brgru'=> $v_Brgru,
+				'Tope1'=> $v_ToPer,
+				'Frye3'=> $v_Frye3,
+				'Frpe3'=> $v_Frpe3,
+				'Toye3'=> $v_Toye3,
+				'Tope3'=> $v_Tope3
+
+			
+		);
+$jsonvar = json_encode($jsonvar);
+	//echo $jsonvar;
+$curl = curl_init();
+$csrftoken = "x-CSRF-Token:".$token; // Prepare the csrf token
+$v_cookie =  "SAP_SESSIONID_SMF_100".$matches[1]; //Prepare cookie value sap session id
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')";
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "PUT",
+  CURLOPT_COOKIE => $v_cookie,
+  CURLOPT_POST => true,
+  CURLOPT_POSTFIELDS => $jsonvar,
+  CURLOPT_HTTPHEADER => array(
+	  "Content-Type: application/json",
+	  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+	  $csrftoken),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+  curl_close($curl);
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+//extracting status from header
+$httpstatus = $headers[0];
+	
+//---
+	
+preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+//echo $res[1];
+	$v_res = str_replace(' ', '', $res[1]);
+	if($v_res=="204NoContent")
+	{
+		$speech .= "Record Updated Successfully
+		$speech .= "\r\n";
+	}
+	else 
+	{
+		$speech = $err;
+	}	
+//---
+	
+//GET REQUEST EXECUTING AGAIN TO CHECK FLAG STATUS
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json";
+$curl = curl_init();
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  //CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+    "x-CSRF-Token: Fetch"
+  ),
+));
+
+// Get the response body as string
+$response = curl_exec($curl);
+$jsonoutput = json_decode($response);
+
+//echo $response;	
+
+			$v_BUKRS = $jsonoutput->d->Bukrs;
+			$v_Mandt = $jsonoutput->d->Mandt;
+			$v_Mkoar = $jsonoutput->d->Mkoar;
+			$v_Tope1 = $jsonoutput->d->Tope1;
+	
+	$speech = "Updated values are\r\n";
+	
+	$speech .= "CompanyCode\tClientCode\tAccountType\tTo Period\n";
+	$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Tope1;
+//-----GET REQUEST AGAIN ENDS
+	
+
+	
+	
+		
+}
+
+//--------YES UPDATE ENDS HERE---------------------
 	
 //---------------------------------------------------
 //--OPP UPDATE SPECIFIC RECORD ENDS HERE
