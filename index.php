@@ -750,7 +750,8 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => "GET",
   CURLOPT_POSTFIELDS => "",
   CURLOPT_HTTPHEADER => array(
-         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+	   "x-CSRF-Token: Fetch"
   ),
 ));
 
