@@ -272,14 +272,15 @@ curl_setopt_array($curl, array(
 		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer2\n";
 				
 		
-		   	$v_BUKRS = $jsonoutput->results->Bukrs;
-			$v_Mandt = $jsonoutput->results->Mandt;
-			$v_Mkoar = $jsonoutput->results->Mkoar;
-			$v_Bkont = $jsonoutput->results->Bkont;
-			$v_Frye1 = $jsonoutput->results->Frye1;
-			$v_Frpe1 = $jsonoutput->results->Frpe1;
-			$v_Toye1 = $jsonoutput->results->Toye1;
-			$v_Tope1 = $jsonoutput->results->Tope1;
+		   	$v_BUKRS = $jsonoutput->d->Bukrs;
+			$v_Mandt = $jsonoutput->d->Mandt;
+			$v_Mkoar = $jsonoutput->d->Mkoar;
+			$v_Bkont = $jsonoutput->d->Bkont;
+			$v_Frye1 = $jsonoutput->d->Frye1;
+			$v_Frpe1 = $jsonoutput->d->Frpe1;
+			$v_Toye1 = $jsonoutput->d->Toye1;
+			$v_Tope1 = $jsonoutput->d->Tope1;
+			
 			
 			
 			$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Bkont."\t\t".$v_Frye1."\t\t".$v_Frpe1."\t\t".$v_Toye1."\t\t".$v_Tope1;
