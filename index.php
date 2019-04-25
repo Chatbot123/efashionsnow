@@ -185,7 +185,7 @@ $curl = curl_init();
 
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
-  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet/?$format=json",
+  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet/?\$format=json",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
