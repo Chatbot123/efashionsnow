@@ -252,6 +252,7 @@ $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERI
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
+  CURLOPT_HEADER => true,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -267,9 +268,36 @@ curl_setopt_array($curl, array(
 		$response = curl_exec($curl);
 		//echo $response;
 		$err = curl_error($curl);
+	
+	//--
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+ //echo $headers;
+ //--
+	$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+//extracting status from header
+$httpstatus = $headers[0];
+	
+//---
+curl_close($curl);
+preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+//echo $res[1];
+	$v_res = str_replace(' ', '', $res[1]);
+	if($v_res=="404NotFound")
+	{
+		$speech .= "Record Doesn't exist in system";
+		$speech .= "\r\n";
+	}
+	else 
+	{
+	
 
-		curl_close($curl);
-		$jsonoutput = json_decode($response);
+		
+		$jsonoutput = json_decode($body);
 		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
 				
 		
@@ -286,8 +314,8 @@ curl_setopt_array($curl, array(
 			
 			$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Bkont."\t\t".$v_Frye1."\t\t".$v_Frpe1."\t\t".$v_Toye1."\t\t".$v_Tope1;
 			$speech .= "\r\n";	
-		
 	}
+}
 
 //---------------------------------------------------
 //--OPP DISPLAY SPECIFIC RECORD ENDS HERE
@@ -538,11 +566,6 @@ $jsonoutput = json_decode($response);
 	$speech .= "CompanyCode\tClientCode\tAccountType\tTo Period\n";
 	$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Tope1;
 //-----GET REQUEST AGAIN ENDS
-	
-
-	
-	
-		
 }
 
 //--------YES UPDATE ENDS HERE---------------------
@@ -550,6 +573,151 @@ $jsonoutput = json_decode($response);
 //---------------------------------------------------
 //--OPP UPDATE SPECIFIC RECORD ENDS HERE
 //---------------------------------------------------
+
+//---------------------------------------------------
+//--OPP CREATE NEW RECORD STARTS HERE OPPCustomCreateNew
+//---------------------------------------------------
+if($json->queryResult->intent->displayName=='OPPCustomCreateNew')
+{
+	if(isset($json->queryResult->parameters->CompanyCode))
+		{	$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
+			$v_CompanyCode= strtoupper($v_CompanyCode);
+		}
+	if(isset($json->queryResult->parameters->AcctType))
+		{	$v_AcctType = $json->queryResult->parameters->AcctType; 
+			$v_AcctType= strtoupper($v_AcctType);
+		}
+	if(isset($json->queryResult->parameters->FromPer1))
+		{	$v_FromPer1 = $json->queryResult->parameters->FromPer1; 
+			$v_FromPer1 = strtoupper($v_FromPer1);
+		}
+	if(isset($json->queryResult->parameters->ToPer))
+		{	$v_ToPer = $json->queryResult->parameters->ToPer; 
+			$v_ToPer= strtoupper($v_ToPer);
+		}
+//----------------------------------------------------------------------------
+$curl = curl_init();
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet/?\$format=json";
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+    "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+    "x-CSRF-Token: Fetch"
+  ),
+));
+
+// Get the response body as string
+$response = curl_exec($curl);
+
+//---------
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+ //echo $headers;
+  curl_close($curl);
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+$token = $headers[5];
+$sapcookie = $headers[2];
+preg_match("/SAP_SESSIONID_SMF_100(.*?)\;/", $sapcookie, $matches);
+$token = substr($token,14);
+
+//put request
+$jsonvar = array(
+				'Bukrs'=> $v_CompanyCode,
+				'Mandt'=> '100',
+				'Mkoar'=> $v_AcctType,
+				'Rrcty'=> '0',
+				'Bkont'=> 'ZZZZZZZZZZ',
+				'Frye2'=> '0000',
+				'Vkont'=> '',
+				'Frpe2'=> '000',
+				'Frye1'=> '2018',
+				'Toye2'=> '0000',
+				'Frpe1'=> $v_FromPer1,
+				'Tope2'=> '000',
+				'Toye1'=> '2019',
+				'Brgru'=> '',
+				'Tope1'=> $v_ToPer,
+				'Frye3'=> '0000',
+				'Frpe3'=> '000',
+				'Toye3'=> '0000',
+				'Tope3'=> '000'
+
+			
+		);
+$jsonvar = json_encode($jsonvar);
+	//echo $jsonvar;
+$curl = curl_init();
+$csrftoken = "x-CSRF-Token:".$token; // Prepare the csrf token
+$v_cookie =  "SAP_SESSIONID_SMF_100".$matches[1]; //Prepare cookie value sap session id
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet";
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_COOKIE => $v_cookie,
+  CURLOPT_POST => true,
+  CURLOPT_POSTFIELDS => $jsonvar,
+  CURLOPT_HTTPHEADER => array(
+	  "Content-Type: application/json",
+	  "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+	  $csrftoken),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+  curl_close($curl);
+
+$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+//extracting status from header
+$httpstatus = $headers[0];
+	
+//---
+	
+preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+//echo $res[1];
+	$v_res = str_replace(' ', '', $res[1]);
+	if($v_res=="201Created")
+	{
+		$speech .= "Record Created Successfully";
+		$speech .= "\r\n";
+	}
+	else 
+	{
+		$speech = $err;
+	}	
+	
+}
+	
+//---------------------------------------------------
+//--OPP CREATE NEW RECORD ENDS HERE
+//---------------------------------------------------
+
 	
 //---------------------------------------------------
 //----CUSTOM ODATA SERVICES ENDS HERE-------------
