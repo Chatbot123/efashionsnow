@@ -902,7 +902,7 @@ $curl = curl_init();
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAP_VENDOR_BALANCE_SRV/SupplierBalanceSet?$filter=((Supplier eq '".$v_SuppCode."') and (CompanyCode eq '".$v_CompanyCode."')) and (FiscalYear eq '".$v_FiscalYear."')&$format=json";
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
-  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet/?\$format=json",
+  CURLOPT_URL => $url,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_HEADER => true,
   CURLOPT_ENCODING => "",
