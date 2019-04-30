@@ -900,7 +900,7 @@ if($json->queryResult->intent->displayName=='OPPSupBalSet')
 $curl = curl_init();
 //"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')";
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAP_VENDOR_BALANCE_SRV/SupplierBalanceSet?\$filter=((Supplier eq '".$v_SuppCode."') and (CompanyCode eq '".$v_CompanyCode."')) and (FiscalYear eq '".$v_FiscalYear."')&\$format=json";
-	echo $url;
+	//echo $url;
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
@@ -918,7 +918,7 @@ curl_setopt_array($curl, array(
 ));
 
 		$response = curl_exec($curl);
-		//echo $response;
+		echo $response;
 		$err = curl_error($curl);
 		// Return headers seperatly from the Response Body
 		  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
