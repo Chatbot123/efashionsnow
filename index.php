@@ -7,7 +7,7 @@ if($method == 'POST')
 	$json = json_decode($requestBody);
 
 //---------------------------------------------------------------------------------
-	//------------------------------------
+//------------------------------------
 //--Vendor balance detail starts here
 //-------------------------------------
 if($json->queryResult->intent->displayName=='OPPVendorBalSet')
@@ -105,7 +105,104 @@ curl_setopt_array($curl, array(
 //-------------------------------------
 //--vendor balance details ends here
 //--------------------------------------
+//------------------------------------
+//--Vendor Current balance detail starts here
+//-------------------------------------
+if($json->queryResult->intent->displayName=='OPPcurrentVendorBal')
+{
+	if(isset($json->queryResult->parameters->CompCode))
+	{ 
+		$v_CompanyCode = $json->queryResult->parameters->CompCode; 
+	  	$v_CompanyCode= strtoupper($v_CompanyCode);
+	}
+	if(isset($json->queryResult->parameters->VendorCode))
+	{ 
+		$v_VendorCode = $json->queryResult->parameters->VendorCode; 
+	  	$v_VendorCode = strtoupper($v_VendorCode);
+	}
+	
+	
+	
+$curl = curl_init();
+//$api_request_parameters = array('filter'=>"((Vendor eq '".$v_VendorCode."') and (CompCode eq '".$v_CompanyCode."'))");
+//$api_request_url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/CreditorBalancesSet";
+//$api_request_url .= "?".http_build_query($api_request_parameters);
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/CurrentVendorBalSet?\$filter=%28%28Vendor%20eq%20%27".$v_VendorCode."%27%29%20and%20%28CompCode%20eq%20%27".$v_CompanyCode."%27%29%29";
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_0,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+	  "Accept:application/json"
+  ),
+));
 
+		$response = curl_exec($curl);
+		//echo $response;
+		$err = curl_error($curl);
+		// Return headers seperatly from the Response Body
+		  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+		  $headers = substr($response, 0, $header_size);
+		  $body = substr($response, $header_size);
+		  header("Content-Type:application/json");
+		  curl_close($curl);
+
+		$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+		$headers = array_filter($headers);
+		//extracting status from header
+		$httpstatus = $headers[0];
+
+		//---
+
+		preg_match("/HTTP\/1.0(.*)/", $httpstatus, $res);
+		//echo $res[1];
+			$v_res = str_replace(' ', '', $res[1]);
+	//echo $v_res;
+	//echo $body;
+			if($v_res=="400BadRequest" )
+			{
+				$speech = "Vendor ".$v_VendorCode." does not exist";
+				$speech .= "\r\n";
+			}
+			else 
+			{
+		$jsonoutput = json_decode($body,true);
+		$numofrecords = sizeof($jsonoutput['d']['results']);
+		$speech = "Total number of records ".$numofrecords;
+		$speech .= "\r\n";
+		$speech .= "Companycode\tVendor\tCarryFwd\tCurrency\tBalance\tCrryfwdtot\tCurrency\tTotalBal";
+				
+		for($x=0;$x<$numofrecords;$x++) 
+		{
+		   	$v_Companycode = $jsonoutput['d']['results'][$x]['Companycode'];
+			$v_Vendor = $jsonoutput['d']['results'][$x]['Vendor'];
+			$v_CarryFwd = $jsonoutput['d']['results'][$x]['CarryFwd'];
+			$v_Currency = $jsonoutput['d']['results'][$x]['Currency'];
+			$v_Balance = $jsonoutput['d']['results'][$x]['Balance'];
+			$v_Crryfwdtot = $jsonoutput['d']['results'][$x]['Crryfwdtot'];
+			$v_Currency = $jsonoutput['d']['results'][$x]['Currency'];
+			$v_TotalBal = $jsonoutput['d']['results'][$x]['TotalBal'];
+			
+						
+			$speech .= "\r\n";	
+			$speech .= "$v_Companycode \t $v_Vendor \t $v_CarryFwd \t $v_Currency \t $v_Balance \t $v_Crryfwdtot \t $v_Currency \t $v_TotalBal";
+			$speech .= "\r\n";	
+		}
+	}
+		
+	}
+	
+//-------------------------------------
+//--vendor current balance details ends here
+//--------------------------------------
 //----------------------------------------------------------------------------------	
 	
 	
