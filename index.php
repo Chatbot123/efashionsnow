@@ -900,7 +900,7 @@ if($json->queryResult->intent->displayName=='OPPSupBalSet')
 $curl = curl_init();
 //"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')";
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAP_VENDOR_BALANCE_SRV/SupplierBalanceSet/?\$filter=((Supplier eq '".$v_SuppCode."') and (CompanyCode eq '".$v_CompanyCode."')) and (FiscalYear eq '".$v_FiscalYear."')&\$format=json";
-	echo $url;
+	//echo $url;
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
@@ -909,7 +909,7 @@ curl_setopt_array($curl, array(
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
   CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_0,
   CURLOPT_CUSTOMREQUEST => "GET",
   CURLOPT_POSTFIELDS => "",
   CURLOPT_HTTPHEADER => array(
@@ -935,11 +935,11 @@ curl_setopt_array($curl, array(
 
 		//---
 
-		preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+		preg_match("/HTTP\/1.0(.*)/", $httpstatus, $res);
 		//echo $res[1];
 			$v_res = str_replace(' ', '', $res[1]);
-	echo $v_res;
-	echo $body;
+	//echo $v_res;
+	//echo $body;
 			if($v_res=="400BadRequest" )
 			{
 				$speech = "No data present for given fiscal year";
