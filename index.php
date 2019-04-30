@@ -914,11 +914,12 @@ curl_setopt_array($curl, array(
   CURLOPT_POSTFIELDS => "",
   CURLOPT_HTTPHEADER => array(
          "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
+	  "Content-Type:application/json"
   ),
 ));
 
 		$response = curl_exec($curl);
-		echo $response;
+		//echo $response;
 		$err = curl_error($curl);
 		// Return headers seperatly from the Response Body
 		  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
@@ -937,14 +938,15 @@ curl_setopt_array($curl, array(
 		preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 		//echo $res[1];
 			$v_res = str_replace(' ', '', $res[1]);
+	echo $v_res;
 			if($v_res=="400BadRequest" )
 			{
-				$speech .= "No data present for given fiscal year";
+				$speech = "No data present for given fiscal year";
 				$speech .= "\r\n";
 			}
 			else 
 			{
-				$jsonoutput = json_decode($response,true);
+				$jsonoutput = json_decode($body,true);
 		$numofrecords = sizeof($jsonoutput['d']['results']);
 		//$speech = "Total number of records ".$numofusers;
 		//$speech .= "\r\n";
