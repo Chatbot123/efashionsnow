@@ -171,28 +171,28 @@ curl_setopt_array($curl, array(
 			}
 			else 
 			{
-		$jsonoutput = json_decode($body,true);
-		$numofrecords = sizeof($jsonoutput['d']['results']);
-		$speech = "Total number of records ".$numofrecords;
-		$speech .= "\r\n";
+		$jsonoutput = json_decode($body);
+		//$numofrecords = sizeof($jsonoutput['d']['results']);
+		//$speech = "Total number of records ".$numofrecords;
+		$speech = "\r\n";
 		$speech .= "Companycode\tVendor\tCarryFwd\tCurrency\tBalance\tCrryfwdtot\tCurrency\tTotalBal";
 				
-		for($x=0;$x<$numofrecords;$x++) 
-		{
-		   	$v_Companycode = $jsonoutput['d']['results'][$x]['Companycode'];
-			$v_Vendor = $jsonoutput['d']['results'][$x]['Vendor'];
-			$v_CarryFwd = $jsonoutput['d']['results'][$x]['CarryFwd'];
-			$v_Currency = $jsonoutput['d']['results'][$x]['Currency'];
-			$v_Balance = $jsonoutput['d']['results'][$x]['Balance'];
-			$v_Crryfwdtot = $jsonoutput['d']['results'][$x]['Crryfwdtot'];
-			$v_Currency = $jsonoutput['d']['results'][$x]['Currency'];
-			$v_TotalBal = $jsonoutput['d']['results'][$x]['TotalBal'];
+		//for($x=0;$x<$numofrecords;$x++) 
+		//{
+		   	$v_Companycode = $jsonoutput->d->Companycode;
+			$v_Vendor = $jsonoutput->d->Vendor;
+			$v_CarryFwd = $jsonoutput->d->CarryFwd;
+			$v_Currency = $jsonoutput->d->Currency;
+			$v_Balance = $jsonoutput->d->Balance;
+			$v_Crryfwdtot = $jsonoutput->d->Crryfwdtot;
+			$v_Currency = $jsonoutput->d->Currency;
+			$v_TotalBal = $jsonoutput->d->TotalBal;
 			
 						
 			$speech .= "\r\n";	
 			$speech .= "$v_Companycode \t $v_Vendor \t $v_CarryFwd \t $v_Currency \t $v_Balance \t $v_Crryfwdtot \t $v_Currency \t $v_TotalBal";
 			$speech .= "\r\n";	
-		}
+		//}
 	}
 		
 	}
