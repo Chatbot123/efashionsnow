@@ -1015,14 +1015,13 @@ if($json->queryResult->intent->displayName=='OPPVendorBalSet')
 	
 	
 $curl = curl_init();
+$api_request_parameters = array('filter'=>"((Vendor eq '".$v_VendorCode."') and (CompCode eq '".$v_CompanyCode."'))");
+$api_request_url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/CreditorBalancesSet";
+$api_request_url .= "?".http_build_query($api_request_parameters);
 
-
-
-$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/CreditorBalancesSet?\$filter=((Vendor eq '".$v_VendorCode."') and (CompCode eq '".$v_CompanyCode."'))&\$format=json";
-	echo $url;
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
-  CURLOPT_URL => $url,
+  CURLOPT_URL => $api_request_url,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_HEADER => true,
   CURLOPT_ENCODING => "",
@@ -1033,7 +1032,7 @@ curl_setopt_array($curl, array(
   CURLOPT_POSTFIELDS => "",
   CURLOPT_HTTPHEADER => array(
          "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
-	  "Content-Type:application/json"
+	  "Accept:application/json"
   ),
 ));
 
