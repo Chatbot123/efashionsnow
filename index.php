@@ -5,6 +5,109 @@ if($method == 'POST')
 {
 	$requestBody = file_get_contents('php://input');
 	$json = json_decode($requestBody);
+
+//---------------------------------------------------------------------------------
+	//------------------------------------
+//--Vendor balance detail starts here
+//-------------------------------------
+if($json->queryResult->intent->displayName=='OPPVendorBalSet')
+{
+	if(isset($json->queryResult->parameters->CompCode))
+	{ 
+		$v_CompanyCode = $json->queryResult->parameters->CompCode; 
+	  	$v_CompanyCode= strtoupper($v_CompanyCode);
+	}
+	if(isset($json->queryResult->parameters->VendorCode))
+	{ 
+		$v_VendorCode = $json->queryResult->parameters->VendorCode; 
+	  	$v_VendorCode = strtoupper($v_VendorCode);
+	}
+	
+	
+	
+$curl = curl_init();
+//$api_request_parameters = array('filter'=>"((Vendor eq '".$v_VendorCode."') and (CompCode eq '".$v_CompanyCode."'))");
+//$api_request_url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/CreditorBalancesSet";
+//$api_request_url .= "?".http_build_query($api_request_parameters);
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/CreditorBalancesSet?\$filter=%28%28Vendor%20eq%20%27".$v_VendorCode."%27%29%20and%20%28CompCode%20eq%20%27".$v_CompanyCode."%27%29%29";
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_0,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+	  "Accept:application/json"
+  ),
+));
+
+		$response = curl_exec($curl);
+		//echo $response;
+		$err = curl_error($curl);
+		// Return headers seperatly from the Response Body
+		  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+		  $headers = substr($response, 0, $header_size);
+		  $body = substr($response, $header_size);
+		  header("Content-Type:application/json");
+		  curl_close($curl);
+
+		$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+		$headers = array_filter($headers);
+		//extracting status from header
+		$httpstatus = $headers[0];
+
+		//---
+
+		preg_match("/HTTP\/1.0(.*)/", $httpstatus, $res);
+		//echo $res[1];
+			$v_res = str_replace(' ', '', $res[1]);
+	//echo $v_res;
+	//echo $body;
+			if($v_res=="400BadRequest" )
+			{
+				$speech = "Vendor ".$v_VendorCode." does not exist";
+				$speech .= "\r\n";
+			}
+			else 
+			{
+		$jsonoutput = json_decode($body,true);
+		$numofrecords = sizeof($jsonoutput['d']['results']);
+		$speech = "Total number of records ".$numofrecords;
+		$speech .= "\r\n";
+		$speech .= "Vendor\tCompCode\tFiscYear\tFisPeriod\tDebitsMth\tCreditMth\tCurrency\tBalance\tMnthSales";
+				
+		for($x=0;$x<$numofrecords;$x++) 
+		{
+		   	$v_Vendor = $jsonoutput['d']['results'][$x]['Vendor'];
+			$v_CompCode = $jsonoutput['d']['results'][$x]['CompCode'];
+			$v_FiscYear = $jsonoutput['d']['results'][$x]['FiscYear'];
+			$v_FisPeriod = $jsonoutput['d']['results'][$x]['FisPeriod'];
+			$v_DebitsMth = $jsonoutput['d']['results'][$x]['DebitsMth'];
+			$v_CreditMth = $jsonoutput['d']['results'][$x]['CreditMth'];
+			$v_Currency = $jsonoutput['d']['results'][$x]['Currency'];
+			$v_Balance = $jsonoutput['d']['results'][$x]['Balance'];
+			$v_MnthSales = $jsonoutput['d']['results'][$x]['MnthSales'];
+						
+			$speech .= "\r\n";	
+			$speech .= "$v_Vendor \t $v_CompCode \t v_FiscYear \t v_FisPeriod \t v_DebitsMth \t v_CreditMth \t v_Currency \t v_Balance \t v_MnthSales";
+			$speech .= "\r\n";	
+		}
+	}
+		
+	}
+	
+//-------------------------------------
+//--vendor balance details ends here
+//--------------------------------------
+
+//----------------------------------------------------------------------------------	
+	
 	
 	//sap integration -- open posting period
 	if($json->queryResult->intent->displayName=='OPPacctype')
@@ -996,104 +1099,6 @@ if($json->queryResult->intent->displayName=='OPPSupBalSet - yes')
 }
 	
 //--vendor/supplier more detail on fiori end
-//------------------------------------
-//--Vendor balance detail starts here
-//-------------------------------------
-if($json->queryResult->intent->displayName=='OPPVendorBalSet')
-{
-	if(isset($json->queryResult->parameters->CompCode))
-	{ 
-		$v_CompanyCode = $json->queryResult->parameters->CompCode; 
-	  	$v_CompanyCode= strtoupper($v_CompanyCode);
-	}
-	if(isset($json->queryResult->parameters->VendorCode))
-	{ 
-		$v_VendorCode = $json->queryResult->parameters->VendorCode; 
-	  	$v_VendorCode = strtoupper($v_VendorCode);
-	}
-	
-	
-	
-$curl = curl_init();
-//$api_request_parameters = array('filter'=>"((Vendor eq '".$v_VendorCode."') and (CompCode eq '".$v_CompanyCode."'))");
-//$api_request_url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/CreditorBalancesSet";
-//$api_request_url .= "?".http_build_query($api_request_parameters);
-$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/CreditorBalancesSet?\$filter=%28%28Vendor%20eq%20%27".$v_VendorCode."%27%29%20and%20%28CompCode%20eq%20%27".$v_CompanyCode."%27%29%29";
-curl_setopt_array($curl, array(
-  CURLOPT_PORT => "8000",
-  CURLOPT_URL => $url,
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_HEADER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_0,
-  CURLOPT_CUSTOMREQUEST => "GET",
-  CURLOPT_POSTFIELDS => "",
-  CURLOPT_HTTPHEADER => array(
-         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
-	  "Accept:application/json"
-  ),
-));
-
-		$response = curl_exec($curl);
-		//echo $response;
-		$err = curl_error($curl);
-		// Return headers seperatly from the Response Body
-		  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
-		  $headers = substr($response, 0, $header_size);
-		  $body = substr($response, $header_size);
-		  header("Content-Type:application/json");
-		  curl_close($curl);
-
-		$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
-		$headers = array_filter($headers);
-		//extracting status from header
-		$httpstatus = $headers[0];
-
-		//---
-
-		preg_match("/HTTP\/1.0(.*)/", $httpstatus, $res);
-		//echo $res[1];
-			$v_res = str_replace(' ', '', $res[1]);
-	//echo $v_res;
-	//echo $body;
-			if($v_res=="400BadRequest" )
-			{
-				$speech = "Vendor ".$v_VendorCode." does not exist";
-				$speech .= "\r\n";
-			}
-			else 
-			{
-		$jsonoutput = json_decode($body,true);
-		$numofrecords = sizeof($jsonoutput['d']['results']);
-		$speech = "Total number of records ".$numofrecords;
-		$speech .= "\r\n";
-		$speech .= "Vendor\tCompCode\tFiscYear\tFisPeriod\tDebitsMth\tCreditMth\tCurrency\tBalance\tMnthSales";
-				
-		for($x=0;$x<$numofrecords;$x++) 
-		{
-		   	$v_Vendor = $jsonoutput['d']['results'][$x]['Vendor'];
-			$v_CompCode = $jsonoutput['d']['results'][$x]['CompCode'];
-			$v_FiscYear = $jsonoutput['d']['results'][$x]['FiscYear'];
-			$v_FisPeriod = $jsonoutput['d']['results'][$x]['FisPeriod'];
-			$v_DebitsMth = $jsonoutput['d']['results'][$x]['DebitsMth'];
-			$v_CreditMth = $jsonoutput['d']['results'][$x]['CreditMth'];
-			$v_Currency = $jsonoutput['d']['results'][$x]['Currency'];
-			$v_Balance = $jsonoutput['d']['results'][$x]['Balance'];
-			$v_MnthSales = $jsonoutput['d']['results'][$x]['MnthSales'];
-						
-			$speech .= "\r\n";	
-			$speech .= "$v_Vendor \t $v_CompCode \t v_FiscYear \t v_FisPeriod \t v_DebitsMth \t v_CreditMth \t v_Currency \t v_Balance \t v_MnthSales";
-			$speech .= "\r\n";	
-		}
-	}
-		
-	}
-	
-//-------------------------------------
-//--vendor balance details ends here
-//--------------------------------------
 
 	
 	
