@@ -913,7 +913,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => "GET",
   CURLOPT_POSTFIELDS => "",
   CURLOPT_HTTPHEADER => array(
-         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
 	  "Content-Type:application/json"
   ),
 ));
@@ -939,6 +939,7 @@ curl_setopt_array($curl, array(
 		//echo $res[1];
 			$v_res = str_replace(' ', '', $res[1]);
 	echo $v_res;
+	echo $body;
 			if($v_res=="400BadRequest" )
 			{
 				$speech = "No data present for given fiscal year";
