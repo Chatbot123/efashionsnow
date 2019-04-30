@@ -899,7 +899,7 @@ if($json->queryResult->intent->displayName=='OPPSupBalSet')
 	
 $curl = curl_init();
 //"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')";
-$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAP_VENDOR_BALANCE_SRV/SupplierBalanceSet/?\$filter=((Supplier eq '".$v_SuppCode."') and (CompanyCode eq '".$v_CompanyCode."')) and (FiscalYear eq '".$v_FiscalYear."')";
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAP_VENDOR_BALANCE_SRV/SupplierBalanceSet/?\$filter=(((Supplier eq '".$v_SuppCode."') and (CompanyCode eq '".$v_CompanyCode."')) and (FiscalYear eq '".$v_FiscalYear."')))&\$format=json";
 	//echo $url;
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
@@ -958,7 +958,9 @@ curl_setopt_array($curl, array(
 		   	$v_BalAmtInDisplayCrcy = $jsonoutput['d']['results'][$numofrecords-1]['BalAmtInDisplayCrcy'];
 			$v_Currency = $jsonoutput['d']['results'][$numofrecords-1]['Currency'];
 			$speech .=  "Total balance amount for supplier number ".$v_SuppCode." is ".$v_Currency." ".$v_BalAmtInDisplayCrcy;
+				
 			$speech .= "\r\n";	
+			$speech .= "Do you want to see each line item split details?";
 		//}
 			}	
 		
