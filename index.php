@@ -871,6 +871,106 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 //--OPP DELETE RECORD ENDS HERE OPPCustomDelSpecific
 //---------------------------------------------------
 	
+	
+//------------------------------------------	
+//VENDOR/SUPPLIER SCENARIOS STARTS HERE
+//------------------------------------------
+	//------------------------------------------
+	//--SUPPLIER BALANCE STARTS HERE
+	//------------------------------------------
+if($json->queryResult->intent->displayName=='OPPSupBalSet')
+{
+	if(isset($json->queryResult->parameters->CompCode))
+	{ 
+		$v_CompanyCode = $json->queryResult->parameters->CompCode; 
+	  	$v_CompanyCode= strtoupper($v_CompanyCode);
+	}
+	if(isset($json->queryResult->parameters->SuppCode))
+	{ 
+		$v_SuppCode = $json->queryResult->parameters->SuppCode; 
+	  	$v_SuppCode= strtoupper($v_SuppCode);
+	}
+	if(isset($json->queryResult->parameters->FiscalYear))
+	{ 
+		$v_FiscalYear = $json->queryResult->parameters->FiscalYear; 
+	  	$v_FiscalYear= strtoupper($v_FiscalYear);
+	}
+	
+	
+$curl = curl_init();
+//"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')";
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAP_VENDOR_BALANCE_SRV/SupplierBalanceSet?$filter=((Supplier eq '".$v_SuppCode."') and (CompanyCode eq '".$v_CompanyCode."')) and (FiscalYear eq '".$v_FiscalYear."')&$format=json";
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet/?\$format=json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
+  ),
+));
+
+		$response = curl_exec($curl);
+		//echo $response;
+		$err = curl_error($curl);
+		// Return headers seperatly from the Response Body
+		  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+		  $headers = substr($response, 0, $header_size);
+		  $body = substr($response, $header_size);
+		  header("Content-Type:application/json");
+		  curl_close($curl);
+
+		$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+		$headers = array_filter($headers);
+		//extracting status from header
+		$httpstatus = $headers[0];
+
+		//---
+
+		preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+		//echo $res[1];
+			$v_res = str_replace(' ', '', $res[1]);
+			if($v_res=="400BadRequest" )
+			{
+				$speech .= "No data present for given fiscal year";
+				$speech .= "\r\n";
+			}
+			else 
+			{
+				$jsonoutput = json_decode($response,true);
+		$numofrecords = sizeof($jsonoutput['d']['results']);
+		//$speech = "Total number of records ".$numofusers;
+		//$speech .= "\r\n";
+		//$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
+				
+		//for($x=0;$x<$numofusers;$x++) 
+		//{
+		   	$v_BalAmtInDisplayCrcy = $jsonoutput['d']['results'][$numofrecords-1]['BalAmtInDisplayCrcy'];
+			$v_Currency = $jsonoutput['d']['results'][$numofrecords-1]['Currency'];
+			$speech .=  "Total balance amount for supplier number ".$v_SuppCode." is ".$v_Currency." ".$v_BalAmtInDisplayCrcy;
+			$speech .= "\r\n";	
+		//}
+			}	
+		
+	}
+	//------------------------------------------
+	//--SUPPLIER BALANCE ENDS HERE
+	//------------------------------------------
+	
+	
+	
+	
+//------------------------------------------	
+//VENDOR/SUPPLIER SCENARIOS ENDS HERE
+//------------------------------------------	
+	
+	
 //---------------------------------------------------
 //----CUSTOM ODATA SERVICES ENDS HERE-------------
 //---------------------------------------------------
@@ -1394,6 +1494,10 @@ if ($lockstatus == "L")
 //------------------------------	
 //Lock sap user account ends here
 //-------------------------------
+
+	
+
+	
 	//SAP ends here
 
 
