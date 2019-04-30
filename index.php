@@ -1087,7 +1087,8 @@ curl_setopt_array($curl, array(
 			$speech .= "\r\n";	
 			$speech .= "$v_Vendor \t $v_CompCode \t v_FiscYear \t v_FisPeriod \t v_DebitsMth \t v_CreditMth \t v_Currency \t v_Balance \t v_MnthSales";
 			$speech .= "\r\n";	
-		}	
+		}
+	}
 		
 	}
 	
