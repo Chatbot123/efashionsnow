@@ -975,6 +975,34 @@ curl_setopt_array($curl, array(
 //------------------------------------------	
 //VENDOR/SUPPLIER SCENARIOS ENDS HERE
 //------------------------------------------	
+//--vendor/supplier more detail on fiori
+	
+	
+if($json->queryResult->intent->displayName=='OPPSupBalSet - yes')
+{
+	if(isset($json->queryResult->parameters->CompCode))
+	{ 
+		$v_CompanyCode = $json->queryResult->parameters->CompCode; 
+	  	$v_CompanyCode= strtoupper($v_CompanyCode);
+	}
+	if(isset($json->queryResult->parameters->SuppCode))
+	{ 
+		$v_SuppCode = $json->queryResult->parameters->SuppCode; 
+	  	$v_SuppCode= strtoupper($v_SuppCode);
+	}
+	if(isset($json->queryResult->parameters->FiscalYear))
+	{ 
+		$v_FiscalYear = $json->queryResult->parameters->FiscalYear; 
+	  	$v_FiscalYear= strtoupper($v_FiscalYear);
+	}
+		
+	$uri = " http://sealapp2.sealconsult.com:8000/sap/bc/ui5_ui5/ui2/ushell/shells/abap/Fiorilaunchpad.html#Supplier-manageLineItems?CompanyCode=".$v_CompanyCode."&CustomClearingStatus=A&DueItemCategory=N&FiscalYear=".$v_FiscalYear."&PostingDate=&Supplier=".$v_SuppCode;		
+	$speech = "Please click on below link to get details.\r\n";
+	$speech .= $uri;
+	
+}
+	
+//--vendor/supplier more detail on fiori end
 	
 	
 //---------------------------------------------------
