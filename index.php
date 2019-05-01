@@ -220,6 +220,7 @@ if($json->queryResult->intent->displayName=='OPPcurrentVendorBalKeyDate')
 		$v_KeyDate = $json->queryResult->parameters->KeyDate; 
 	  	$v_KeyDate = strtoupper($v_KeyDate);
 		$v_KeyDate = substr($v_KeyDate, 0, -6);
+		echo $v_KeyDate;
 	}
 	
 	
@@ -267,7 +268,7 @@ curl_setopt_array($curl, array(
 		//echo $res[1];
 			$v_res = str_replace(' ', '', $res[1]);
 	//echo $v_res;
-	//echo $body;
+	echo $body;
 			if($v_res=="400BadRequest" )
 			{
 				$speech = "Vendor ".$v_VendorCode." does not exist";
@@ -284,17 +285,16 @@ curl_setopt_array($curl, array(
 		//for($x=0;$x<$numofrecords;$x++) 
 		//{
 		   	$v_Companycode = $jsonoutput->d->Companycode;
+			//$v_Keydate = $jsonoutput->d->Keydate;
 			$v_Vendor = $jsonoutput->d->Vendor;
-			$v_CarryFwd = $jsonoutput->d->CarryFwd;
 			$v_Currency = $jsonoutput->d->Currency;
-			$v_Balance = $jsonoutput->d->Balance;
-			$v_Crryfwdtot = $jsonoutput->d->Crryfwdtot;
-			$v_Currency = $jsonoutput->d->Currency;
-			$v_TotalBal = $jsonoutput->d->TotalBal;
+			$v_TCurrBal = $jsonoutput->d->TCurrBal;
+			
+			
 			
 						
 			$speech .= "\r\n";	
-			$speech .= "$v_Companycode \t $v_Vendor \t $v_CarryFwd \t $v_Currency \t $v_Balance \t $v_Crryfwdtot \t $v_Currency \t $v_TotalBal";
+			$speech .= "Current Balance on date ".$v_Keydate." is ".$v_Currency." ".$v_TCurrBal." of Vendor ".$v_Vendor;
 			$speech .= "\r\n";	
 		//}
 	}
