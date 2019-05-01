@@ -1389,7 +1389,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 //--display newly created records
 //---------------------------------------
 $speech .= "\r\nDetails are given below\r\n";
-$speech .= "\r\nBUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
+$speech = "\r\nBUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
 for($x=0;$x<$numofaccts;$x++) 
 {
 		   $v_AcctType = $json['queryResult']['parameters']['AcctType'][$x];
@@ -1447,7 +1447,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 
 		
 		$jsonoutput = json_decode($body);
-		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
+		//$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
 				
 		
 		   	$v_BUKRS = $jsonoutput->d->Bukrs;
