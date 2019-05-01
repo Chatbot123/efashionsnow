@@ -614,7 +614,7 @@ curl_setopt_array($curl, array(
 				$numofrecords = sizeof($jsonoutput['d']['results']);
 				$speech = "Total number of records ".$numofrecords;
 				$speech .= "\r\n";
-				$speech .= "Supplier Industry Code\tSupplier Industry Name";
+				$speech .= "Supplier Industry Code"."  \t   "."Supplier Industry Name";
 
 				for($x=0;$x<$numofrecords;$x++) 
 				{
