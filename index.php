@@ -80,6 +80,7 @@ curl_setopt_array($curl, array(
 		$numofrecords = sizeof($jsonoutput['d']['results']);
 		$speech = "Total number of records ".$numofrecords;
 		$speech .= "\r\n";
+		$speech .= "Balance Information in all months for vender ".$v_VendorCode."\r\n";
 		$speech .= "Vendor\tCompCode\tFiscYear\tFisPeriod\tDebitsMth\tCreditMth\tCurrency\tBalance\tMnthSales";
 				
 		for($x=0;$x<$numofrecords;$x++) 
@@ -171,14 +172,7 @@ curl_setopt_array($curl, array(
 			}
 			else 
 			{
-		$jsonoutput = json_decode($body);
-		//$numofrecords = sizeof($jsonoutput['d']['results']);
-		//$speech = "Total number of records ".$numofrecords;
-		$speech = "\r\n";
-		$speech .= "Companycode\tVendor\tCarryFwd\tCurrency\tBalance\tCrryfwdtot\tCurrency\tTotalBal";
-				
-		//for($x=0;$x<$numofrecords;$x++) 
-		//{
+			$jsonoutput = json_decode($body);
 		   	$v_Companycode = $jsonoutput->d->Companycode;
 			$v_Vendor = $jsonoutput->d->Vendor;
 			$v_CarryFwd = $jsonoutput->d->CarryFwd;
@@ -188,8 +182,13 @@ curl_setopt_array($curl, array(
 			$v_Currency = $jsonoutput->d->Currency;
 			$v_TotalBal = $jsonoutput->d->TotalBal;
 			
-						
 			$speech .= "\r\n";	
+			$speech .= "Current Balance of vendor ".$v_Vendor." is ".$v_Currency." ".$v_Balance;
+			
+			$speech .= "\r\n";
+			$speech .= "Other details are given below\r\n";
+			$speech .= "Companycode\tVendor\tCarryFwd\tCurrency\tBalance\tCrryfwdtot\tCurrency\tTotalBal";			
+			$speech .= "\r\n";
 			$speech .= "$v_Companycode \t $v_Vendor \t $v_CarryFwd \t $v_Currency \t $v_Balance \t $v_Crryfwdtot \t $v_Currency \t $v_TotalBal";
 			$speech .= "\r\n";	
 		//}
@@ -230,7 +229,7 @@ $curl = curl_init();
 http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/KeyDateVendorBalSet(Vendor='1000120',Companycode='1710',Keydate=datetime'2019-04-25T00:00:00')/?$format=json
 
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/KeyDateVendorBalSet(Vendor='".$v_VendorCode."',Companycode='".$v_CompanyCode."',Keydate=datetime'".$v_KeyDate."')/?\$format=json";
-echo $url;	
+//echo $url;	
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
@@ -269,7 +268,7 @@ curl_setopt_array($curl, array(
 		//echo $res[1];
 			$v_res = str_replace(' ', '', $res[1]);
 	//echo $v_res;
-	echo $body;
+	//echo $body;
 			if($v_res=="400BadRequest" )
 			{
 				$speech = "Vendor ".$v_VendorCode." does not exist";
@@ -281,7 +280,7 @@ curl_setopt_array($curl, array(
 		//$numofrecords = sizeof($jsonoutput['d']['results']);
 		//$speech = "Total number of records ".$numofrecords;
 		$speech = "\r\n";
-		$speech .= "Companycode\tVendor\tCarryFwd\tCurrency\tBalance\tCrryfwdtot\tCurrency\tTotalBal";
+		//$speech .= "Companycode\tVendor\tCarryFwd\tCurrency\tBalance\tCrryfwdtot\tCurrency\tTotalBal";
 				
 		//for($x=0;$x<$numofrecords;$x++) 
 		//{
