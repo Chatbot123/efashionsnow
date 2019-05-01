@@ -1240,14 +1240,25 @@ if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
 		{	$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
 			$v_CompanyCode= strtoupper($v_CompanyCode);
 		}
-	if(isset($json->queryResult->parameters->AcctType))
-		{	$v_AcctType = $json->queryResult->parameters->AcctType; 
-			$v_AcctType= strtoupper($v_AcctType);
+	
+	
+	
+		$numofaccts = sizeof($json['queryResult']['parameters']['AcctType']);
+		$speech = "Total number of accounts ".$numofaccts;
+		
+		for($x=0;$x<$numofaccts;$x++) 
+		{
+		   $v_AcctType = $jsonoutput['d']['results'][$x]['AcctType'];
+		   $v_AcctType= strtoupper($v_AcctType);
+			$speech .= $v_AcctType;
 		}
-	/*if(isset($json->queryResult->parameters->FromPer1))
-		{	$v_FromPer1 = $json->queryResult->parameters->FromPer1; 
-			$v_FromPer1 = strtoupper($v_FromPer1);
-		}*/
+	
+	
+	
+		
+	$allacctype = array("+","A","D","K","M","S","V");
+	//if(in_array($ENT_MEASURE, $salemeasure)){$com = "amountsold"; }
+	
 	if(isset($json->queryResult->parameters->ToPer))
 		{	$v_ToPer = $json->queryResult->parameters->ToPer; 
 			$v_ToPer= strtoupper($v_ToPer);
@@ -1366,7 +1377,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	}
 	else 
 	{
-		$speech = $err;
+		$speech .= $err;
 	}	
 	
 }
