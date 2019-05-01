@@ -549,6 +549,92 @@ curl_setopt_array($curl, array(
 //-------------------------------------
 //--vendor Specific Industry details ends here
 //--------------------------------------	
+
+//--------------------------------------------------------------
+//--Vendor all Industry  detail starts here
+//-------------------------------------------------------------
+if($json->queryResult->intent->displayName=='OPPSuppIndustryInfoSpecific')
+{
+	
+		
+$curl = curl_init();
+															
+//http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/C_SUPPLIER_FS_SRV/C_SupplierFs('1000120')/?$format=json
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/C_SUPPLIER_FS_SRV/I_SupplierIndustryText/?\$format=json";
+//echo $url;	
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_0,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+	  "Accept:application/json"
+  ),
+));
+
+		$response = curl_exec($curl);
+		//echo $response;
+		$err = curl_error($curl);
+		// Return headers seperatly from the Response Body
+		  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+		  $headers = substr($response, 0, $header_size);
+		  $body = substr($response, $header_size);
+		  header("Content-Type:application/json");
+		  curl_close($curl);
+
+		$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+		$headers = array_filter($headers);
+		//extracting status from header
+		$httpstatus = $headers[0];
+
+		//---
+
+		preg_match("/HTTP\/1.0(.*)/", $httpstatus, $res);
+		//echo $res[1];
+			$v_res = str_replace(' ', '', $res[1]);
+	//echo $v_res;
+	//echo $body;
+			if($v_res=="400BadRequest" )
+			{
+				$speech = "Industry ".$v_IndustryCode." does not exist";
+				$speech .= "\r\n";
+			}
+			else 
+			{
+				$jsonoutput = json_decode($body);
+				
+				//--------------------------------------------------------
+				$numofrecords = sizeof($jsonoutput['d']['results']);
+				$speech = "Total number of records ".$numofrecords;
+				$speech .= "\r\n";
+				$speech .= "Supplier Industry Code\tSupplier Industry Name";
+
+				for($x=0;$x<$numofrecords;$x++) 
+				{
+					$v_SupplierIndustry = $jsonoutput['d']['results'][$x]['SupplierIndustry'];
+					$v_SupplierIndustryName = $jsonoutput['d']['results'][$x]['$v_SupplierIndustryName'];
+
+					$speech .= "\r\n";	
+					$speech .= "$v_SupplierIndustry        \t       $v_SupplierIndustryName;
+					$speech .= "\r\n";	
+				}
+				
+		
+			}
+		
+	}
+	
+//-------------------------------------
+//--vendor all Industry details ends here
+//--------------------------------------
+
 //----------------------------------------------------------------------------------	
 	
 	
