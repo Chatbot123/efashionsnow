@@ -220,7 +220,7 @@ if($json->queryResult->intent->displayName=='OPPcurrentVendorBalKeyDate')
 		$v_KeyDate = $json->queryResult->parameters->KeyDate; 
 	  	$v_KeyDate = strtoupper($v_KeyDate);
 		$v_KeyDate = substr($v_KeyDate, 0, -6);
-		echo $v_KeyDate;
+		//echo $v_KeyDate;
 	}
 	
 	
@@ -230,6 +230,7 @@ $curl = curl_init();
 http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/KeyDateVendorBalSet(Vendor='1000120',Companycode='1710',Keydate=datetime'2019-04-25T00:00:00')/?$format=json
 
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_CURRENT_VENDOR_BAL_SRV/KeyDateVendorBalSet(Vendor='".$v_VendorCode."',Companycode='".$v_CompanyCode."',Keydate=datetime'".$v_KeyDate."')/?\$format=json";
+echo $url;	
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
