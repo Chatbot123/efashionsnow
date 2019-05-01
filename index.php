@@ -1235,7 +1235,9 @@ $jsonoutput = json_decode($response);
 //--OPP CREATE NEW RECORD STARTS HERE OPPCustomCreateNew
 //---------------------------------------------------
 if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
+	
 {
+	$json = json_decode($requestBody,true);
 	if(isset($json->queryResult->parameters->CompanyCode))
 		{	$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
 			$v_CompanyCode= strtoupper($v_CompanyCode);
@@ -1254,7 +1256,7 @@ if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
 		}
 	
 	
-	
+/*	
 		
 	$allacctype = array("+","A","D","K","M","S","V");
 	//if(in_array($ENT_MEASURE, $salemeasure)){$com = "amountsold"; }
@@ -1379,7 +1381,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	{
 		$speech .= $err;
 	}	
-	
+	*/
 }
 	
 //---------------------------------------------------
