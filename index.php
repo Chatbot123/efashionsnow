@@ -600,7 +600,7 @@ curl_setopt_array($curl, array(
 		//echo $res[1];
 			$v_res = str_replace(' ', '', $res[1]);
 	//echo $v_res;
-	//echo $body;
+	echo $body;
 			if($v_res=="400BadRequest" )
 			{
 				$speech = "Industry ".$v_IndustryCode." does not exist";
