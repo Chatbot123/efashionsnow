@@ -1384,7 +1384,89 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 		$speech .= $err;
 	}	
 	
+}//account loop ends here
+//------------------------------------
+//--display newly created records
+//---------------------------------------
+$speech .= "\r\nBUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
+for($x=0;$x<$numofaccts;$x++) 
+{
+		   $v_AcctType = $json['queryResult']['parameters']['AcctType'][$x];
+		   $v_AcctType= strtoupper($v_AcctType);
+	$curl = curl_init();
+//"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar='".$v_PostgPerdVar."',AcctType='".$v_AcctType."',ToAcct='".$v_ToAcct."',FiscalYearVar='".$v_FiscalYearVar."')/?"."\$format"."=json";	
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json";
+//echo $url;
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_HEADER => true,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY="
+  ),
+));
+
+		$response = curl_exec($curl);
+		//echo $response;
+		$err = curl_error($curl);
+	
+	//--
+// Return headers seperatly from the Response Body
+  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+  $headers = substr($response, 0, $header_size);
+  $body = substr($response, $header_size);
+  header("Content-Type:application/json");
+ //echo $headers;
+ //--
+	$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+$headers = array_filter($headers);
+//extracting status from header
+$httpstatus = $headers[0];
+	
+//---
+curl_close($curl);
+preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
+//echo $res[1];
+	$v_res = str_replace(' ', '', $res[1]);
+	if($v_res=="404NotFound")
+	{
+		$speech .= "Record Doesn't exist in system";
+		$speech .= "\r\n";
+	}
+	else 
+	{
+	
+
+		
+		$jsonoutput = json_decode($body);
+		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
+				
+		
+		   	$v_BUKRS = $jsonoutput->d->Bukrs;
+			$v_Mandt = $jsonoutput->d->Mandt;
+			$v_Mkoar = $jsonoutput->d->Mkoar;
+			$v_Bkont = $jsonoutput->d->Bkont;
+			$v_Frye1 = $jsonoutput->d->Frye1;
+			$v_Frpe1 = $jsonoutput->d->Frpe1;
+			$v_Toye1 = $jsonoutput->d->Toye1;
+			$v_Tope1 = $jsonoutput->d->Tope1;
+			
+			
+			
+			$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Bkont."\t\t".$v_Frye1."\t\t".$v_Frpe1."\t\t".$v_Toye1."\t\t".$v_Tope1;
+			$speech .= "\r\n";	
+	}
 }
+//---ends display newly created records
+
+	
 }
 	
 //---------------------------------------------------
