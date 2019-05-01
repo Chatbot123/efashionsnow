@@ -622,7 +622,7 @@ curl_setopt_array($curl, array(
 					$v_SupplierIndustryName = $jsonoutput['d']['results'][$x]['SupplierIndustryName'];
 
 					$speech .= "\r\n";	
-					$speech .= $v_SupplierIndustry."       \t       ".$v_SupplierIndustryName;
+					$speech .= $v_SupplierIndustry."                    \t       ".$v_SupplierIndustryName;
 					$speech .= "\r\n";	
 				}
 				
