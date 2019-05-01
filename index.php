@@ -1234,7 +1234,7 @@ $jsonoutput = json_decode($response);
 //---------------------------------------------------
 //--OPP CREATE NEW RECORD STARTS HERE OPPCustomCreateNew
 //---------------------------------------------------
-if($json->queryResult->intent->displayName=='OPPCustomCreateNew')
+if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
 {
 	if(isset($json->queryResult->parameters->CompanyCode))
 		{	$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
@@ -1244,10 +1244,10 @@ if($json->queryResult->intent->displayName=='OPPCustomCreateNew')
 		{	$v_AcctType = $json->queryResult->parameters->AcctType; 
 			$v_AcctType= strtoupper($v_AcctType);
 		}
-	if(isset($json->queryResult->parameters->FromPer1))
+	/*if(isset($json->queryResult->parameters->FromPer1))
 		{	$v_FromPer1 = $json->queryResult->parameters->FromPer1; 
 			$v_FromPer1 = strtoupper($v_FromPer1);
-		}
+		}*/
 	if(isset($json->queryResult->parameters->ToPer))
 		{	$v_ToPer = $json->queryResult->parameters->ToPer; 
 			$v_ToPer= strtoupper($v_ToPer);
@@ -1303,7 +1303,7 @@ $jsonvar = array(
 				'Frpe2'=> '000',
 				'Frye1'=> '2018',
 				'Toye2'=> '0000',
-				'Frpe1'=> $v_FromPer1,
+				'Frpe1'=> '000',
 				'Tope2'=> '000',
 				'Toye1'=> '2019',
 				'Brgru'=> '',
