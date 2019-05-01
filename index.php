@@ -378,7 +378,94 @@ curl_setopt_array($curl, array(
 	
 //-------------------------------------
 //--vendor address details ends here
-//--------------------------------------		
+//--------------------------------------
+//--------------------------------------------------------------
+//--Vendor company address detail starts here
+//-------------------------------------------------------------
+if($json->queryResult->intent->displayName=='OPPcurrentVendorCompanyAddress')
+{
+	
+	if(isset($json->queryResult->parameters->VendorCode))
+	{ 
+		$v_VendorCode = $json->queryResult->parameters->VendorCode; 
+	  	$v_VendorCode = strtoupper($v_VendorCode);
+	}
+	if(isset($json->queryResult->parameters->CompCode))
+	{ 
+		$v_CompCode = $json->queryResult->parameters->CompCode; 
+	  	$v_CompCode = strtoupper($v_CompCode);
+	}
+	
+	
+	
+$curl = curl_init();
+															
+//http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/C_SUPPLIER_FS_SRV/C_SupplierCompanyData(Supplier='1000120',CompanyCode='1710')/?$format=json
+
+$url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/C_SUPPLIER_FS_SRV/C_SupplierCompanyData(Supplier='".$v_VendorCode."',CompanyCode='".$v_CompCode."')/?\$format=json";
+//echo $url;	
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8000",
+  CURLOPT_URL => $url,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_HEADER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_0,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_POSTFIELDS => "",
+  CURLOPT_HTTPHEADER => array(
+         "Authorization: Basic YXJ1bm46Y3RsQDE5NzY=",
+	  "Accept:application/json"
+  ),
+));
+
+		$response = curl_exec($curl);
+		//echo $response;
+		$err = curl_error($curl);
+		// Return headers seperatly from the Response Body
+		  $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+		  $headers = substr($response, 0, $header_size);
+		  $body = substr($response, $header_size);
+		  header("Content-Type:application/json");
+		  curl_close($curl);
+
+		$headers = explode("\r\n", $headers); // The seperator used in the Response Header is CRLF (Aka. \r\n) 
+		$headers = array_filter($headers);
+		//extracting status from header
+		$httpstatus = $headers[0];
+
+		//---
+
+		preg_match("/HTTP\/1.0(.*)/", $httpstatus, $res);
+		//echo $res[1];
+			$v_res = str_replace(' ', '', $res[1]);
+	//echo $v_res;
+	//echo $body;
+			if($v_res=="400BadRequest" )
+			{
+				$speech = "Vendor ".$v_VendorCode." does not exist";
+				$speech .= "\r\n";
+			}
+			else 
+			{
+				$jsonoutput = json_decode($body);
+				$v_CityName = $jsonoutput->d->CityName;
+				$v_Country_Text = $jsonoutput->d->Country_Text;
+				$v_Supplier = $jsonoutput->d->Supplier;
+				$v_CompanyCode = $jsonoutput->d->CompanyCode;
+				
+				$speech = "Company address of vendor ".$v_Supplier." is :\r\n".$v_CityName.", ".$v_Country_Text."\r\n";
+				$speech .= "\r\n";	
+		
+			}
+		
+	}
+	
+//-------------------------------------
+//--vendor company address details ends here
+//--------------------------------------
 	
 //----------------------------------------------------------------------------------	
 	
