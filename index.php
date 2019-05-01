@@ -276,16 +276,16 @@ curl_setopt_array($curl, array(
 			}
 			else 
 			{
-		$jsonoutput = json_decode($body);
-		$speech = "\r\n";
-		   	$v_Companycode = $jsonoutput->d->Companycode;
-			//$v_Keydate = $jsonoutput->d->Keydate;
-			$v_Vendor = $jsonoutput->d->Vendor;
-			$v_Currency = $jsonoutput->d->Currency;
-			$v_TCurrBal = $jsonoutput->d->TCurrBal;
-			$speech .= "\r\n";	
-			$speech .= "Current Balance on date ".$v_KeyDate." is ".$v_Currency." ".$v_TCurrBal." of Vendor ".$v_Vendor;
-			$speech .= "\r\n";	
+				$new_date = date('d-m-Y', $v_KeyDate);   
+				$jsonoutput = json_decode($body);
+				$speech = "\r\n";
+				$v_Companycode = $jsonoutput->d->Companycode;
+				//$v_Keydate = $jsonoutput->d->Keydate;
+				$v_Vendor = $jsonoutput->d->Vendor;
+				$v_Currency = $jsonoutput->d->Currency;
+				$v_TCurrBal = $jsonoutput->d->TCurrBal;
+				$speech .= "Current Balance on date ".$new_date." is ".$v_Currency." ".$v_TCurrBal." of Vendor ".$v_Vendor;
+				$speech .= "\r\n";	
 		
 	}
 		
