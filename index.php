@@ -1242,13 +1242,13 @@ if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
 		{	$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
 			$v_CompanyCode= strtoupper($v_CompanyCode);
 		}
-		
+		echo $v_CompanyCode;
 		if(isset($json->queryResult->parameters->ToPer))
 		{	$v_ToPer = $json->queryResult->parameters->ToPer; 
 			$v_ToPer= strtoupper($v_ToPer);
 		}
 	
-	
+	echo $v_ToPer;
 		$numofaccts = sizeof($json['queryResult']['parameters']['AcctType']);
 		$speech = "Total number of accounts ".$numofaccts;
 		
