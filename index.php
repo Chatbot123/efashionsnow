@@ -284,7 +284,7 @@ curl_setopt_array($curl, array(
 			$v_Currency = $jsonoutput->d->Currency;
 			$v_TCurrBal = $jsonoutput->d->TCurrBal;
 			$speech .= "\r\n";	
-			$speech .= "Current Balance on date ".$v_Keydate." is ".$v_Currency." ".$v_TCurrBal." of Vendor ".$v_Vendor;
+			$speech .= "Current Balance on date ".$v_KeyDate." is ".$v_Currency." ".$v_TCurrBal." of Vendor ".$v_Vendor;
 			$speech .= "\r\n";	
 		
 	}
