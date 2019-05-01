@@ -1242,7 +1242,11 @@ if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
 		{	$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
 			$v_CompanyCode= strtoupper($v_CompanyCode);
 		}
-	
+		
+		if(isset($json->queryResult->parameters->ToPer))
+		{	$v_ToPer = $json->queryResult->parameters->ToPer; 
+			$v_ToPer= strtoupper($v_ToPer);
+		}
 	
 	
 		$numofaccts = sizeof($json['queryResult']['parameters']['AcctType']);
@@ -1252,19 +1256,16 @@ if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
 		{
 		   $v_AcctType = $json['queryResult']['parameters']['AcctType'][$x];
 		   $v_AcctType= strtoupper($v_AcctType);
-			$speech .= $v_AcctType;
-		}
-	
-	
-/*	
+			
 		
-	$allacctype = array("+","A","D","K","M","S","V");
+	
+	
+	
+		
+	//$allacctype = array("+","A","D","K","M","S","V");
 	//if(in_array($ENT_MEASURE, $salemeasure)){$com = "amountsold"; }
 	
-	if(isset($json->queryResult->parameters->ToPer))
-		{	$v_ToPer = $json->queryResult->parameters->ToPer; 
-			$v_ToPer= strtoupper($v_ToPer);
-		}
+	
 //----------------------------------------------------------------------------
 $curl = curl_init();
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet/?\$format=json";
@@ -1381,7 +1382,8 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	{
 		$speech .= $err;
 	}	
-	*/
+	
+}
 }
 	
 //---------------------------------------------------
