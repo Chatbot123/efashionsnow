@@ -1237,18 +1237,19 @@ $jsonoutput = json_decode($response);
 if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
 	
 {
-	$json = json_decode($requestBody,true);
-	if(isset($json->queryResult->parameters->CompanyCode))
+	
+		if(isset($json->queryResult->parameters->CompanyCode))
 		{	$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
 			$v_CompanyCode= strtoupper($v_CompanyCode);
 		}
-		echo $v_CompanyCode;
+		
 		if(isset($json->queryResult->parameters->ToPer))
 		{	$v_ToPer = $json->queryResult->parameters->ToPer; 
 			$v_ToPer= strtoupper($v_ToPer);
 		}
 	
-	echo $v_ToPer;
+	
+		$json = json_decode($requestBody,true);
 		$numofaccts = sizeof($json['queryResult']['parameters']['AcctType']);
 		$speech = "Total number of accounts ".$numofaccts;
 		
