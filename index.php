@@ -1388,6 +1388,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 //------------------------------------
 //--display newly created records
 //---------------------------------------
+$speech .= "\r\nDetails are given below\r\n";
 $speech .= "\r\nBUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
 for($x=0;$x<$numofaccts;$x++) 
 {
