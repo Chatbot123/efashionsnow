@@ -182,7 +182,7 @@ curl_setopt_array($curl, array(
 			$v_Currency = $jsonoutput->d->Currency;
 			$v_TotalBal = $jsonoutput->d->TotalBal;
 			
-			$speech .= "\r\n";	
+			$speech = "\r\n";	
 			$speech .= "Current Balance of vendor ".$v_Vendor." is ".$v_Currency." ".$v_Balance;
 			
 			$speech .= "\r\n";
@@ -191,7 +191,7 @@ curl_setopt_array($curl, array(
 			$speech .= "\r\n";
 			$speech .= "$v_Companycode \t $v_Vendor \t $v_CarryFwd \t $v_Currency \t $v_Balance \t $v_Crryfwdtot \t $v_Currency \t $v_TotalBal";
 			$speech .= "\r\n";	
-		//}
+		
 	}
 		
 	}
@@ -277,26 +277,16 @@ curl_setopt_array($curl, array(
 			else 
 			{
 		$jsonoutput = json_decode($body);
-		//$numofrecords = sizeof($jsonoutput['d']['results']);
-		//$speech = "Total number of records ".$numofrecords;
 		$speech = "\r\n";
-		//$speech .= "Companycode\tVendor\tCarryFwd\tCurrency\tBalance\tCrryfwdtot\tCurrency\tTotalBal";
-				
-		//for($x=0;$x<$numofrecords;$x++) 
-		//{
 		   	$v_Companycode = $jsonoutput->d->Companycode;
 			//$v_Keydate = $jsonoutput->d->Keydate;
 			$v_Vendor = $jsonoutput->d->Vendor;
 			$v_Currency = $jsonoutput->d->Currency;
 			$v_TCurrBal = $jsonoutput->d->TCurrBal;
-			
-			
-			
-						
 			$speech .= "\r\n";	
 			$speech .= "Current Balance on date ".$v_Keydate." is ".$v_Currency." ".$v_TCurrBal." of Vendor ".$v_Vendor;
 			$speech .= "\r\n";	
-		//}
+		
 	}
 		
 	}
