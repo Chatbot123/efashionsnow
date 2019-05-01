@@ -1250,7 +1250,7 @@ if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
 		
 		for($x=0;$x<$numofaccts;$x++) 
 		{
-		   $v_AcctType = $jsonoutput['d']['results'][$x]['AcctType'];
+		   $v_AcctType = $json['queryResult']['parameters']['AcctType'];
 		   $v_AcctType= strtoupper($v_AcctType);
 			$speech .= $v_AcctType;
 		}
