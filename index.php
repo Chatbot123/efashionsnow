@@ -1485,11 +1485,19 @@ if($json->queryResult->intent->displayName=='OPPCustomDelSpecific')
 		$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
 	  	$v_CompanyCode= strtoupper($v_CompanyCode);
 	}
-	if(isset($json->queryResult->parameters->AcctType))
+	$json = json_decode($requestBody,true);
+		$numofaccts = sizeof($json['queryResult']['parameters']['AcctType']);
+		$speech = "Total number of accounts ".$numofaccts."\r\n";
+		
+for($x=0;$x<$numofaccts;$x++) 
+{
+		   $v_AcctType = $json['queryResult']['parameters']['AcctType'][$x];
+		   $v_AcctType= strtoupper($v_AcctType);
+	/*if(isset($json->queryResult->parameters->AcctType))
 	{ 
 		$v_AcctType = $json->queryResult->parameters->AcctType; 
 	  	$v_AcctType= strtoupper($v_AcctType);
-	}
+	}*/
 $curl = curl_init();
 //"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar='".$v_PostgPerdVar."',AcctType='".$v_AcctType."',ToAcct='".$v_ToAcct."',FiscalYearVar='".$v_FiscalYearVar."')/?"."\$format"."=json";	
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json";
@@ -1535,7 +1543,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	$v_res = str_replace(' ', '', $res[1]);
 	if($v_res=="404NotFound")
 	{
-		$speech .= "Record Doesn't exist in system";
+		$speech .= "Record Doesn't exist in system for ".$v_AcctType;
 		$speech .= "\r\n";
 	}
 	else 
@@ -1585,7 +1593,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 			$v_res = str_replace(' ', '', $res[1]);
 			if($v_res=="204NoContent")
 			{
-				$speech .= "Record deleted Successfully";
+				$speech .= "Record deleted Successfully for ".$v_AcctType;
 				$speech .= "\r\n";
 			}
 			else 
@@ -1595,6 +1603,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 		
 		
 	}
+}//for loop ends
 }
 
 	
