@@ -403,7 +403,7 @@ $curl = curl_init();
 //http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/C_SUPPLIER_FS_SRV/C_SupplierCompanyData(Supplier='1000120',CompanyCode='1710')/?$format=json
 
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/C_SUPPLIER_FS_SRV/C_SupplierCompanyData(Supplier='".$v_VendorCode."',CompanyCode='".$v_CompCode."')/?\$format=json";
-echo $url;	
+//echo $url;	
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
@@ -442,7 +442,7 @@ curl_setopt_array($curl, array(
 		//echo $res[1];
 			$v_res = str_replace(' ', '', $res[1]);
 	//echo $v_res;
-	echo $body;
+//	echo $body;
 			if($v_res=="400BadRequest" )
 			{
 				$speech = "Vendor ".$v_VendorCode." does not exist";
