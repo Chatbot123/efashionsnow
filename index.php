@@ -619,7 +619,7 @@ curl_setopt_array($curl, array(
 				for($x=0;$x<$numofrecords;$x++) 
 				{
 					$v_SupplierIndustry = $jsonoutput['d']['results'][$x]['SupplierIndustry'];
-					$v_SupplierIndustryName = $jsonoutput['d']['results'][$x]['$v_SupplierIndustryName'];
+					$v_SupplierIndustryName = $jsonoutput['d']['results'][$x]['SupplierIndustryName'];
 
 					$speech .= "\r\n";	
 					$speech .= $v_SupplierIndustry."       \t       ".$v_SupplierIndustryName;
