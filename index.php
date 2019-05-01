@@ -608,7 +608,7 @@ curl_setopt_array($curl, array(
 			}
 			else 
 			{
-				$jsonoutput = json_decode($body);
+				$jsonoutput = json_decode($body,true);
 				
 				//--------------------------------------------------------
 				$numofrecords = sizeof($jsonoutput['d']['results']);
