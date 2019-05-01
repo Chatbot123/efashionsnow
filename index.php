@@ -277,7 +277,7 @@ curl_setopt_array($curl, array(
 			else 
 			{
 				$timestamp = strtotime($v_KeyDate);
-				$new_date = date('d-mmm-Y', $timestamp);   
+				$new_date = date('d-F-Y', $timestamp);   
 				$jsonoutput = json_decode($body);
 				$speech = "\r\n";
 				$v_Companycode = $jsonoutput->d->Companycode;
