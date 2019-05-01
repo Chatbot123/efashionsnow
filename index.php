@@ -1251,7 +1251,7 @@ if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
 	
 		$json = json_decode($requestBody,true);
 		$numofaccts = sizeof($json['queryResult']['parameters']['AcctType']);
-		$speech = "Total number of accounts ".$numofaccts;
+		$speech = "Total number of accounts ".$numofaccts."\r\n";
 		
 		for($x=0;$x<$numofaccts;$x++) 
 		{
@@ -1376,7 +1376,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	$v_res = str_replace(' ', '', $res[1]);
 	if($v_res=="201Created")
 	{
-		$speech .= "Record Created Successfully";
+		$speech .= "Opened Posting Period for Account type ".$v_AcctType;
 		$speech .= "\r\n";
 	}
 	else 
