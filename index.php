@@ -1311,18 +1311,8 @@ $speech = "Total number of accounts ".$numofaccts."\r\n";
 		
 for($x=0;$x<$numofaccts;$x++) 
 {
-	$v_AcctType = $json['queryResult']['parameters']['AcctType'][$x];
-	$v_AcctType= strtoupper($v_AcctType);
-			
-		
-	
-	
-	
-		
-	//$allacctype = array("+","A","D","K","M","S","V");
-	//if(in_array($ENT_MEASURE, $salemeasure)){$com = "amountsold"; }
-	
-	
+	$v_AcctType = $array_AcctType[$x]; 
+
 //----------------------------------------------------------------------------
 $curl = curl_init();
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet/?\$format=json";
