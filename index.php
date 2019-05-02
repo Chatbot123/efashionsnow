@@ -880,8 +880,10 @@ if($json->queryResult->intent->displayName=='OPPCustomDisSpecific')
 			for($x=0;$x<count($allacctype);$x++)
 			{
 				$array_AcctType[$x] = $allacctype[$x];
-				echo $array_AcctType[$x];
+				
+				//echo $array_AcctType[$x];
 			}
+			
 		}
 		else
 		{
@@ -894,9 +896,9 @@ if($json->queryResult->intent->displayName=='OPPCustomDisSpecific')
 		//$speech = "Total number of accounts ".$numofaccts."\r\n";
 		
 		
-	
-		for($x=0;$x<$numofaccts;$x++) 
-		{
+	$numofaccts = count($array_AcctType);
+	for($x=0;$x<$numofaccts;$x++) 
+	{
 		 
 			  
 			$v_AcctType = $array_AcctType[$x];
