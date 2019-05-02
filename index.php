@@ -879,7 +879,8 @@ if($json->queryResult->intent->displayName=='OPPCustomDisSpecific')
 		{
 			for($x=0;$x<count($allacctype);$x++)
 			{
-				$array_AcctType[] = $allacctype[$x];
+				$array_AcctType[$x] = $allacctype[$x];
+				echo $array_AcctType[$x];
 			}
 		}
 		else
