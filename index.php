@@ -1685,7 +1685,7 @@ if($json->queryResult->intent->displayName=='OPPSupBalSet')
 $curl = curl_init();
 
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAP_VENDOR_BALANCE_SRV/SupplierBalanceSet?\$filter=%28%28Supplier%20eq%20%27".$v_SuppCode."%27%29%20and%20%28CompanyCode%20eq%20%27".$v_CompanyCode."%27%29%29%20and%20%28FiscalYear%20eq%20%27".$v_FiscalYear."%27%29&\$format=json";
-	echo $url;
+	//echo $url;
 curl_setopt_array($curl, array(
   CURLOPT_PORT => "8000",
   CURLOPT_URL => $url,
