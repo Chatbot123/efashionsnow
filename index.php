@@ -877,7 +877,10 @@ if($json->queryResult->intent->displayName=='OPPCustomDisSpecific')
 		$numofaccts = sizeof($json['queryResult']['parameters']['AcctType']);
 		if($numofaccts == 1 && strtoupper($json['queryResult']['parameters']['AcctType'][0]) == 'ALL')
 		{
-			$array_AcctType = $allacctype;
+			for($x=0;$x<count($allacctype);$x++)
+			{
+				$array_AcctType[] = $allacctype[$x];
+			}
 		}
 		else
 		{
