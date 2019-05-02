@@ -872,11 +872,46 @@ if($json->queryResult->intent->displayName=='OPPCustomDisSpecific')
 		$v_CompanyCode = $json->queryResult->parameters->CompanyCode; 
 	  	$v_CompanyCode= strtoupper($v_CompanyCode);
 	}
+		$allacctype = array("+","A","D","K","M","S","V");
+		$json = json_decode($requestBody,true);
+		$numofaccts = sizeof($json['queryResult']['parameters']['AcctType']);
+		if($numofaccts == 1 && strtoupper($json['queryResult']['parameters']['AcctType'][0]) == 'ALL')
+		{
+			$array_AcctType = $allacctype;
+		}
+		else
+		{
+			for($x=0;$x<$numofaccts;$x++) 
+			{
+				$array_AcctType[] = strtoupper($json['queryResult']['parameters']['AcctType'][$x]);
+			}
+		}
+	
+		$speech = "Total number of accounts ".$numofaccts."\r\n";
+		
+		
+	
+		for($x=0;$x<$numofaccts;$x++) 
+		{
+		  if($numofaccts == 1 && strtoupper($json['queryResult']['parameters']['AcctType'][$x]) == 'ALL')
+		  {
+			  
+			$v_AcctType = $json['queryResult']['parameters']['AcctType'][$x];
+		   $v_AcctType= strtoupper($v_AcctType);
+			
+		
+	
+	
+	
+		
+	//$allacctype = array("+","A","D","K","M","S","V");
+	//if(in_array($ENT_MEASURE, $salemeasure)){$com = "amountsold"; }
+	/*
 	if(isset($json->queryResult->parameters->AcctType))
 	{ 
 		$v_AcctType = $json->queryResult->parameters->AcctType; 
 	  	$v_AcctType= strtoupper($v_AcctType);
-	}
+	}*/
 $curl = curl_init();
 //"http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/FAC_GL_MAINT_POSTING_PERIOD_SRV/PostingPeriodSet(PostgPerdVar='".$v_PostgPerdVar."',AcctType='".$v_AcctType."',ToAcct='".$v_ToAcct."',FiscalYearVar='".$v_FiscalYearVar."')/?"."\$format"."=json";	
 $url = "http://sealapp2.sealconsult.com:8000/sap/opu/odata/sap/ZFIN_POSTING_PERIODS_SRV/PostingPeriodsSet(Bukrs='".$v_CompanyCode."',Mkoar='".$v_AcctType."')/?"."\$format"."=json";
