@@ -949,7 +949,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	$v_res = str_replace(' ', '', $res[1]);
 	if($v_res=="404NotFound")
 	{
-		$speech .= "Record Doesn't exist in system";
+		$speech .= "No Posting period available for account type ".$v_AcctType." and "."posting period varient ".$v_CompanyCode;
 		$speech .= "\r\n";
 	}
 	else 
