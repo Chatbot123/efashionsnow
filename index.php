@@ -1276,16 +1276,43 @@ if($json->queryResult->intent->displayName=='OPPCustomCreateNew-custom')
 		{	$v_ToPer = $json->queryResult->parameters->ToPer; 
 			$v_ToPer= strtoupper($v_ToPer);
 		}
-	
-	
+	//-----------------------------------------------------------------------------------------
+	$allacctype = array("+","A","D","K","M","S","V");
 		$json = json_decode($requestBody,true);
 		$numofaccts = sizeof($json['queryResult']['parameters']['AcctType']);
-		$speech = "Total number of accounts ".$numofaccts."\r\n";
-		
-		for($x=0;$x<$numofaccts;$x++) 
+		if($numofaccts == 1 && strtoupper($json['queryResult']['parameters']['AcctType'][0]) == 'ALL')
 		{
-		   $v_AcctType = $json['queryResult']['parameters']['AcctType'][$x];
-		   $v_AcctType= strtoupper($v_AcctType);
+			for($x=0;$x<count($allacctype);$x++)
+			{
+				$array_AcctType[$x] = $allacctype[$x];
+				
+				//echo $array_AcctType[$x];
+			}
+			
+		}
+		else
+		{
+			for($x=0;$x<$numofaccts;$x++) 
+			{
+				$array_AcctType[] = strtoupper($json['queryResult']['parameters']['AcctType'][$x]);
+			}
+		}
+	
+		//$speech = "Total number of accounts ".$numofaccts."\r\n";
+		
+		
+	$numofaccts = count($array_AcctType);
+	
+	
+	//-----------------------------------------------------------------------------------------
+	
+		
+$speech = "Total number of accounts ".$numofaccts."\r\n";
+		
+for($x=0;$x<$numofaccts;$x++) 
+{
+	$v_AcctType = $json['queryResult']['parameters']['AcctType'][$x];
+	$v_AcctType= strtoupper($v_AcctType);
 			
 		
 	
