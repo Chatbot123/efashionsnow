@@ -1777,7 +1777,7 @@ if($json->queryResult->intent->displayName=='OPPSupBalSet - yes')
 	
 	//<html><a href="http://sealapp2.sealconsult.com:8000/sap/bc/ui5_ui5/ui2/ushell/shells/abap/Fiorilaunchpad.html#Supplier-manageLineItems">Click here</a></html>;
 	
-	$uri = " http://sealapp2.sealconsult.com:8000/sap/bc/ui5_ui5/ui2/ushell/shells/abap/Fiorilaunchpad.html#Supplier-manageLineItems?CompanyCode=".$v_CompanyCode."&CustomClearingStatus=A&DueItemCategory=N&FiscalYear=".$v_FiscalYear."&PostingDate=&Supplier=".$v_SuppCode;		
+	$uri = "https://tinyurl.com/FioriLinkDemo";		
 	$speech = "Please click on below link to get details.\r\n";
 	$speech .= $uri;
 	
