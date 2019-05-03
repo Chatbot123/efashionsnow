@@ -1426,7 +1426,8 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	{
 		$speech .= "Opened Posting Period for Account type ".$v_AcctType;
 		$speech .= "\r\n";
-		$speech .= "Account Type \t Account No \t From Year\t From Period\t To Year\t To Period\n";
+		$speech .= "Account Type \t Account No \t From Year\t From Period\t To Year\t To Period\r\n";
+		$speech .= "Details are given below\r\n";
 	}
 	else 
 	{
@@ -1437,7 +1438,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 //------------------------------------
 //--display newly created records
 //---------------------------------------
-$speech .= "\r\nDetails are given below\r\n";
+//$speech .= "\r\nDetails are given below\r\n";
 //$speech .= "\r\nBUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
 for($x=0;$x<$numofaccts;$x++) 
 {
