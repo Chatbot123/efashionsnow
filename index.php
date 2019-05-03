@@ -1050,10 +1050,10 @@ else
 			$v_Mkoar = $jsonoutput->d->Mkoar;
 			$v_Tope1 = $jsonoutput->d->Tope1;
 	
-	$speech = "Current values for this record are\r\n";
+	$speech = "Current value is:\r\n";
 	
 	$speech .= "Account Type\tTo Period\n";
-	$speech .=  $v_Mkoar."                 ".$v_Tope1;
+	$speech .=  "  "$v_Mkoar."                    ".$v_Tope1;
 	$speech .= "\r\nDo you want to update To Period value (Yes/No) \n";
 }
 }
@@ -1249,10 +1249,10 @@ $jsonoutput = json_decode($response);
 			$v_Mkoar = $jsonoutput->d->Mkoar;
 			$v_Tope1 = $jsonoutput->d->Tope1;
 	
-	$speech .= "Updated values are\r\n";
+	$speech .= "Updated value is : \r\n";
 	
 	$speech .= "AccountType\tTo Period\n";
-	$speech .=  $v_Mkoar."               ".$v_Tope1;
+	$speech .=  "  ".$v_Mkoar."                    ".$v_Tope1;
 //-----GET REQUEST AGAIN ENDS
 }
 
