@@ -975,7 +975,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 			
 			
 			$speech .= $v_Mkoar."                   ".$v_Bkont."         ".$v_Frye1."               ".$v_Frpe1."         ".$v_Toye1."     ".$v_Tope1;
-			$speech .= "\r\n";	
+			$speech .= "\n";	
 	}
 }
 }
