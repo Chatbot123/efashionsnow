@@ -1773,10 +1773,12 @@ if($json->queryResult->intent->displayName=='OPPSupBalSet - yes')
 		$v_FiscalYear = $json->queryResult->parameters->FiscalYear; 
 	  	$v_FiscalYear= strtoupper($v_FiscalYear);
 	}
-		
-	$uri = " http://sealapp2.sealconsult.com:8000/sap/bc/ui5_ui5/ui2/ushell/shells/abap/Fiorilaunchpad.html#Supplier-manageLineItems?CompanyCode=".$v_CompanyCode."&CustomClearingStatus=A&DueItemCategory=N&FiscalYear=".$v_FiscalYear."&PostingDate=&Supplier=".$v_SuppCode;		
+	
+	echo <<<HTML <a href="http://sealapp2.sealconsult.com:8000/sap/bc/ui5_ui5/ui2/ushell/shells/abap/Fiorilaunchpad.html#Supplier-manageLineItems?CompanyCode=".$v_CompanyCode."&CustomClearingStatus=A&DueItemCategory=N&FiscalYear=".$v_FiscalYear."&PostingDate=&Supplier=".$v_SuppCode">Click here</a>
+HTML;
+	//$uri = " http://sealapp2.sealconsult.com:8000/sap/bc/ui5_ui5/ui2/ushell/shells/abap/Fiorilaunchpad.html#Supplier-manageLineItems?CompanyCode=".$v_CompanyCode."&CustomClearingStatus=A&DueItemCategory=N&FiscalYear=".$v_FiscalYear."&PostingDate=&Supplier=".$v_SuppCode;		
 	$speech = "Please click on below link to get details.\r\n";
-	$speech .= $uri;
+	//$speech .= $uri;
 	
 }
 	
