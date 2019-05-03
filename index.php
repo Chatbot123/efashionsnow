@@ -1742,10 +1742,10 @@ curl_setopt_array($curl, array(
 		//{
 		   	$v_BalAmtInDisplayCrcy = $jsonoutput['d']['results'][$numofrecords-1]['BalAmtInDisplayCrcy'];
 			$v_Currency = $jsonoutput['d']['results'][$numofrecords-1]['Currency'];
-			$speech .=  "Total balance amount for supplier number ".$v_SuppCode." is ".$v_Currency." ".$v_BalAmtInDisplayCrcy;
+			$speech .=  "Here is the cumulative balance for supplier # : ".$v_SuppCode."  ".$v_Currency." ".$v_BalAmtInDisplayCrcy;
 				
 			$speech .= "\r\n";	
-			$speech .= "Do you want to see each line item split details?";
+			$speech .= "Do you wish to see line item details?";
 		//}
 			}	
 		
