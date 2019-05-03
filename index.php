@@ -286,7 +286,10 @@ curl_setopt_array($curl, array(
 				$v_Currency = $jsonoutput->d->Currency;
 				$v_TCurrBal = $jsonoutput->d->TCurrBal;
 				$speech .= "Current Balance on date ".$new_date." is ".$v_Currency." ".$v_TCurrBal." of Vendor ".$v_Vendor;
-				$speech .= "\r\n";	
+				$speech .= "\r\n";
+				$speech .= "You can get more details from below link\r\n";
+				$speech .= "https://tinyurl.com/FioriLinkDemo";
+				$speech .= "\r\n";
 		
 	}
 		
