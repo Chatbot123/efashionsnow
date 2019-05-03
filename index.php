@@ -961,12 +961,10 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 
 		
 		$jsonoutput = json_decode($body);
-		$speech .= "BUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
+		$speech .= "Account Type \t Account No \t From Year\t From Period\t To Year\t To Period\n";
 				
 		
-		   	$v_BUKRS = $jsonoutput->d->Bukrs;
-			$v_Mandt = $jsonoutput->d->Mandt;
-			$v_Mkoar = $jsonoutput->d->Mkoar;
+		   	$v_Mkoar = $jsonoutput->d->Mkoar;
 			$v_Bkont = $jsonoutput->d->Bkont;
 			$v_Frye1 = $jsonoutput->d->Frye1;
 			$v_Frpe1 = $jsonoutput->d->Frpe1;
@@ -975,7 +973,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 			
 			
 			
-			$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Bkont."\t\t".$v_Frye1."\t\t".$v_Frpe1."\t\t".$v_Toye1."\t\t".$v_Tope1;
+			$speech .= $v_Mkoar."          \t".$v_Bkont."\t".$v_Frye1."     t".$v_Frpe1."   \t".$v_Toye1."     t".$v_Tope1;
 			$speech .= "\r\n";	
 	}
 }
