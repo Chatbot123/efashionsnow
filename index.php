@@ -1051,8 +1051,8 @@ else
 	
 	$speech = "Current values for this record are\r\n";
 	
-	$speech .= "CompanyCode\tClientCode\tAccountType\tTo Period\n";
-	$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Tope1;
+	$speech .= "Account Type\tTo Period\n";
+	$speech .=  $v_Mkoar."           \t".$v_Tope1;
 	$speech .= "\r\nDo you want to update To Period value (Yes/No) \n";
 }
 }
@@ -1250,8 +1250,8 @@ $jsonoutput = json_decode($response);
 	
 	$speech .= "Updated values are\r\n";
 	
-	$speech .= "CompanyCode\tClientCode\tAccountType\tTo Period\n";
-	$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Tope1;
+	$speech .= "AccountType\tTo Period\n";
+	$speech .=  $v_Mkoar."          \t".$v_Tope1;
 //-----GET REQUEST AGAIN ENDS
 }
 
