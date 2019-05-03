@@ -903,7 +903,7 @@ if($json->queryResult->intent->displayName=='OPPCustomDisSpecific')
 $speech = "Account Type \t Account No \t From Year\t From Period\t To Year\t To Period\n";
 	for($x=0;$x<$numofaccts;$x++) 
 	{
-		$speech .= ""; 
+		
 			  
 			$v_AcctType = $array_AcctType[$x];
 		  	$v_AcctType= strtoupper($v_AcctType);
