@@ -1426,8 +1426,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	{
 		$speech .= "Opened Posting Period for Account type ".$v_AcctType;
 		$speech .= "\r\n";
-		$speech .= "Account Type \t Account No \t From Year\t From Period\t To Year\t To Period\r\n";
-		$speech .= "Details are given below\r\n";
+		
 	}
 	else 
 	{
@@ -1438,8 +1437,9 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 //------------------------------------
 //--display newly created records
 //---------------------------------------
-//$speech .= "\r\nDetails are given below\r\n";
-//$speech .= "\r\nBUKRS\tMandt\tMkoar\tBkont\tFromYear1\tFromPer1\tToYear1\tToPer1\n";
+$speech .= "Details are given below\r\n";
+$speech1 = "Account Type \t Account No \t From Year\t From Period\t To Year\t To Period\r\n";
+
 for($x=0;$x<$numofaccts;$x++) 
 {
 		   $v_AcctType = $array_AcctType[$x];
@@ -1509,13 +1509,13 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 			$v_Tope1 = $jsonoutput->d->Tope1;
 			
 			
-			$speech .= $v_Mkoar."                   ".$v_Bkont."         ".$v_Frye1."               ".$v_Frpe1."         ".$v_Toye1."     ".$v_Tope1;
+			$speech1 .= $v_Mkoar."                   ".$v_Bkont."         ".$v_Frye1."               ".$v_Frpe1."         ".$v_Toye1."     ".$v_Tope1;
 			//$speech .=  $v_BUKRS."\t".$v_Mandt."\t".$v_Mkoar."\t\t".$v_Bkont."\t\t".$v_Frye1."\t\t".$v_Frpe1."\t\t".$v_Toye1."\t\t".$v_Tope1;
-			$speech .= "\r\n";	
+			$speech1 .= "\r\n";	
 	}
 }
 //---ends display newly created records
-
+$speech .= $speech1;
 	
 }
 	
