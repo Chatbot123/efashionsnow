@@ -1053,7 +1053,7 @@ else
 	$speech = "Current value is:\r\n";
 	
 	$speech .= "Account Type\tTo Period\n";
-	$speech .=  "  "$v_Mkoar."                    ".$v_Tope1;
+	$speech .=  "  ".$v_Mkoar."                    ".$v_Tope1;
 	$speech .= "\r\nDo you want to update To Period value (Yes/No) \n";
 }
 }
