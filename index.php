@@ -900,9 +900,10 @@ if($json->queryResult->intent->displayName=='OPPCustomDisSpecific')
 		
 		
 	$numofaccts = count($array_AcctType);
+$speech = "Account Type \t Account No \t From Year\t From Period\t To Year\t To Period\n";
 	for($x=0;$x<$numofaccts;$x++) 
 	{
-		 
+		$speech = ""; 
 			  
 			$v_AcctType = $array_AcctType[$x];
 		  	$v_AcctType= strtoupper($v_AcctType);
@@ -961,7 +962,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 
 		
 		$jsonoutput = json_decode($body);
-		$speech .= "Account Type \t Account No \t From Year\t From Period\t To Year\t To Period\n";
+		
 				
 		
 		   	$v_Mkoar = $jsonoutput->d->Mkoar;
