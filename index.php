@@ -973,7 +973,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 			
 			
 			
-			$speech .= $v_Mkoar."          \t".$v_Bkont."\t".$v_Frye1."     t".$v_Frpe1."   \t".$v_Toye1."     t".$v_Tope1;
+			$speech .= $v_Mkoar."                ".$v_Bkont."        ".$v_Frye1."        ".$v_Frpe1."        ".$v_Toye1."     ".$v_Tope1;
 			$speech .= "\r\n";	
 	}
 }
@@ -1052,7 +1052,7 @@ else
 	$speech = "Current values for this record are\r\n";
 	
 	$speech .= "Account Type\tTo Period\n";
-	$speech .=  $v_Mkoar."           \t".$v_Tope1;
+	$speech .=  $v_Mkoar."                 ".$v_Tope1;
 	$speech .= "\r\nDo you want to update To Period value (Yes/No) \n";
 }
 }
@@ -1251,7 +1251,7 @@ $jsonoutput = json_decode($response);
 	$speech .= "Updated values are\r\n";
 	
 	$speech .= "AccountType\tTo Period\n";
-	$speech .=  $v_Mkoar."          \t".$v_Tope1;
+	$speech .=  $v_Mkoar."               ".$v_Tope1;
 //-----GET REQUEST AGAIN ENDS
 }
 
