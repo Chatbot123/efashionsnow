@@ -2628,7 +2628,7 @@ if ($lockstatus == "L")
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		$jsonvar = array('tenancyName'=> 'rachna2019',
 				 'usernameOrEmailAddress'=>'rachnarke@gmail.com',
-				 'password'=>'Avik.17.jan',
+				 'password'=>'@viK@123',
 				 'url'=>'https://platform.uipath.com/'
 				);
              	$jsonvar = json_encode($jsonvar);
@@ -2766,7 +2766,7 @@ if ($lockstatus == "L")
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		$jsonvar = array('tenancyName'=> 'rachna2019',
 				 'usernameOrEmailAddress'=>'rachnarke@gmail.com',
-				 'password'=>'Avik.17.jan',
+				 'password'=>'@viK@123',
 				 'url'=>'https://platform.uipath.com/'
 				);
              	$jsonvar = json_encode($jsonvar);
