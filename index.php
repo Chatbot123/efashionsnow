@@ -276,24 +276,25 @@ if($method == 'POST')
 	if(in_array($ENT_MEASURE, $marginmeasure)){$com = "margin"; }
 	$qtymeasure = array("QUANTITY","QTY","ITEMS","PRODUCTS");
 	if(in_array($ENT_MEASURE, $qtymeasure)){$com = "qtysold"; }
+	
 		if($com == 'amountsold' or $com == 'margin' or $com == 'qtysold' or $action == 'HighLowValues'  )
 		{
 			
 			if ($com == 'amountsold' )
 			{
-				$distext = "Sale  ";
+				$distext = "We recorded sales  ";
 				//$distext .= "\r\n";
 				$show_dlr = "worth of $";
 			}
 			else if($com == 'margin' )
 			{
-				$distext = "Margin ";
+				$distext = "We recorded margin ";
 				//$distext .= "\r\n";
 				$show_dlr = "worth of $";
 			}
 			else if ($com == 'qtysold' )
 			{
-				$distext = "Products ";
+				$distext = "# Units Sold =  ";
 				//$distext .= "\r\n";
 				$show_dlr = "";
 			}
@@ -302,27 +303,28 @@ if($method == 'POST')
 				
 				$distext = "$ENT_TOP_BOT $disnum $ENT_MEASURE $disval ";
 				if($showqty==1)
-				{$show_dlr = "";} else {$show_dlr = "Worth of $";}
+				{$show_dlr = "";} else {$show_dlr = "worth $";}
 				 $distext .= "\r\n";
 				$speech .= $distext;
 				$distext="";
 				
 			}
 			if($CITY !="" 	|| $ENT_CITY !="")	{ $discity = " for city "; } else { $discity = ""; }
-			if($STATE !="" || $ENT_STATE !=""){ $disstate = " in state "; } else { $disstate = ""; }
-			if($FAMILY !="" || $ENT_FAM !=""){ $disfamily = " family of product sold "; } else {$disfamily = ""; }
-            		if($CATEGORY !="" || $ENT_CAT !=""){ $discategory = " category sold "; }	else { $discategory = ""; }
-            		if($ARTICLE !="" || $ENT_ARTICLE !=""){$disarticle = " article sold ";} else	{ $disarticle = ""; }
-			if($SHOPNAME !="" || $ENT_SHOP !="") { $disshop = " of shop "; } else{	$disshop = "";	}
-			if($YR != '0')	{      $disyear = " for year ";} else {$disyear = "";}
-			if($QTR != '0')	{      $disqtr = " in quarter ";} else {$disqtr = "";}
-			if($MTH != '0')	{      $dismth = " for month ";} else {$dismth = "";}
+			if($STATE !="" || $ENT_STATE !=""){ $disstate = " in state of "; } else { $disstate = ""; }
+			if($FAMILY !="" || $ENT_FAM !=""){ $disfamily = " For product family : "; } else {$disfamily = ""; }
+            		if($CATEGORY !="" || $ENT_CAT !=""){ $discategory = " For category : "; }	else { $discategory = ""; }
+            		if($ARTICLE !="" || $ENT_ARTICLE !=""){$disarticle = " For article : ";} else	{ $disarticle = ""; }
+			if($SHOPNAME !="" || $ENT_SHOP !="") { $disshop = " For shop :  "; } else{	$disshop = "";	}
+			if($YR != '0' || $QTR != '0' || $MTH != '0')	{      $distimeframe = " Time Frame : ";} else {$distimeframe = "";}
+			//if($QTR != '0')	{      $disqtr = " in quarter ";} else {$disqtr = "";}
+			//if($MTH != '0')	{      $dismth = " for month ";} else {$dismth = "";}
 			
 			
-			
+			//We recorded sales worth $25000.6 in state of Texas. For Product family : Overcoats, Time frame: Q4 2001.
+	//e.	# Units Sold = 33  for Houston. Product family: Overcoats, Timeframe: 10.2001 
 			foreach ($someobj["results"] as $value) 
 			{
-				$speech .=  $distext.$show_dlr. $value["AMOUNT"].$disshop.$value["SHOP_NAME"].$discity.$value["CITY"].$disstate.$value["STATE"]." ".$value["FAMILY_NAME"].$disfamily." ".$value["CATEGORY"].$discategory." ".$value["ARTICLE_LABEL"].$disarticle.$disqtr.$value["QTR"].$dismth.$value["MTH"].$disyear.$value["YR"];
+				$speech .=  $distext.$show_dlr. $value["AMOUNT"].". ".$discity.$value["CITY"].". "$disstate.$value["STATE"].". ".$disshop.$value["SHOP_NAME"].", ".$disfamily.$value["FAMILY_NAME"].", ".$discategory.$value["CATEGORY"].", ".$disarticle.$value["ARTICLE_LABEL"].", ".$distimeframe." : ".$value["QTR"]." ".$value["MTH"].".".$value["YR"];
 				$speech .= "\r\n";
 				//$speech .= "Do you want this info on mail\n";
 			 }
