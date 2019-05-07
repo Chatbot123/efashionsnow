@@ -282,7 +282,7 @@ if($method == 'POST')
 			
 			if ($com == 'amountsold' )
 			{
-				$distext = "We recorded sales  ";
+				$distext = "We recorded sales ";
 				//$distext .= "\r\n";
 				$show_dlr = "worth of $";
 			}
@@ -309,13 +309,13 @@ if($method == 'POST')
 				$distext="";
 				
 			}
-			if($CITY !="" 	|| $ENT_CITY !="")	{ $discity = " for city "; } else { $discity = ""; }
-			if($STATE !="" || $ENT_STATE !=""){ $disstate = " in state of "; } else { $disstate = ""; }
-			if($FAMILY !="" || $ENT_FAM !=""){ $disfamily = " For product family : "; } else {$disfamily = ""; }
-            		if($CATEGORY !="" || $ENT_CAT !=""){ $discategory = " For category : "; }	else { $discategory = ""; }
-            		if($ARTICLE !="" || $ENT_ARTICLE !=""){$disarticle = " For article : ";} else	{ $disarticle = ""; }
-			if($SHOPNAME !="" || $ENT_SHOP !="") { $disshop = " For shop :  "; } else{	$disshop = "";	}
-			if($YR != '0' || $QTR != '0' || $MTH != '0')	{      $distimeframe = " Time Frame :";} else {$distimeframe = "";}
+			if($CITY !="" 	|| $ENT_CITY !="")	{ $discity = "for city "; } else { $discity = ""; }
+			if($STATE !="" || $ENT_STATE !=""){ $disstate = "in state of "; } else { $disstate = ""; }
+			if($FAMILY !="" || $ENT_FAM !=""){ $disfamily = "For product family : "; } else {$disfamily = ""; }
+            		if($CATEGORY !="" || $ENT_CAT !=""){ $discategory = "For category : "; }	else { $discategory = ""; }
+            		if($ARTICLE !="" || $ENT_ARTICLE !=""){$disarticle = "For article : ";} else	{ $disarticle = ""; }
+			if($SHOPNAME !="" || $ENT_SHOP !="") { $disshop = "For shop :  "; } else{	$disshop = "";	}
+			if($YR != '0' || $QTR != '0' || $MTH != '0')	{      $distimeframe = "Time Frame :";} else {$distimeframe = "";}
 			//if($QTR != '0')	{      $disqtr = " in quarter ";} else {$disqtr = "";}
 			//if($MTH != '0')	{      $dismth = " for month ";} else {$dismth = "";}
 			
@@ -324,7 +324,7 @@ if($method == 'POST')
 	//e.	# Units Sold = 33  for Houston. Product family: Overcoats, Timeframe: 10.2001 
 			foreach ($someobj["results"] as $value) 
 			{
-				$speech .=  $distext.$show_dlr.$value["AMOUNT"]." ".$discity.$value["CITY"]." ".$disstate.$value["STATE"]." ".$disshop.$value["SHOP_NAME"]." ".$disfamily.$value["FAMILY_NAME"].", ".$discategory.$value["CATEGORY"]." ".$disarticle.$value["ARTICLE_LABEL"]." ".$distimeframe." ".$value["QTR"]." ".$value["MTH"]." ".$value["YR"];
+				$speech .=  $distext.$show_dlr.$value["AMOUNT"]." ".$discity.$value["CITY"]." ".$disstate.$value["STATE"]." ".$disshop.$value["SHOP_NAME"]." ".$disfamily.$value["FAMILY_NAME"]." ".$discategory.$value["CATEGORY"]." ".$disarticle.$value["ARTICLE_LABEL"]." ".$distimeframe." ".$value["QTR"]." ".$value["MTH"]." ".$value["YR"];
 				$speech .= "\r\n";
 				//$speech .= "Do you want this info on mail\n";
 			 }
