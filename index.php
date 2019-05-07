@@ -2594,13 +2594,14 @@ $headers = explode("\r\n", $headers); // The seperator used in the Response Head
 $headers = array_filter($headers);
 //extracting status from header
 $httpstatus = $headers[0];
-	
+	echo $httpstatus;
 preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 //echo $res[1];
 	$v_res = str_replace(' ', '', $res[1]);
 	if($v_res=="204NoContent")
 	{
-		$speech .= "Your password has changed successfully to default. We will notify you through mail. Please change this password in SAP system at first login.";
+		$speech .= "Your password has changed successfully to default.";
+		$speech .= " We will notify you through mail. Please change this password in SAP system at first login.";
 		$speech .= "\r\n";
 	}
 	else 
