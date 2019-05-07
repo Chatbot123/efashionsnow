@@ -2600,7 +2600,7 @@ preg_match("/HTTP\/1.1(.*)/", $httpstatus, $res);
 	$v_res = str_replace(' ', '', $res[1]);
 	if($v_res=="204NoContent")
 	{
-		$speech .= "Your password has successfully changed to default. We will notify you through mail. Please change this password in first login to SAP system.";
+		$speech .= "Your password has changed successfully to default. We will notify you through mail. Please change this password in SAP system at first login.";
 		$speech .= "\r\n";
 	}
 	else 
