@@ -324,7 +324,7 @@ if($method == 'POST')
 	//e.	# Units Sold = 33  for Houston. Product family: Overcoats, Timeframe: 10.2001 
 			foreach ($someobj["results"] as $value) 
 			{
-				$speech .=  $distext.$show_dlr. $value["AMOUNT"].". ".$discity.$value["CITY"].". "$disstate.$value["STATE"].". ".$disshop.$value["SHOP_NAME"].", ".$disfamily.$value["FAMILY_NAME"].", ".$discategory.$value["CATEGORY"].", ".$disarticle.$value["ARTICLE_LABEL"].", ".$distimeframe." : ".$value["QTR"]." ".$value["MTH"].".".$value["YR"];
+				$speech .=  $distext.$show_dlr.$value["AMOUNT"].". ".$discity.$value["CITY"].". ".$disstate.$value["STATE"].". ".$disshop.$value["SHOP_NAME"].", ".$disfamily.$value["FAMILY_NAME"].", ".$discategory.$value["CATEGORY"].", ".$disarticle.$value["ARTICLE_LABEL"].", ".$distimeframe." : ".$value["QTR"]." ".$value["MTH"].".".$value["YR"];
 				$speech .= "\r\n";
 				//$speech .= "Do you want this info on mail\n";
 			 }
