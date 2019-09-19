@@ -2392,9 +2392,9 @@ if ($lockstatus == "L")
 		str_pad($Ticketno, 7, '0', STR_PAD_LEFT);
 		$Raisedate = substr($Raisedate, 0, 10);
 			
-		$instance = "dev62236";
+		$instance = "dev75823";
 		$username = "admin";
-		$password = "Ctli@234";
+		$password = "Ctli1234";
 		$table = "incident";
 		
 		$query = "https://$instance.service-now.com/$table.do?JSONv2&sysparm_action=getRecords&sysparm_query=numberENDSWITH".$Ticketno."^sys_created_onSTARTSWITH".$Raisedate;
@@ -2458,9 +2458,9 @@ if ($lockstatus == "L")
 		//{"incident_state":"7","close_notes":"Resolved by Caller","close_code":"Closed/Resolved by Caller","caller_id":"System Administrator"}
 		//$sh_desc = "Testing";
 		//$name = "someone";
-		$instance = "dev62236";
+		$instance = "dev75823";
 		$username = "admin";
-		$password = "Ctli@234";
+		$password = "Ctli1234";
 		$table = "incident";
 		
 		/*$jsonobj = array(
@@ -2507,9 +2507,9 @@ if ($lockstatus == "L")
 		
 		
 			
-		$instance = "dev62236";
+		$instance = "dev75823";
 		$username = "admin";
-		$password = "Ctli@234";
+		$password = "Ctli1234";
 		
 		
 		$query = "https://$instance.service-now.com/api/sn_sc/v1/servicecatalog/items/0bd1963f4f02230017ab4f00a310c7bd/order_now";
@@ -2578,9 +2578,9 @@ if ($lockstatus == "L")
 		
 		
 			
-		$instance = "dev62236";
+		$instance = "dev75823";
 		$username = "admin";
-		$password = "Ctli@234";
+		$password = "Ctli1234";
 		
 		
 		$query = "https://$instance.service-now.com/api/sn_sc/v1/servicecatalog/items/e4d504654f12230017ab4f00a310c706/order_now";
