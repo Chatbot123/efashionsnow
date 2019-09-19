@@ -2342,9 +2342,9 @@ if ($lockstatus == "L")
 		$sh_desc = strtolower($sh_desc);
 		//$sh_desc = "Testing";
 		//$name = "someone";
-		$instance = "dev62236";
+		$instance = "dev75823";
 		$username = "admin";
-		$password = "Ctli@234";
+		$password = "Ctli1234";
 		$table = "incident";
 		
 		$jsonobj = array('short_description' => $sh_desc);
